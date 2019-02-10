@@ -10,4 +10,7 @@
 <route id="route3" edges="1to2 2to3 3to5 5to11 out2"/>
 <vehicle depart="30" id="veh3" route="route3" type="Car" />
 
+<route id="route4" edges="1to2 2to4 4to56 6to11 out2"/>
+<vehicle depart="40" id="veh4" route="route4" type="Car" />
+
 </routes> 

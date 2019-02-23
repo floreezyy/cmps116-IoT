@@ -249,7 +249,7 @@ SUMORouteHandler::checkStopPos(double& startPos, double& endPos, const double la
             startPos = endPos - minLength;
         }
     }
-    return true;
+    return false;
 }
 
 

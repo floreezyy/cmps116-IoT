@@ -1,22 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on Thu 13 Dec 2018 12:46:53 AM CST by SUMO gui Version 0.32.0
+<!-- generated on Sun 24 Feb 2019 01:27:43 AM UTC by SUMO gui Version 0.32.0
 <?xml version="1.0" encoding="UTF-8"?>
 
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
 
     <input>
-        <net-file value="demo.net.xml"/>
-        <route-files value="demo.rou.xml"/>
-        <additional-files value="demo.add.xml"/>
+        <net-file value="my_net.net.xml"/>
+        <route-files value="my_rou.rou.xml"/>
+        <additional-files value="my_add.add.xml"/>
     </input>
 
     <output>
         <tripinfo-output value="tripinfo.xml"/>
     </output>
 
+    <time>
+        <begin value="0"/>
+        <end value="2000"/>
+    </time>
+
     <traci_server>
-        <remote-port value="44083"/>
+        <remote-port value="50385"/>
     </traci_server>
 
 </configuration>

@@ -38,8 +38,8 @@ def run():
             traci.vehicle.changeLane(veh, 2, 25)
 
         if step == 100:
-            traci.vehicle.changeTarget("1", "e9")
-            traci.vehicle.changeTarget("3", "e9")
+            traci.vehicle.changeTarget("veh1", "n1")
+            traci.vehicle.changeTarget("veh2", "n1")
 
         step += 1
 
@@ -58,6 +58,6 @@ if __name__ == "__main__":
         sumoBinary = checkBinary('sumo-gui')
 
     # traci starts sumo as a subprocess and then this script connects and runs
-    traci.start([sumoBinary, "-c", "demo.sumocfg",
+    traci.start([sumoBinary, "-c", "my_config.sumocfg",
                              "--tripinfo-output", "tripinfo.xml"])
     run()

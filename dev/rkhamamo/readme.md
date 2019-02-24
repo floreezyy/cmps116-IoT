@@ -2,15 +2,15 @@ Ryan Hamamoto
 
 edits:
 
-SUMOVehicleClass.h
+src\utils\common\SUMOVehicleClass.h
 	added SVC_ROGUE class  //SVS_ROGUE?
 	
-SUMOVehicleClass.cpp
+src\utils\common\SUMOVehicleClass.cpp
 	added string converter for rogue class and shape
 
-SUMOVTypeParameter.cpp
+src\utils\vehicle\SUMOVTypeParameter.cpp
 	added switch case for SVC_ROGUE with SVS_PASSENGER shape
 	print statements iostream include
 	
-guisim_main.cpp
+src\guisim_main.cpp
 	added print statement

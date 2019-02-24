@@ -108,7 +108,9 @@ enum SUMOVehicleShape {
     /// @brief render as a fire brigade
     SVS_FIREBRIGADE,
     /// @brief render as a police car
-    SVS_POLICE
+    SVS_POLICE,
+	/// @brief render as a rogue car
+	//SVS_ROGUE
 };
 
 
@@ -197,6 +199,8 @@ enum SUMOVehicleClass {
     SVC_CUSTOM1 = 1 << 23,
     /// @brief is a user-defined type
     SVC_CUSTOM2 = 1 << 24,
+	/// @brief is a rogue type
+    SVC_ROGUE = 1 << 25,
     //@}
 
     /// @brief classes which (normally) do not drive on normal roads

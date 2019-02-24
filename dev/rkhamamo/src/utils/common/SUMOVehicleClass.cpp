@@ -79,7 +79,8 @@ StringBijection<SUMOVehicleClass>::Entry sumoVehicleClassStringInitializer[] = {
     {"evehicle",          SVC_E_VEHICLE},
     {"ship",              SVC_SHIP},
     {"custom1",           SVC_CUSTOM1},
-    {"custom2",           SVC_CUSTOM2}
+    {"custom2",           SVC_CUSTOM2},
+	{"rogue",             SVC_ROGUE}
 };
 
 StringBijection<SUMOVehicleClass> SumoVehicleClassStrings(
@@ -125,6 +126,7 @@ StringBijection<SUMOVehicleShape>::Entry sumoVehicleShapeStringInitializer[] = {
     {"emergency",             SVS_EMERGENCY},
     {"firebrigade",           SVS_FIREBRIGADE},
     {"police",                SVS_POLICE},
+	{"rogue",                 SVS_ROGUE},
     {"",                      SVS_UNKNOWN}
 };
 
@@ -137,7 +139,7 @@ StringBijection<SUMOVehicleShape> SumoVehicleShapeStrings(
 // additional constants
 // ===========================================================================
 
-const int SUMOVehicleClass_MAX = SVC_CUSTOM2;
+const int SUMOVehicleClass_MAX = SVC_ROGUE;
 const SVCPermissions SVCAll = 2 * SUMOVehicleClass_MAX - 1; // all relevant bits set to 1
 const SVCPermissions SVC_UNSPECIFIED = -1;
 

@@ -61,6 +61,7 @@
 // ===========================================================================
 int
 main(int argc, char** argv) {
+	std::cout << "guisim called\n";
     // make the output aware of threading
     MFXMutex lock;
     MsgHandler::assignLock(&lock);

@@ -29,6 +29,7 @@
 #include <config.h>
 #endif
 
+#include <iostream>
 #include <algorithm>
 #include <utils/vehicle/SUMOVTypeParameter.h>
 #include <utils/common/ToString.h>
@@ -188,7 +189,13 @@ SUMOVTypeParameter::SUMOVTypeParameter(const std::string& vtid, const SUMOVehicl
             emissionClass = PollutantsInterface::getClassByName(EMPREFIX + "LDV", vclass);
             break;
         case SVC_PASSENGER:
+			std::cout << "passenger ";
             shape = SVS_PASSENGER;
+            break;
+		case SVC_ROGUE:
+			std::cout << "rogue ";
+            shape = SVS_PASSENGER; //appear as default car
+			//add color change?
             break;
         case SVC_E_VEHICLE:
             shape = SVS_E_VEHICLE;

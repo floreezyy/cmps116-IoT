@@ -12,6 +12,6 @@
 		</interval>
     </rerouter>
 
-    <e1Detector id="det_0" lane="e4_0" pos="10" freq="500" file="det.out.xml" />
+    <e1Detector id="det_0" lane="e4_0" pos="10" freq="500" file="my_out.out.xml" />
 
 </additionals>

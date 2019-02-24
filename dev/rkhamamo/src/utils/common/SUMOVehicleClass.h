@@ -195,12 +195,12 @@ enum SUMOVehicleClass {
     SVC_E_VEHICLE = 1 << 21,
     /// @brief is an arbitrary ship
     SVC_SHIP = 1 << 22,
+    /// @brief is a rogue type
+    SVC_ROGUE = 1 << 23,
     /// @brief is a user-defined type
-    SVC_CUSTOM1 = 1 << 23,
-    /// @brief is a user-defined type
-    SVC_CUSTOM2 = 1 << 24,
-	/// @brief is a rogue type
-    SVC_ROGUE = 1 << 25,
+    SVC_CUSTOM1 = 1 << 24,
+	/// @brief is a user-defined type
+    SVC_CUSTOM2 = 1 << 25,
     //@}
 
     /// @brief classes which (normally) do not drive on normal roads

@@ -8,10 +8,33 @@
 
     <rerouter id="rerouter_2" edges="5to11" probability="1">
         <interval begin="0" end="10000">
+		   <destProbReroute id="11to6"/>
+		</interval>
+    </rerouter>
+    
+    <rerouter id="rerouter_2" edges="11to6" probability="1">
+        <interval begin="0" end="10000">
+		   <destProbReroute id="6to4"/>
+		</interval>
+    </rerouter>
+    
+    <rerouter id="rerouter_2" edges="6to4" probability="1">
+        <interval begin="0" end="10000">
+		   <destProbReroute id="4to2"/>
+		</interval>
+    </rerouter>
+    
+    <rerouter id="rerouter_2" edges="4to2" probability="1">
+        <interval begin="0" end="10000">
+		   <destProbReroute id="2to3"/>
+		</interval>
+    </rerouter>
+    
+    <rerouter id="rerouter_2" edges="2to3" probability="1">
+        <interval begin="0" end="10000">
 		   <destProbReroute id="3to5"/>
 		</interval>
     </rerouter>
-
-    <e1Detector id="det_0" lane="e4_0" pos="10" freq="500" file="my_out.out.xml" />
+    <e1Detector id="det_0" lane="3to5_0" pos="100" freq="500" file="my_out.out.xml" />
 
 </additionals>

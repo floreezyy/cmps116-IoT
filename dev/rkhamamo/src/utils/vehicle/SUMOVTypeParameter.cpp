@@ -192,9 +192,9 @@ SUMOVTypeParameter::SUMOVTypeParameter(const std::string& vtid, const SUMOVehicl
 			std::cout << "passenger ";
             shape = SVS_PASSENGER;
             break;
-		case SVC_ROGUE:
+        case SVC_ROGUE:
 			std::cout << "rogue ";
-            shape = SVS_PASSENGER; //appear as default car
+			shape = SVS_PASSENGER; //appear as default car
 			//add color change?
             break;
         case SVC_E_VEHICLE:

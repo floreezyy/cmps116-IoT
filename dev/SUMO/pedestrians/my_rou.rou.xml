@@ -1,6 +1,6 @@
 
 <routes>
-<vType vClass = "passenger" accel="1.0" decel="5.0" id="Car" length="2.0" maxSpeed="100.0" sigma="0.0" />
+<vType vClass = "rogue" accel="1.0" decel="5.0" id="Car" length="2.0" maxSpeed="100.0" sigma="0.0" />
 
 <route id="route1" edges="1to2 2to3 3to5 5to7 7to9"/>
 <vehicle depart="10" id="veh1" route="route1" type="Car" />

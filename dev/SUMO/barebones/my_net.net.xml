@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on Sun Feb 10 16:03:00 2019 by SUMO netconvert Version 0.32.0
+<!-- generated on Tue Feb 26 07:50:30 2019 by SUMO netconvert Version 0.32.0
 <?xml version="1.0" encoding="UTF-8"?>
+
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
+
     <input>
         <node-files value="my_nod.nod.xml"/>
         <edge-files value="my_edg.edg.xml"/>
         <type-files value="my_type.type.xml"/>
     </input>
+
     <output>
         <output-file value="my_net.net.xml"/>
     </output>
+
 </configuration>
 -->
 
@@ -330,4 +334,3 @@
     <connection from=":n8_1" to="out3" fromLane="0" toLane="1" dir="l" state="M"/>
 
 </net>
-

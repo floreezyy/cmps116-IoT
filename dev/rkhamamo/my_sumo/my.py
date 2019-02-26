@@ -38,8 +38,8 @@ def run():
             traci.vehicle.changeLane(veh, 1, 25)
 
         if step == 100:
-            traci.vehicle.setSpeedMode("veh1", 7);
-            traci.vehicle.changeTarget("veh2", "1to2")
+            traci.vehicle.setSpeedMode("veh1", 7); #vehicle runs red lights
+            traci.vehicle.setSpeed("veh2", 0); #stop vehicle
 
         step += 1
 

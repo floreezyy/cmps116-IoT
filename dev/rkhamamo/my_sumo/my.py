@@ -28,17 +28,16 @@ def get_options():
 def run():
 
     step = 0
-    while traci.simulation.getMinExpectedNumber() > 0: #when all route files have been exhausted
+    while step < 5000: #when all route files have been exhausted
         traci.simulationStep()
-        print(step)
-        
+        traci.vehicle.setSpeedMode("veh1", 7); #vehicle runs red lights
         det_vehs = traci.inductionloop.getLastStepVehicleIDs("det_0")
         for veh in det_vehs:
             print(veh)
             traci.vehicle.changeLane(veh, 1, 25)
 
         if step == 100:
-            traci.vehicle.setSpeedMode("veh1", 7); #vehicle runs red lights
+            
             traci.vehicle.setSpeed("veh2", 0); #stop vehicle
 
         step += 1

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on Tue 26 Feb 2019 12:55:36 AM UTC by SUMO gui Version 0.32.0
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
+
+    <input>
+        <net-file value="my_net.net.xml"/>
+        <route-files value="my_rou.rou.xml"/>
+    </input>
+
+    <output>
+        <vehroute-output value="veh_route_data.xml"/>
+    </output>
+
+    <time>
+        <begin value="0"/>
+        <end value="2000"/>
+    </time>
+
+</configuration>
+-->
+
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+    <vehicle id="veh2" type="Car" depart="20.00" arrival="65.00">
+        <route edges="1to2 2to4 4to6 6to8 8to10"/>
+    </vehicle>
+
+    <vehicle id="veh1" type="Car" depart="10.00" arrival="66.00">
+        <route edges="1to2 2to3 3to5 5to7 7to9"/>
+    </vehicle>
+
+    <vehicle id="veh4" type="Car" depart="40.00" arrival="71.00">
+        <route edges="1to2 2to4 4to6 6to11 11to12"/>
+    </vehicle>
+
+    <vehicle id="veh3" type="Car" depart="30.00" arrival="97.00">
+        <route edges="1to2 2to3 3to5 5to11 11to12"/>
+    </vehicle>
+
+</routes>

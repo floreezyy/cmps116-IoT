@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on Sat 23 Feb 2019 11:06:31 PM UTC by SUMO gui Version 0.32.0
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
+
+    <input>
+        <net-file value="my_net.net.xml"/>
+        <route-files value="my_rou.rou.xml"/>
+    </input>
+
+    <output>
+        <tripinfo-output value="test_trip_output.xml"/>
+    </output>
+
+    <time>
+        <begin value="0"/>
+        <end value="2000"/>
+    </time>
+
+</configuration>
+-->
+
+<tripinfos xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/tripinfo_file.xsd">
+    <tripinfo id="veh1" depart="10.00" departLane="1to2_0" departPos="2.10" departSpeed="0.00" departDelay="0.00" arrival="71.00" arrivalLane="out1_0" arrivalPos="238.65" arrivalSpeed="15.00" duration="61.00" routeLength="1134.35" waitSteps="0" timeLoss="19.73" rerouteNo="0" devices="tripinfo_veh1" vType="Car" speedFactor="1.00" vaporized=""/>
+    <tripinfo id="veh2" depart="20.00" departLane="1to2_0" departPos="2.10" departSpeed="0.00" departDelay="0.00" arrival="82.00" arrivalLane="out3_0" arrivalPos="248.55" arrivalSpeed="15.00" duration="62.00" routeLength="1133.24" waitSteps="0" timeLoss="19.70" rerouteNo="0" devices="tripinfo_veh2" vType="Car" speedFactor="1.00" vaporized=""/>
+    <tripinfo id="veh3" depart="30.00" departLane="1to2_0" departPos="2.10" departSpeed="0.00" departDelay="0.00" arrival="95.00" arrivalLane="out2_0" arrivalPos="238.65" arrivalSpeed="15.00" duration="65.00" routeLength="1129.90" waitSteps="0" timeLoss="23.16" rerouteNo="0" devices="tripinfo_veh3" vType="Car" speedFactor="1.00" vaporized=""/>
+    <tripinfo id="veh4" depart="40.00" departLane="1to2_0" departPos="2.10" departSpeed="0.00" departDelay="0.00" arrival="113.00" arrivalLane="out2_0" arrivalPos="238.65" arrivalSpeed="15.00" duration="73.00" routeLength="1136.68" waitSteps="2" timeLoss="31.28" rerouteNo="0" devices="tripinfo_veh4" vType="Car" speedFactor="1.00" vaporized=""/>
+</tripinfos>

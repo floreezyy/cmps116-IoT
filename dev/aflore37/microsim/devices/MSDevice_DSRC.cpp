@@ -9,14 +9,14 @@
 //   http://www.eclipse.org/legal/epl-v20.html
 //
 /****************************************************************************/
-/// @file    MSDevice_Example.cpp
-/// @author  Daniel Krajzewicz
+/// @file    MSDevice_DSRC.cpp
+/// @author  Alexis Flores, based on Daniel Krajzewicz's MSDevice_Example framework
 /// @author  Michael Behrisch
 /// @author  Jakob Erdmann
 /// @date    11.06.2013
 /// @version $Id$
 ///
-// A device which stands as an implementation example and which outputs movereminder calls
+// A device which stands as a barebones implementation example and which outputs movereminder calls
 /****************************************************************************/
 
 // ===========================================================================
@@ -47,46 +47,46 @@
 // static initialisation methods
 // ---------------------------------------------------------------------------
 void
-MSDevice_Example::insertOptions(OptionsCont& oc) {
-    oc.addOptionSubTopic("Example Device");
-    insertDefaultAssignmentOptions("example", "Example Device", oc);
+MSDevice_DSRC::insertOptions(OptionsCont& oc) {
+    oc.addOptionSubTopic("DSRC Device");
+    insertDefaultAssignmentOptions("dsrc", "DSRC Device", oc);
 
-    oc.doRegister("device.example.parameter", new Option_Float(0.0));
-    oc.addDescription("device.example.parameter", "Example Device", "An exemplary parameter which can be used by all instances of the example device");
+    oc.doRegister("device.dsrc.parameter", new Option_Float(0.0));
+    oc.addDescription("device.dsrc.parameter", "DSRC Device", "An exemplary parameter which can be used by all instances of the dsrc device");
 }
 
 
 void
-MSDevice_Example::buildVehicleDevices(SUMOVehicle& v, std::vector<MSDevice*>& into) {
+MSDevice_DSRC::buildVehicleDevices(SUMOVehicle& v, std::vector<MSDevice*>& into) {
     OptionsCont& oc = OptionsCont::getOptions();
-    if (equippedByDefaultAssignmentOptions(oc, "example", v)) {
+    if (equippedByDefaultAssignmentOptions(oc, "dsrc", v)) {
         // build the device
         // get custom vehicle parameter
         double customParameter2 = -1;
-        if (v.getParameter().knowsParameter("example")) {
+        if (v.getParameter().knowsParameter("dsrc")) {
             try {
-                customParameter2 = TplConvert::_2double(v.getParameter().getParameter("example", "-1").c_str());
+                customParameter2 = TplConvert::_2double(v.getParameter().getParameter("dsrc", "-1").c_str());
             } catch (...) {
-                WRITE_WARNING("Invalid value '" + v.getParameter().getParameter("example", "-1") + "'for vehicle parameter 'example'");
+                WRITE_WARNING("Invalid value '" + v.getParameter().getParameter("dsrc", "-1") + "'for vehicle parameter 'dsrc'");
             }
 
         } else {
-            std::cout << "vehicle '" << v.getID() << "' does not supply vehicle parameter 'example'. Using default of " << customParameter2 << "\n";
+            std::cout << "vehicle '" << v.getID() << "' does not supply vehicle parameter 'dsrc'. Using default of " << customParameter2 << "\n";
         }
         // get custom vType parameter
         double customParameter3 = -1;
-        if (v.getVehicleType().getParameter().knowsParameter("example")) {
+        if (v.getVehicleType().getParameter().knowsParameter("dsrc")) {
             try {
-                customParameter3 = TplConvert::_2double(v.getVehicleType().getParameter().getParameter("example", "-1").c_str());
+                customParameter3 = TplConvert::_2double(v.getVehicleType().getParameter().getParameter("dsrc", "-1").c_str());
             } catch (...) {
-                WRITE_WARNING("Invalid value '" + v.getVehicleType().getParameter().getParameter("example", "-1") + "'for vType parameter 'example'");
+                WRITE_WARNING("Invalid value '" + v.getVehicleType().getParameter().getParameter("dsrc", "-1") + "'for vType parameter 'dsrc'");
             }
 
         } else {
-            std::cout << "vehicle '" << v.getID() << "' does not supply vType parameter 'example'. Using default of " << customParameter3 << "\n";
+            std::cout << "vehicle '" << v.getID() << "' does not supply vType parameter 'dsrc'. Using default of " << customParameter3 << "\n";
         }
-        MSDevice_Example* device = new MSDevice_Example(v, "example_" + v.getID(),
-                oc.getFloat("device.example.parameter"),
+        MSDevice_DSRC* device = new MSDevice_DSRC(v, "dsrc_" + v.getID(),
+                oc.getFloat("device.dsrc.parameter"),
                 customParameter2,
                 customParameter3);
         into.push_back(device);
@@ -95,9 +95,9 @@ MSDevice_Example::buildVehicleDevices(SUMOVehicle& v, std::vector<MSDevice*>& in
 
 
 // ---------------------------------------------------------------------------
-// MSDevice_Example-methods
+// MSDevice_DSRC-methods
 // ---------------------------------------------------------------------------
-MSDevice_Example::MSDevice_Example(SUMOVehicle& holder, const std::string& id,
+MSDevice_DSRC::MSDevice_DSRC(SUMOVehicle& holder, const std::string& id,
                                    double customValue1, double customValue2, double customValue3) :
     MSDevice(holder, id),
     myCustomValue1(customValue1),
@@ -107,12 +107,12 @@ MSDevice_Example::MSDevice_Example(SUMOVehicle& holder, const std::string& id,
 }
 
 
-MSDevice_Example::~MSDevice_Example() {
+MSDevice_DSRC::~MSDevice_DSRC() {
 }
 
 
 bool
-MSDevice_Example::notifyMove(SUMOVehicle& veh, double /* oldPos */,
+MSDevice_DSRC::notifyMove(SUMOVehicle& veh, double /* oldPos */,
                              double /* newPos */, double newSpeed) {
     std::cout << "device '" << getID() << "' notifyMove: newSpeed=" << newSpeed << "\n";
     // check whether another device is present on the vehicle:
@@ -125,24 +125,24 @@ MSDevice_Example::notifyMove(SUMOVehicle& veh, double /* oldPos */,
 
 
 bool
-MSDevice_Example::notifyEnter(SUMOVehicle& veh, MSMoveReminder::Notification reason, const MSLane* /* enteredLane */) {
+MSDevice_DSRC::notifyEnter(SUMOVehicle& veh, MSMoveReminder::Notification reason, const MSLane* /* enteredLane */) {
     std::cout << "device '" << getID() << "' notifyEnter: reason=" << reason << " currentEdge=" << veh.getEdge()->getID() << "\n";
     return true; // keep the device
 }
 
 
 bool
-MSDevice_Example::notifyLeave(SUMOVehicle& veh, double /*lastPos*/, MSMoveReminder::Notification reason, const MSLane* /* enteredLane */) {
+MSDevice_DSRC::notifyLeave(SUMOVehicle& veh, double /*lastPos*/, MSMoveReminder::Notification reason, const MSLane* /* enteredLane */) {
     std::cout << "device '" << getID() << "' notifyLeave: reason=" << reason << " currentEdge=" << veh.getEdge()->getID() << "\n";
     return true; // keep the device
 }
 
 
 void
-MSDevice_Example::generateOutput() const {
+MSDevice_DSRC::generateOutput() const {
     if (OptionsCont::getOptions().isSet("tripinfo-output")) {
         OutputDevice& os = OutputDevice::getDeviceByOption("tripinfo-output");
-        os.openTag("example_device");
+        os.openTag("dsrc_device");
         os.writeAttr("customValue1", toString(myCustomValue1));
         os.writeAttr("customValue2", toString(myCustomValue2));
         os.closeTag();
@@ -150,7 +150,7 @@ MSDevice_Example::generateOutput() const {
 }
 
 std::string
-MSDevice_Example::getParameter(const std::string& key) const {
+MSDevice_DSRC::getParameter(const std::string& key) const {
     if (key == "customValue1") {
         return toString(myCustomValue1);
     } else if (key == "customValue2") {
@@ -163,7 +163,7 @@ MSDevice_Example::getParameter(const std::string& key) const {
 
 
 void
-MSDevice_Example::setParameter(const std::string& key, const std::string& value) {
+MSDevice_DSRC::setParameter(const std::string& key, const std::string& value) {
     double doubleValue;
     try {
         doubleValue = TplConvert::_2double(value.c_str());

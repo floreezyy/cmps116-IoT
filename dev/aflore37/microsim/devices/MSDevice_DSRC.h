@@ -9,16 +9,16 @@
 //   http://www.eclipse.org/legal/epl-v20.html
 //
 /****************************************************************************/
-/// @file    MSDevice_Example.h
+/// @file    MSDevice_DSRC.h
 /// @author  Daniel Krajzewicz
 /// @author  Jakob Erdmann
 /// @date    11.06.2013
 /// @version $Id$
 ///
-// A device which stands as an implementation example and which outputs movereminder calls
+// A device which stands as an implementation DSRC and which outputs movereminder calls
 /****************************************************************************/
-#ifndef MSDevice_Example_h
-#define MSDevice_Example_h
+#ifndef MSDevice_DSRC_h
+#define MSDevice_DSRC_h
 
 
 // ===========================================================================
@@ -44,16 +44,16 @@ class SUMOVehicle;
 // class definitions
 // ===========================================================================
 /**
- * @class MSDevice_Example
+ * @class MSDevice_DSRC
  * @brief A device which collects info on the vehicle trip (mainly on departure and arrival)
  *
  * Each device collects departure time, lane and speed and the same for arrival.
  *
  * @see MSDevice
  */
-class MSDevice_Example : public MSDevice {
+class MSDevice_DSRC : public MSDevice {
 public:
-    /** @brief Inserts MSDevice_Example-options
+    /** @brief Inserts MSDevice_DSRC-options
      * @param[filled] oc The options container to add the options to
      */
     static void insertOptions(OptionsCont& oc);
@@ -61,7 +61,7 @@ public:
 
     /** @brief Build devices for the given vehicle, if needed
      *
-     * The options are read and evaluated whether a example-device shall be built
+     * The options are read and evaluated whether a DSRC-device shall be built
      *  for the given vehicle.
      *
      * The built device is stored in the given vector.
@@ -75,7 +75,7 @@ public:
 
 public:
     /// @brief Destructor.
-    ~MSDevice_Example();
+    ~MSDevice_DSRC();
 
 
 
@@ -121,7 +121,7 @@ public:
 
     /// @brief return the name for this type of device
     const std::string deviceName() const {
-        return "example";
+        return "dsrc";
     }
 
     /// @brief try to retrieve the given parameter from this device. Throw exception for unsupported key
@@ -146,13 +146,13 @@ private:
      * @param[in] holder The vehicle that holds this device
      * @param[in] id The ID of the device
      */
-    MSDevice_Example(SUMOVehicle& holder, const std::string& id, double customValue1,
+    MSDevice_DSRC(SUMOVehicle& holder, const std::string& id, double customValue1,
                      double customValue2, double customValue3);
 
 
 
 private:
-    // private state members of the Example device
+    // private state members of the DSRC device
 
     /// @brief a value which is initialised based on a commandline/configuration option
     double myCustomValue1;
@@ -167,10 +167,10 @@ private:
 
 private:
     /// @brief Invalidated copy constructor.
-    MSDevice_Example(const MSDevice_Example&);
+    MSDevice_DSRC(const MSDevice_DSRC&);
 
     /// @brief Invalidated assignment operator.
-    MSDevice_Example& operator=(const MSDevice_Example&);
+    MSDevice_DSRC& operator=(const MSDevice_DSRC&);
 
 
 };

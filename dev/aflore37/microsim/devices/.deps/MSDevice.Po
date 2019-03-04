@@ -334,7 +334,8 @@ MSDevice.o: MSDevice.cpp /usr/include/stdc-predef.h ../../../src/config.h \
  MSDevice_Battery.h ../../../src/microsim/devices/MSDevice.h \
  MSDevice_SSM.h /usr/include/c++/6/queue \
  /usr/include/c++/6/bits/stl_queue.h \
- ../../../src/utils/iodevices/OutputDevice_File.h MSDevice_Bluelight.h
+ ../../../src/utils/iodevices/OutputDevice_File.h MSDevice_Bluelight.h \
+ MSDevice_DSRC.h
 
 /usr/include/stdc-predef.h:
 
@@ -1353,3 +1354,5 @@ MSDevice_SSM.h:
 ../../../src/utils/iodevices/OutputDevice_File.h:
 
 MSDevice_Bluelight.h:
+
+MSDevice_DSRC.h:

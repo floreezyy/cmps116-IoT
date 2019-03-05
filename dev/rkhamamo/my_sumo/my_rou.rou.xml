@@ -1,16 +1,16 @@
 
 <routes>
 <vType vClass ="passenger" accel="1.0" decel="5.0" id="Car" length="2.0" maxSpeed="100.0" sigma="0.0" />
-<vType vClass ="rogue" accel="1.0" decel="5.0" id="rogue" length="2.0" maxSpeed="100.0" sigma="0.0" />
+<vType vClass ="rogue" accel="1.0" decel="5.0" id="Rogue" length="2.0" maxSpeed="100.0" sigma="0.0"/>
 <!--<vType vClass ="emergency" accel="1.0" decel="5.0" id="Ambulance" length="2.0" maxSpeed="100.0" sigma="0.0" speedFactor = "2.0" minGapLat = "0.2"/>-->
 
 <route id="route1" edges="1to2 2to3"/>
-<vehicle depart="10" id="veh1" route="route1" type="rogue" color = "blue"/>
+
 <vehicle depart="10" id="veh2" route="route1" type="Car" />
 <vehicle depart="10" id="veh3" route="route1" type="Car" />
 <vehicle depart="10" id="veh4" route="route1" type="Car" />
 <vehicle depart="10" id="veh5" route="route1" type="Car" />
-    
+<vehicle depart="10" id="veh1" route="route1" type="Rogue"/>
 <!--<route id="route2" edges="1to2 2to4 4to6 6to8 8to10"/>-->
 <!--<vehicle depart="20" id="veh2" route="route2" type="Ambulance" />-->
 

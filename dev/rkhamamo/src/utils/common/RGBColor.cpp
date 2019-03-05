@@ -57,8 +57,9 @@ const RGBColor RGBColor::BLACK = RGBColor(0, 0, 0, 255);
 const RGBColor RGBColor::GREY = RGBColor(128, 128, 128, 255);
 
 const RGBColor RGBColor::DEFAULT_COLOR = RGBColor::YELLOW;
+const RGBColor RGBColor::DEFAULT_ROGUE_COLOR = RGBColor::BLUE;
 const std::string RGBColor::DEFAULT_COLOR_STRING = toString(RGBColor::DEFAULT_COLOR);
-
+const std::string RGBColor::DEFAULT_ROGUE_COLOR_STRING = toString(RGBColor::DEFAULT_ROGUE_COLOR);
 
 // ===========================================================================
 // method definitions

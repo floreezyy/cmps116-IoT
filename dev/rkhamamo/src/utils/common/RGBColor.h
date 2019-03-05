@@ -189,10 +189,15 @@ public:
 
     /// @brief The default color (for vehicle types and vehicles)
     static const RGBColor DEFAULT_COLOR;
+    
+    /// @brief The default color (for vehicle types and vehicles)
+    static const RGBColor DEFAULT_ROGUE_COLOR;
 
     /// @brief The string description of the default color
     static const std::string DEFAULT_COLOR_STRING;
 
+    /// @brief The string description of the default color
+    static const std::string DEFAULT_ROGUE_COLOR_STRING;
 private:
     /// @brief The color amounts
     unsigned char myRed, myGreen, myBlue, myAlpha;

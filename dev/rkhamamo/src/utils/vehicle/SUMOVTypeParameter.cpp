@@ -40,6 +40,9 @@
 #include <utils/xml/SUMOXMLDefinitions.h>
 #include <utils/emissions/PollutantsInterface.h>
 
+#include <microsim/MSVehicle.h>
+
+
 #define EMPREFIX std::string("HBEFA3/")
 
 
@@ -51,7 +54,7 @@ SUMOVTypeParameter::SUMOVTypeParameter(const std::string& vtid, const SUMOVehicl
       actionStepLength(0), defaultProbability(DEFAULT_VEH_PROB),
       speedFactor("normc", 1.0, 0.0, 0.2, 2.0),
       emissionClass(PollutantsInterface::getClassByName(EMPREFIX + "PC_G_EU4", vclass)), color(RGBColor::DEFAULT_COLOR),
-      vehicleClass(vclass), impatience(0.0), personCapacity(4), containerCapacity(0), boardingDuration(500),
+      vehicleClass(vclass), impatience(0.0), personCapacity(4), containerCapacity(0), boardingDuration(500), 
       loadingDuration(90000), width(1.8), height(1.5), shape(SVS_UNKNOWN), osgFile("car-normal-citrus.obj"),
       cfModel(SUMO_TAG_CF_KRAUSS), lcModel(LCM_DEFAULT),
       maxSpeedLat(1.0), latAlignment(LATALIGN_CENTER), minGapLat(0.6),
@@ -193,9 +196,14 @@ SUMOVTypeParameter::SUMOVTypeParameter(const std::string& vtid, const SUMOVehicl
             shape = SVS_PASSENGER;
             break;
         case SVC_ROGUE:
-			std::cout << "rogue ";
-			shape = SVS_PASSENGER; //appear as default car
-			//add color change?
+            std::cout << "rogue ";
+            //color.set(0, 0, 255, 255); //blue (doesnt work yet)
+            MSVehicle* v = getVehicle(id);
+            //vehicle.setSpeedMode(7);
+            speedFactor.parse("2.0"); //double the speed limit
+            impatience = 1.0; //behavior merges to avoid stops
+            minGap = 0.5; //smaller space left between cars
+            shape = SVS_PASSENGER; //appear as default car
             break;
         case SVC_E_VEHICLE:
             shape = SVS_E_VEHICLE;

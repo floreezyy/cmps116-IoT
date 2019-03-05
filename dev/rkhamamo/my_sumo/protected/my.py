@@ -4,44 +4,36 @@ import os
 import sys
 import optparse
 
-# we need to import some python modules from the $SUMO_HOME/tools directory
+#import tools modules from sumo home directory
 if 'SUMO_HOME' in os.environ:
     tools = os.path.join(os.environ['SUMO_HOME'], 'tools')
     sys.path.append(tools)
 else:
     sys.exit("please declare environment variable 'SUMO_HOME'")
 
-
-from sumolib import checkBinary  # Checks for the binary in environ vars
+from sumolib import checkBinary
 import traci
-
 
 def get_options():
     opt_parser = optparse.OptionParser()
-    opt_parser.add_option("--nogui", action="store_true",
-                         default=False, help="run the commandline version of sumo")
+    opt_parser.add_option("--nogui", action="store_true", default=False, help="run the commandline version of sumo")
     options, args = opt_parser.parse_args()
     return options
 
 
-# contains TraCI control loop
+#run TraCI sim controller
 def run():
 
-    step = 0
-    while traci.simulation.getMinExpectedNumber() > 0:
-        traci.simulationStep()
-        print(step)
-
-        det_vehs = traci.inductionloop.getLastStepVehicleIDs("det_0")
-        for veh in det_vehs:
-            print(veh)
-            traci.vehicle.changeLane(veh, 2, 25)
+    for step in range(5000): #5000 steps
+        traci.simulationStep() #increment sim
+        traci.vehicle.setSpeedMode("veh1", 7); #vehicle 1 runs red lights
+        det_vehicles = traci.inductionloop.getLastStepVehicleIDs("det_0")
+        for vehicle in det_vehicles:
+            print(vehicle)
+            traci.vehicle.changeLane(vehicle, 1, 25) #switch lanes
 
         if step == 100:
-            traci.vehicle.changeTarget("veh1", "n1")
-            traci.vehicle.changeTarget("veh2", "n1")
-
-        step += 1
+            traci.vehicle.setSpeed("veh2", 0); #stop vehicle 2
 
     traci.close()
     sys.stdout.flush()

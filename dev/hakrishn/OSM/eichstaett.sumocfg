@@ -1,0 +1,12 @@
+<configuration>
+
+<input>
+<net-file value="eichstaett.net.xml"/>
+<route-files value="eichstaett.rou.xml"/>
+</input>
+<time>
+<begin value="0"/>
+<end value="2000"/>
+</time>
+
+</configuration>

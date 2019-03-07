@@ -25,3 +25,7 @@ setSpeedMode changes:
 	myRespectJunctionPriority
 	myEmergencyBrakeRedLight
 getSpeedMode returns var
+
+
+microsim/lcmodels/MSLCM_LC2013
+traci_testclient/TraCITestClient.cpp

@@ -26,7 +26,7 @@ def run():
 
     for step in range(5000): #5000 steps
         traci.simulationStep() #increment sim
-        traci.vehicle.setSpeedMode("veh1", 7); #vehicle 1 runs red lights
+        #traci.vehicle.setSpeedMode("veh1", 7); #vehicle 1 runs red lights
         det_vehicles = traci.inductionloop.getLastStepVehicleIDs("det_0")
         for vehicle in det_vehicles:
             print(vehicle)

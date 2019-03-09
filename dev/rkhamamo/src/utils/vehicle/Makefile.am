@@ -10,5 +10,5 @@ GawronCalculator.h LogitCalculator.h RouteCostCalculator.h \
 PedestrianRouter.h SUMOAbstractRouter.h \
 SPTree.h SUMOVehicle.h \
 SUMOVehicleParameter.cpp SUMOVehicleParameter.h \
-SUMOVTypeParameter.cpp SUMOVTypeParameter.h \
+SUMOVTypeParameter.cpp SUMOVTypeParameter.h
 

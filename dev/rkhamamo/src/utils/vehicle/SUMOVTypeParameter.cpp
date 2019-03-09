@@ -32,6 +32,7 @@
 #include <iostream>
 #include <algorithm>
 #include <utils/vehicle/SUMOVTypeParameter.h>
+#include <utils/vehicle/CHRouter.h>
 #include <utils/common/ToString.h>
 #include <utils/common/TplConvert.h>
 #include <utils/common/MsgHandler.h>
@@ -41,7 +42,6 @@
 #include <utils/emissions/PollutantsInterface.h>
 
 #include <microsim/MSVehicle.h>
-
 
 #define EMPREFIX std::string("HBEFA3/")
 
@@ -56,7 +56,7 @@ SUMOVTypeParameter::SUMOVTypeParameter(const std::string& vtid, const SUMOVehicl
       emissionClass(PollutantsInterface::getClassByName(EMPREFIX + "PC_G_EU4", vclass)), color(RGBColor::DEFAULT_COLOR),
       vehicleClass(vclass), impatience(0.0), personCapacity(4), containerCapacity(0), boardingDuration(500), 
       loadingDuration(90000), width(1.8), height(1.5), shape(SVS_UNKNOWN), osgFile("car-normal-citrus.obj"),
-      cfModel(SUMO_TAG_CF_KRAUSS), lcModel(LCM_DEFAULT),
+      cfModel(SUMO_TAG_CF_KRAUSS), lcModel(LCM_DEFAULT), SUMOVheicle& v,
       maxSpeedLat(1.0), latAlignment(LATALIGN_CENTER), minGapLat(0.6),
       parametersSet(0), saved(false), onlyReferenced(false) {
     switch (vclass) {
@@ -197,8 +197,9 @@ SUMOVTypeParameter::SUMOVTypeParameter(const std::string& vtid, const SUMOVehicl
             break;
         case SVC_ROGUE:
             std::cout << "rogue ";
+            std::cout << " veh=" << myVehicle.getID()
             //color.set(0, 0, 255, 255); //blue (doesnt work yet)
-            MSVehicle* v = getVehicle(id);
+            
             //vehicle.setSpeedMode(7);
             speedFactor.parse("2.0"); //double the speed limit
             impatience = 1.0; //behavior merges to avoid stops

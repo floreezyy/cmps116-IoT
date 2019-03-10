@@ -4,36 +4,39 @@ import os
 import sys
 import optparse
 
-#import tools modules from sumo home directory
+# we need to import some python modules from the $SUMO_HOME/tools directory
 if 'SUMO_HOME' in os.environ:
     tools = os.path.join(os.environ['SUMO_HOME'], 'tools')
     sys.path.append(tools)
 else:
     sys.exit("please declare environment variable 'SUMO_HOME'")
 
-from sumolib import checkBinary
+
+from sumolib import checkBinary  # Checks for the binary in environ vars
 import traci
+
 
 def get_options():
     opt_parser = optparse.OptionParser()
-    opt_parser.add_option("--nogui", action="store_true", default=False, help="run the commandline version of sumo")
+    opt_parser.add_option("--nogui", action="store_true",
+                         default=False, help="run the commandline version of sumo")
     options, args = opt_parser.parse_args()
     return options
 
 
-#run TraCI sim controller
+# contains TraCI control loop
 def run():
 
-    for step in range(5000): #5000 steps
-        traci.simulationStep() #increment sim
-        traci.vehicle.setSpeedMode("veh1", 7); #vehicle 1 runs red lights
-        det_vehicles = traci.inductionloop.getLastStepVehicleIDs("det_0")
-        for vehicle in det_vehicles:
-            print(vehicle)
-            traci.vehicle.changeLane(vehicle, 1, 25) #switch lanes
+    step = 0
+    while traci.simulation.getMinExpectedNumber() > 0: #when all route files have been exhausted
+        traci.simulationStep()
+        print(step)
+        
+        det_vehs = traci.inductionloop.getLastStepVehicleIDs("det_0")
+        
+        traci.vehicle.setSpeedMode("veh1", 7);
 
-        if step == 100:
-            traci.vehicle.setSpeed("veh2", 0); #stop vehicle 2
+        step += 1
 
     traci.close()
     sys.stdout.flush()

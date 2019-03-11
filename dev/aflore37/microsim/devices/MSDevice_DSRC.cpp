@@ -71,7 +71,7 @@ MSDevice_DSRC::buildVehicleDevices(SUMOVehicle& v, std::vector<MSDevice*>& into)
             }
 
         } else {
-            std::cout << "vehicle '" << v.getID() << "' does not supply vehicle parameter 'dsrc'. Using default of " << customParameter2 << "\n";
+            std::cout << "VehicleID: '" << v.getID() << "' does not supply vehicle parameter 'dsrc'. Using default of " << customParameter2 << "\n";
         }
         // get custom vType parameter
         double customParameter3 = -1;
@@ -83,8 +83,9 @@ MSDevice_DSRC::buildVehicleDevices(SUMOVehicle& v, std::vector<MSDevice*>& into)
             }
 
         } else {
-            std::cout << "vehicle '" << v.getID() << "' does not supply vType parameter 'dsrc'. Using default of " << customParameter3 << "\n";
+            std::cout << "VehicleID '" << v.getID() << "' does not supply vType parameter 'dsrc'. Using default of " << customParameter3 << "\n";
         }
+
         MSDevice_DSRC* device = new MSDevice_DSRC(v, "dsrc_" + v.getID(),
                 oc.getFloat("device.dsrc.parameter"),
                 customParameter2,
@@ -114,21 +115,27 @@ MSDevice_DSRC::~MSDevice_DSRC() {
 bool
 MSDevice_DSRC::notifyMove(SUMOVehicle& veh, double /* oldPos */,
                              double /* newPos */, double newSpeed) {
-    std::cout << "device '" << getID() << "' notifyMove: newSpeed=" << newSpeed << "\n";
+    std::cout << "vehicleID: " << veh.getID() << "MoveUpdate: Speed=" << newSpeed << "\n";
     // check whether another device is present on the vehicle:
     MSDevice_Tripinfo* otherDevice = static_cast<MSDevice_Tripinfo*>(veh.getDevice(typeid(MSDevice_Tripinfo)));
     if (otherDevice != 0) {
         std::cout << "  veh '" << veh.getID() << " has device '" << otherDevice->getID() << "'\n";
     }
+    
+    std::cout << "Vehicle Type: " << veh.getVehicleType().getID() << "\n";
+    std::cout << "Vehicle Dimmensions: " << "Length: " << veh.getVehicleType().getLength() << "Width: " << veh.getVehicleType().getWidth() << "Height: " << veh.getVehicleType().getHeight() << "\n";
+    std::cout << "Vehicle Angle Trajectory: " << veh.getAngle() << "\n";
+    std::cout << "Vehicle Coordinates: " << veh.getPosition() << "\n";
+    std::cout << "Vehicle Acceleration: " << veh.getAcceleration() << "\n";
     return true; // keep the device
 }
 
 
-bool
-MSDevice_DSRC::notifyEnter(SUMOVehicle& veh, MSMoveReminder::Notification reason, const MSLane* /* enteredLane */) {
-    std::cout << "device '" << getID() << "' notifyEnter: reason=" << reason << " currentEdge=" << veh.getEdge()->getID() << "\n";
-    return true; // keep the device
-}
+// bool
+// MSDevice_DSRC::notifyEnter(SUMOVehicle& veh, MSMoveReminder::Notification reason, const MSLane* /* enteredLane */) {
+//     std::cout << "device '" << getID() << "' notifyEnter: reason=" << reason << " currentEdge=" << veh.getEdge()->getID() << "\n";
+//     return true; // keep the device
+// }
 
 
 bool

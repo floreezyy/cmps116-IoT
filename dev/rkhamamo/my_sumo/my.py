@@ -34,6 +34,7 @@ def run():
 
         if step == 100:
             traci.vehicle.setSpeed("veh2", 0); #stop vehicle 2
+            traci.setColor("veh2", "red");
 
     traci.close()
     sys.stdout.flush()

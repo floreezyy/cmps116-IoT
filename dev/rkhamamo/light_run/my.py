@@ -35,6 +35,7 @@ def run():
         det_vehs = traci.inductionloop.getLastStepVehicleIDs("det_0")
         
         traci.vehicle.setSpeedMode("veh1", 7);
+        traci.vehicle.setLength("veh1", 10);
 
         step += 1
 

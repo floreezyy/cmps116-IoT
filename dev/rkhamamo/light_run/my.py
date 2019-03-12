@@ -29,14 +29,17 @@ def run():
 
     step = 0
     while traci.simulation.getMinExpectedNumber() > 0: #when all route files have been exhausted
-        traci.simulationStep()
-        print(step)
+        traci.simulationStep() #increment sim step
         
         det_vehs = traci.inductionloop.getLastStepVehicleIDs("det_0")
         
-        traci.vehicle.setSpeedMode("veh1", 7);
-        traci.vehicle.setLength("veh1", 10);
-
+        x, y = traci.vehicle.getPosition("veh1") #store x and y coordinates
+        print x, y #show position on terminal
+        traci.vehicle.setRogue("veh1") #make vehicle rogue
+        
+        if x > 230 and x < 270 and y > 380 and y < 420:
+            traci.vehicle.setRogueException("veh1") #make vehicle stop
+            
         step += 1
 
     traci.close()

@@ -29,7 +29,6 @@
 #include <config.h>
 #endif
 
-#include <iostream>
 #include <algorithm>
 #include <utils/vehicle/SUMOVTypeParameter.h>
 #include <utils/vehicle/CHRouter.h>
@@ -192,15 +191,9 @@ SUMOVTypeParameter::SUMOVTypeParameter(const std::string& vtid, const SUMOVehicl
             emissionClass = PollutantsInterface::getClassByName(EMPREFIX + "LDV", vclass);
             break;
         case SVC_PASSENGER:
-			std::cout << "passenger ";
             shape = SVS_PASSENGER;
             break;
         case SVC_ROGUE:
-            std::cout << "rogue ";
-            //std::cout << " veh=" << myVehicle.getID()
-            //color.set(0, 0, 255, 255); //blue (doesnt work yet)
-            
-            //vehicle.setSpeedMode(7);
             speedFactor.parse("2.0"); //double the speed limit
             impatience = 1.0; //behavior merges to avoid stops
             minGap = 0.5; //smaller space left between cars

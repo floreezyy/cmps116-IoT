@@ -177,6 +177,8 @@ class VehicleDomain(Domain):
 
         Returns the position of the named vehicle within the last step [m,m].
         """
+        self._connection._sendIntCmd(
+            tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_SPEEDSETMODE, vehID, 7)
         return self._getUniversal(tc.VAR_POSITION, vehID)
 
     def getPosition3D(self, vehID):
@@ -1190,13 +1192,42 @@ class VehicleDomain(Domain):
         self._connection._sendIntCmd(
             tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_SPEEDSETMODE, vehID, 7)
         
-    def setRogueException(self, vehID):
-        """setRogueException(string) -> None
+    def rogueFollowSpeed(self, vehID):
+        """rogueSlowSpeed(string) -> None
 
-        Sets the vehicle's rogue status as a bitset.
+        Makes rogue vehicle follow the speed limit
         """
-        self._connection._sendIntCmd(
-            tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_SPEEDSETMODE, vehID, 31)
+        self._connection._sendDoubleCmd(
+            tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_SPEED_FACTOR, vehID, 1.0)   
+        
+    def setRogueNodeException(self, vehID, x, y):
+        """setRogueNodeException(string, double, double) -> None
+
+        Sets the vehicle's rogue exception with node coordinates.
+        """
+        xs, ys = self._getUniversal(tc.VAR_POSITION, vehID)
+        
+        if xs > (x - 30) and xs < (x + 30) and ys > (y - 30) and ys < (y + 30):
+            self._connection._sendIntCmd(
+                tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_SPEEDSETMODE, vehID, 31)
+        else:
+            self._connection._sendIntCmd(
+                tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_SPEEDSETMODE, vehID, 7)
+        
+    def setRogueEdgeException(self, vehID, x1, y1, x2, y2):
+
+        """setRogueEdgeException(string, double, double, double) -> None
+
+        Sets the vehicle's rogue exception with edge coordinates.
+        """
+        xs, ys = self._getUniversal(tc.VAR_POSITION, vehID)
+        
+        if xs > x1 and xs < x2 and ys > (y1 - 20) and ys < (y2 + 20):
+            self._connection._sendDoubleCmd(
+                tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_SPEED_FACTOR, vehID, 1.0)
+        else:
+            self._connection._sendIntCmd(
+                tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_SPEEDSETMODE, vehID, 1.0)
         
     def add(self, vehID, routeID, depart=tc.DEPARTFLAG_NOW, pos=0, speed=0,
             lane=tc.DEPARTFLAG_LANE_FIRST_ALLOWED, typeID="DEFAULT_VEHTYPE"):

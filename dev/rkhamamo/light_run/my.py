@@ -16,6 +16,7 @@ from sumolib import checkBinary  # Checks for the binary in environ vars
 import traci
 
 
+#allow user to run sumo cmd line without visualization tool
 def get_options():
     opt_parser = optparse.OptionParser()
     opt_parser.add_option("--nogui", action="store_true",
@@ -27,19 +28,22 @@ def get_options():
 # contains TraCI control loop
 def run():
 
-    step = 0
-    while traci.simulation.getMinExpectedNumber() > 0: #when all route files have been exhausted
-        traci.simulationStep() #increment sim step
+    for step in range(5000): #5000 steps
+        #increment sim step
+        traci.simulationStep() 
         
-        det_vehs = traci.inductionloop.getLastStepVehicleIDs("det_0")
+        if step > 20:
+            #print rogue position to terminal
+            print traci.vehicle.getPosition("veh1") 
+
+            #det_vehs = traci.inductionloop.getLastStepVehicleIDs("det_0")
+
+            #traci.vehicle.rogueFollowSpeed("veh1") 
+
+            #make vehicle stop at this intersection
+            #x, y = traci.junction.getPosition("n2")
+            #traci.vehicle.setRogueNodeException("veh1", x, y)
         
-        x, y = traci.vehicle.getPosition("veh1") #store x and y coordinates
-        print x, y #show position on terminal
-        traci.vehicle.setRogue("veh1") #make vehicle rogue
-        
-        if x > 230 and x < 270 and y > 380 and y < 420:
-            traci.vehicle.setRogueException("veh1") #make vehicle stop
-            
         step += 1
 
     traci.close()

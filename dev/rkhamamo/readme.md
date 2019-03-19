@@ -15,7 +15,6 @@ src/utils/vehicle/SUMOVTypeParameter.cpp
 	speedfactor of 2
 	impatience of 1
 	mingap of 0.5
-	print statements iostream include
 	
 src/guisim_main.cpp
 	added print statement

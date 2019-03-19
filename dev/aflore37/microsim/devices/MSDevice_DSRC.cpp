@@ -36,6 +36,7 @@
 #include <microsim/MSLane.h>
 #include <microsim/MSEdge.h>
 #include <microsim/MSVehicle.h>
+#include <utils/common/SUMOTime.h>
 #include "MSDevice_Tripinfo.h"
 #include "MSDevice_DSRC.h"
 
@@ -127,6 +128,8 @@ MSDevice_DSRC::notifyMove(SUMOVehicle& veh, double /* oldPos */,
     std::cout << "Vehicle Angle Trajectory: " << veh.getAngle() << "\n";
     std::cout << "Vehicle Coordinates: " << veh.getPosition() << "\n";
     std::cout << "Vehicle Acceleration: " << veh.getAcceleration() << "\n";
+    std::cout << "Vehicle Slope Angle: " << veh.getSlope() << "\n";
+    std::cout << "time step is: " << SIMSTEP << "\n";
     return true; // keep the device
 }
 

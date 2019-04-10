@@ -9,6 +9,7 @@ if 'SUMO_HOME' in os.environ:
 else:
     sys.exit("please declare environment variable 'SUMO_HOME'")
 
+print "running SUMO for", sys.argv[1], "steps"
 
 from sumolib import checkBinary  # Checks for the binary in environ vars
 import traci
@@ -26,7 +27,8 @@ def get_options():
 # contains TraCI control loop
 def run():
 
-    for step in range(5000): #5000 steps
+    
+    for step in range(int(sys.argv[1])): #5000 steps
         
         #increment sim step
         traci.simulationStep() 
@@ -36,13 +38,13 @@ def run():
             #print rogue position to terminal
             print traci.vehicle.getPosition("veh1")
             #make vehicle stop at this intersection
-            x, y = traci.junction.getPosition("n2")
-            traci.vehicle.rogueNodeException("veh1", x, y)
+            #x, y = traci.junction.getPosition("n2")
+            #traci.vehicle.rogueNodeException("veh1", x, y)
             
         if step == 20:
 
-            traci.vehicle.rogueToggleFollowSpeed("veh1") 
-            traci.vehicle.rogueToggleFollowDistance("veh1") 
+            #traci.vehicle.rogueToggleFollowSpeed("veh1") 
+            #traci.vehicle.rogueToggleFollowDistance("veh1") 
         
         #if step == 21:
 

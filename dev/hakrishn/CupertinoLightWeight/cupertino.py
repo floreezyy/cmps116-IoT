@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 
-import os, sys, optparse
+import os
+import sys
+import optparse
 
-# check that sumo load path is set, import python modules from tools directory
+# we need to import some python modules from the $SUMO_HOME/tools directory
 if 'SUMO_HOME' in os.environ:
     tools = os.path.join(os.environ['SUMO_HOME'], 'tools')
     sys.path.append(tools)
@@ -25,29 +27,28 @@ def get_options():
 
 # contains TraCI control loop
 def run():
-           
-    for step in range(simRange):
-        
+
+    for step in range(5000): #5000 steps
         #increment sim step
         traci.simulationStep() 
         
-        #wait until rogue vehicle is deployed
-        if step > 20: 
+        if 10 < step < 20:
             #print rogue position to terminal
-            print traci.vehicle.getPosition(rogueVehicle)
+            traci.vehicle.setSpeedMode('89098', 7) 
+            traci.vehicle.setSpeedMode('1', 7) 
+            traci.vehicle.setSpeedMode('2', 7) 
+            traci.vehicle.setSpeedMode('3', 7) 
+            traci.vehicle.setSpeedMode('4', 7) 
+            traci.vehicle.setSpeedMode('5', 7) 
+            traci.vehicle.setSpeedMode('6', 7) 
+            traci.vehicle.setSpeedMode('7', 7) 
+            traci.vehicle.setSpeedMode('8', 7) 
+            traci.vehicle.setSpeedMode('9', 7) 
+            #traci.vehicle.rogueFollowSpeed("veh1") 
+
             #make vehicle stop at this intersection
             #x, y = traci.junction.getPosition("n2")
-            #traci.vehicle.rogueNodeException(rogueVehicle, x, y)
-            
-        #if step == 20:
-
-            #traci.vehicle.rogueToggleFollowSpeed(rogueVehicle) 
-            #traci.vehicle.rogueToggleFollowDistance(rogueVehicle) 
-        
-        #if step == 21:
-
-            #traci.vehicle.rogueToggleFollowSpeed(rogueVehicle) 
-            #traci.vehicle.rogueToggleFollowDistance(rogueVehicle) 
+            #traci.vehicle.setRogueNodeException("veh1", x, y)
         
         step += 1
 
@@ -66,20 +67,6 @@ if __name__ == "__main__":
         sumoBinary = checkBinary('sumo-gui')
 
     # traci starts sumo as a subprocess and then this script connects and runs
-    traci.start([sumoBinary, "-c", "my_config.sumocfg",
+    traci.start([sumoBinary, "-c", "cupertino.sumocfg",
                              "--tripinfo-output", "tripinfo.xml"])
-    
-    #parse command line
-    if len(sys.argv) > 1:
-        simRange = int(sys.argv[1])
-    else:
-        simRange = 5000 #default value
-           
-    if len(sys.argv) > 2:
-        rogueVehicle = sys.argv[2]
-    else:
-        rogueVehicle = 'veh1' #default value
-        
-    print "running SUMO for", simRange, "steps"
-    
     run()

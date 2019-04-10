@@ -1183,25 +1183,45 @@ class VehicleDomain(Domain):
         """
         self._connection._sendIntCmd(
             tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_SPEEDSETMODE, vehID, sm)
-    
-    def setRogue(self, vehID):
-        """setRogue(string) -> None
+        
+    def rogueToggleFollowDistance(self, vehID):
+        """rogueToggleFollowDistance(string) -> None
 
-        Sets the vehicle's rogue status with a bitset.
+        Toggles follow distance between default and rogue.
         """
-        self._connection._sendIntCmd(
+        if self._getUniversal(tc.VAR_MINGAP, vehID) == 0.5:
+            self._connection._sendDoubleCmd(
+            tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_MINGAP, vehID, 2.5)
+        else:
+            self._connection._sendDoubleCmd(
+            tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_MINGAP, vehID, 0.5)
+        
+    def rogueToggleLightRun(self, vehID):
+        """rogueToggleLightRun(string) -> None
+
+        Sets the vehicle's light respecting status with a bitset.
+        """
+        if self._getUniversal(tc.VAR_SPEEDSETMODE, vehID) == 7:
+            self._connection._sendIntCmd(
+            tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_SPEEDSETMODE, vehID, 31)
+        else:
+            self._connection._sendIntCmd(
             tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_SPEEDSETMODE, vehID, 7)
-        
-    def rogueFollowSpeed(self, vehID):
-        """rogueSlowSpeed(string) -> None
+                    
+    def rogueToggleFollowSpeed(self, vehID):
+        """rogueToggleFollowSpeed(string) -> None
 
-        Makes rogue vehicle follow the speed limit
+        Makes rogue vehicle follow the speed limit/disobey speed limit.
         """
-        self._connection._sendDoubleCmd(
-            tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_SPEED_FACTOR, vehID, 1.0)   
+        if self._getUniversal(tc.VAR_SPEED_FACTOR, vehID) == 2.0:
+            self._connection._sendDoubleCmd(
+            tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_SPEED_FACTOR, vehID, 1.0)
+        else:
+            self._connection._sendDoubleCmd(
+            tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_SPEED_FACTOR, vehID, 2.0) 
         
-    def setRogueNodeException(self, vehID, x, y):
-        """setRogueNodeException(string, double, double) -> None
+    def rogueNodeException(self, vehID, x, y):
+        """rogueNodeException(string, double, double) -> None
 
         Sets the vehicle's rogue exception with node coordinates.
         """
@@ -1214,9 +1234,9 @@ class VehicleDomain(Domain):
             self._connection._sendIntCmd(
                 tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_SPEEDSETMODE, vehID, 7)
         
-    def setRogueEdgeException(self, vehID, x1, y1, x2, y2):
+    def rogueEdgeException(self, vehID, x1, y1, x2, y2):
 
-        """setRogueEdgeException(string, double, double, double) -> None
+        """rogueEdgeException(string, double, double, double) -> None
 
         Sets the vehicle's rogue exception with edge coordinates.
         """

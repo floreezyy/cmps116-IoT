@@ -9,7 +9,6 @@ if 'SUMO_HOME' in os.environ:
 else:
     sys.exit("please declare environment variable 'SUMO_HOME'")
 
-print "running SUMO for", sys.argv[1], "steps"
 
 from sumolib import checkBinary  # Checks for the binary in environ vars
 import traci
@@ -26,9 +25,8 @@ def get_options():
 
 # contains TraCI control loop
 def run():
-
-    
-    for step in range(int(sys.argv[1])): #5000 steps
+           
+    for step in range(simRange):
         
         #increment sim step
         traci.simulationStep() 
@@ -36,20 +34,20 @@ def run():
         #wait until rogue vehicle is deployed
         if step > 20: 
             #print rogue position to terminal
-            print traci.vehicle.getPosition("veh1")
+            print traci.vehicle.getPosition(rogueVehicle)
             #make vehicle stop at this intersection
             #x, y = traci.junction.getPosition("n2")
-            #traci.vehicle.rogueNodeException("veh1", x, y)
+            #traci.vehicle.rogueNodeException(rogueVehicle, x, y)
             
-        if step == 20:
+        #if step == 20:
 
-            #traci.vehicle.rogueToggleFollowSpeed("veh1") 
-            #traci.vehicle.rogueToggleFollowDistance("veh1") 
+            #traci.vehicle.rogueToggleFollowSpeed(rogueVehicle) 
+            #traci.vehicle.rogueToggleFollowDistance(rogueVehicle) 
         
         #if step == 21:
 
-            #traci.vehicle.rogueToggleFollowSpeed("veh1") 
-            #traci.vehicle.rogueToggleFollowDistance("veh1") 
+            #traci.vehicle.rogueToggleFollowSpeed(rogueVehicle) 
+            #traci.vehicle.rogueToggleFollowDistance(rogueVehicle) 
         
         step += 1
 
@@ -70,4 +68,18 @@ if __name__ == "__main__":
     # traci starts sumo as a subprocess and then this script connects and runs
     traci.start([sumoBinary, "-c", "my_config.sumocfg",
                              "--tripinfo-output", "tripinfo.xml"])
+    
+    #parse command line
+    if len(sys.argv) > 1:
+        simRange = int(sys.argv[1])
+    else:
+        simRange = 5000 #default value
+           
+    if len(sys.argv) > 2:
+        rogueVehicle = sys.argv[2]
+    else:
+        rogueVehicle = 'veh1' #default value
+        
+    print "running SUMO for", simRange, "steps"
+    
     run()

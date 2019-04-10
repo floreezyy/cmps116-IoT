@@ -1,10 +1,8 @@
 #!/usr/bin/env python
 
-import os
-import sys
-import optparse
+import os, sys, optparse
 
-# we need to import some python modules from the $SUMO_HOME/tools directory
+# check that sumo load path is set, import python modules from tools directory
 if 'SUMO_HOME' in os.environ:
     tools = os.path.join(os.environ['SUMO_HOME'], 'tools')
     sys.path.append(tools)
@@ -29,20 +27,27 @@ def get_options():
 def run():
 
     for step in range(5000): #5000 steps
+        
         #increment sim step
         traci.simulationStep() 
         
-        if step > 20:
+        #wait until rogue vehicle is deployed
+        if step > 20: 
             #print rogue position to terminal
-            print traci.vehicle.getPosition("veh1") 
-
-            #det_vehs = traci.inductionloop.getLastStepVehicleIDs("det_0")
-
-            #traci.vehicle.rogueFollowSpeed("veh1") 
-
+            print traci.vehicle.getPosition("veh1")
             #make vehicle stop at this intersection
-            #x, y = traci.junction.getPosition("n2")
-            #traci.vehicle.setRogueNodeException("veh1", x, y)
+            x, y = traci.junction.getPosition("n2")
+            traci.vehicle.rogueNodeException("veh1", x, y)
+            
+        if step == 20:
+
+            traci.vehicle.rogueToggleFollowSpeed("veh1") 
+            traci.vehicle.rogueToggleFollowDistance("veh1") 
+        
+        #if step == 21:
+
+            #traci.vehicle.rogueToggleFollowSpeed("veh1") 
+            #traci.vehicle.rogueToggleFollowDistance("veh1") 
         
         step += 1
 

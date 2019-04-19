@@ -28,6 +28,11 @@
 #include <config.h>
 #endif
 
+#include <iostream>
+#include <fstream> //file creation to output BSM data
+#include <chrono> //for calculating time of computations
+#include <ctime> // used to get time of message creation completion
+
 #include <utils/common/TplConvert.h>
 #include <utils/options/OptionsCont.h>
 #include <utils/iodevices/OutputDevice.h>
@@ -72,7 +77,7 @@ MSDevice_DSRC::buildVehicleDevices(SUMOVehicle& v, std::vector<MSDevice*>& into)
             }
 
         } else {
-            std::cout << "VehicleID: '" << v.getID() << "' does not supply vehicle parameter 'dsrc'. Using default of " << customParameter2 << "\n";
+            //std::cout << "VehicleID: '" << v.getID() << "' does not supply vehicle parameter 'dsrc'. Using default of " << customParameter2 << "\n";
         }
         // get custom vType parameter
         double customParameter3 = -1;
@@ -84,7 +89,7 @@ MSDevice_DSRC::buildVehicleDevices(SUMOVehicle& v, std::vector<MSDevice*>& into)
             }
 
         } else {
-            std::cout << "VehicleID '" << v.getID() << "' does not supply vType parameter 'dsrc'. Using default of " << customParameter3 << "\n";
+            //std::cout << "VehicleID '" << v.getID() << "' does not supply vType parameter 'dsrc'. Using default of " << customParameter3 << "\n";
         }
 
         MSDevice_DSRC* device = new MSDevice_DSRC(v, "dsrc_" + v.getID(),
@@ -105,31 +110,49 @@ MSDevice_DSRC::MSDevice_DSRC(SUMOVehicle& holder, const std::string& id,
     myCustomValue1(customValue1),
     myCustomValue2(customValue2),
     myCustomValue3(customValue3) {
-    std::cout << "initialized device '" << id << "' with myCustomValue1=" << myCustomValue1 << ", myCustomValue2=" << myCustomValue2 << ", myCustomValue3=" << myCustomValue3 << "\n";
+    //std::cout << "initialized device '" << id << "' with myCustomValue1=" << myCustomValue1 << ", myCustomValue2=" << myCustomValue2 << ", myCustomValue3=" << myCustomValue3 << "\n";
 }
 
 
 MSDevice_DSRC::~MSDevice_DSRC() {
 }
 
+int msg_num = 0;
 
 bool
 MSDevice_DSRC::notifyMove(SUMOVehicle& veh, double /* oldPos */,
                              double /* newPos */, double newSpeed) {
-    std::cout << "vehicleID: " << veh.getID() << "MoveUpdate: Speed=" << newSpeed << "\n";
+    msg_num++; //increment the message id
+    std::string file_name = "dsrc_out_" + veh.getID() + ".txt";                    
+    std::ofstream dsrcfile (file_name, std::ios_base::app);
+
+    //std::cout << "vehicleID: " << veh.getID() << " MoveUpdate: Speed=" << newSpeed << "\n";
     // check whether another device is present on the vehicle:
     MSDevice_Tripinfo* otherDevice = static_cast<MSDevice_Tripinfo*>(veh.getDevice(typeid(MSDevice_Tripinfo)));
     if (otherDevice != 0) {
         std::cout << "  veh '" << veh.getID() << " has device '" << otherDevice->getID() << "'\n";
     }
+    //auto start = std::chrono::system_clock::now();
+    dsrcfile << "DSRC MessageID: " << veh.getID() << "_" << msg_num << "\n" <<std::endl;
+    dsrcfile << "vehicleID: " << veh.getID() << std::endl;
+    dsrcfile << "Vehicle Type: " << veh.getVehicleType().getID() << std::endl;
+    dsrcfile << "Vehicle Length: " << veh.getVehicleType().getLength() << std::endl;
+    dsrcfile << "Vehicle Width: " << veh.getVehicleType().getWidth() << std::endl;
+    dsrcfile << "Vehicle Height: " << veh.getVehicleType().getHeight() << std::endl;
+    dsrcfile << "Vehicle Angle Trajectory: " << veh.getAngle() << std::endl;
+    dsrcfile << "Vehicle Coordinates: " << veh.getPosition() << std::endl;
+    dsrcfile << "Vehicle Speed: " << newSpeed << std::endl;
+    dsrcfile << "Vehicle Acceleration: " << veh.getAcceleration() << std::endl;
+    dsrcfile << "Vehicle Slope Angle: " << veh.getSlope() << std::endl;
+    dsrcfile << "time step is: " << SIMSTEP << std::endl;
+
+    auto sent = std::chrono::system_clock::now();
     
-    std::cout << "Vehicle Type: " << veh.getVehicleType().getID() << "\n";
-    std::cout << "Vehicle Dimmensions: " << "Length: " << veh.getVehicleType().getLength() << "Width: " << veh.getVehicleType().getWidth() << "Height: " << veh.getVehicleType().getHeight() << "\n";
-    std::cout << "Vehicle Angle Trajectory: " << veh.getAngle() << "\n";
-    std::cout << "Vehicle Coordinates: " << veh.getPosition() << "\n";
-    std::cout << "Vehicle Acceleration: " << veh.getAcceleration() << "\n";
-    std::cout << "Vehicle Slope Angle: " << veh.getSlope() << "\n";
-    std::cout << "time step is: " << SIMSTEP << "\n";
+    //std::chrono::duration<double> elapsed_seconds = end-start;
+    std::time_t end_time = std::chrono::system_clock::to_time_t(sent);
+
+    dsrcfile << "Time sent: " << std::ctime(&end_time) << std::endl;
+    dsrcfile << "\n\n**************************************************\n\n" << std::endl;
     return true; // keep the device
 }
 

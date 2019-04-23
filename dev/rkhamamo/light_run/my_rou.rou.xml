@@ -7,7 +7,11 @@
 
 <vehicle depart="10" id="veh2" route="route1" type="Car" />
 <vehicle depart="15" id="veh3" route="route1" type="Car" />
-<vehicle depart="20" id="veh1" route="route1" type="Rogue" color = "orange"/>
+<vehicle depart="20" id="veh1" route="route1" type="Rogue" color = "255,0,0,0"/>
+<vehicle depart="20" id="veh1a" route="route1" type="Rogue" color = "255,0,0,0"/>
+<vehicle depart="20" id="veh1b" route="route1" type="Rogue" color = "255,0,0,255"/>
+<vehicle depart="20" id="veh1c" route="route1" type="Rogue" color = "255,0,0,0"/>
+<vehicle depart="20" id="veh1d" route="route1" type="Rogue" color = "255,0,0,0"/>
 <vehicle depart="25" id="veh4" route="route1" type="Car" />
 <vehicle depart="30" id="veh5" route="route1" type="Car" />
 <!--<route id="route2" edges="1to2 2to4 4to6 6to8 8to10"/>-->

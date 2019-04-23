@@ -1,4 +1,6 @@
 <additionals>
+    
+    <poly id="1" type = "building" color="255,230,230" fill="1" layer="-1.00" shape="1952.28,1419.89 1966.35,1420.19 1966.85,1396.76 1952.78,1396.46 1952.28,1419.89"/>
 
     <rerouter id="rerouter_0" edges="3to5" probability="1">
         <interval begin="0" end="10000">

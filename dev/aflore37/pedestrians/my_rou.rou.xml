@@ -5,25 +5,14 @@
 <route id="route1" edges="1to2 2to3 3to5 5to7 7to9"/>
 <vehicle depart="10" id="veh1" route="route1" type="Car">
 
-	<param key="has.ssm.device" value="false"/>
-	<param key="has.example.device" value="false"/>
-        <param key="device.ssm.measures" value="TTC DRAC PET"/>
-        <param key="device.ssm.thresholds" value="3.0 3.0 2.0"/> 
-        <param key="device.ssm.range" value="50.0" />
-        <param key="device.ssm.extratime" value="5.0" />
-        <param key="device.ssm.file" value="ssm_v0.xml" />
-        <param key="device.ssm.trajectories" value="false" />
-        <param key="device.ssm.geo" value="false" />
-
-        <param key="has.fcd.device" value="true"/>
-	<param key="device.fcd.file" value="fcd_v0.xml" />
 </vehicle>
 
 <route id="route2" edges="1to2 2to4 4to6 6to8 8to10"/>
 
 <vehicle depart="20" id="veh2" route="route2" type="Car">
 	<param key="has.dsrc.device" value="true"/>
-	<param key="device.dsrc.file" value="dsrc.xml"/>
+	<param key="has.dsrc.device" value="true"/>
+
 </vehicle>
 
 <route id="route3" edges="1to2 2to3 3to5 5to11 11to12"/>

@@ -1,0 +1,900 @@
+DSRC MessageID: veh2_1
+
+vehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Angle Trajectory: 0
+Vehicle Coordinates: 12.1,395.05
+Vehicle Speed: 10
+Vehicle Acceleration: 10
+Vehicle Slope Angle: 0
+time step is: 21000
+Time sent: Wed Apr 24 23:28:06 2019
+
+
+
+**************************************************
+
+
+DSRC MessageID: veh2_2
+
+vehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Angle Trajectory: 0
+Vehicle Coordinates: 32.1,395.05
+Vehicle Speed: 20
+Vehicle Acceleration: 10
+Vehicle Slope Angle: 0
+time step is: 22000
+Time sent: Wed Apr 24 23:28:06 2019
+
+
+
+**************************************************
+
+
+DSRC MessageID: veh2_3
+
+vehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Angle Trajectory: 0
+Vehicle Coordinates: 62.1,398.35
+Vehicle Speed: 30
+Vehicle Acceleration: 10
+Vehicle Slope Angle: 0
+time step is: 23000
+Time sent: Wed Apr 24 23:28:06 2019
+
+
+
+**************************************************
+
+
+DSRC MessageID: veh2_4
+
+vehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Angle Trajectory: 0
+Vehicle Coordinates: 101.394,398.35
+Vehicle Speed: 39.2935
+Vehicle Acceleration: 9.2935
+Vehicle Slope Angle: 0
+time step is: 24000
+Time sent: Wed Apr 24 23:28:07 2019
+
+
+
+**************************************************
+
+
+DSRC MessageID: veh2_5
+
+vehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Angle Trajectory: 0
+Vehicle Coordinates: 135.687,398.35
+Vehicle Speed: 34.2935
+Vehicle Acceleration: -5
+Vehicle Slope Angle: 0
+time step is: 25000
+Time sent: Wed Apr 24 23:28:07 2019
+
+
+
+**************************************************
+
+
+DSRC MessageID: veh2_6
+
+vehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Angle Trajectory: 0
+Vehicle Coordinates: 164.981,398.35
+Vehicle Speed: 29.2935
+Vehicle Acceleration: -5
+Vehicle Slope Angle: 0
+time step is: 26000
+Time sent: Wed Apr 24 23:28:07 2019
+
+
+
+**************************************************
+
+
+DSRC MessageID: veh2_7
+
+vehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Angle Trajectory: 0
+Vehicle Coordinates: 190.142,395.05
+Vehicle Speed: 25.1614
+Vehicle Acceleration: -4.13208
+Vehicle Slope Angle: 0
+time step is: 27000
+Time sent: Wed Apr 24 23:28:07 2019
+
+
+
+**************************************************
+
+
+DSRC MessageID: veh2_8
+
+vehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Angle Trajectory: 0
+Vehicle Coordinates: 210.303,395.05
+Vehicle Speed: 20.1614
+Vehicle Acceleration: -5
+Vehicle Slope Angle: 0
+time step is: 28000
+Time sent: Wed Apr 24 23:28:07 2019
+
+
+
+**************************************************
+
+
+DSRC MessageID: veh2_9
+
+vehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Angle Trajectory: 0
+Vehicle Coordinates: 225.465,395.05
+Vehicle Speed: 15.1614
+Vehicle Acceleration: -5
+Vehicle Slope Angle: 0
+time step is: 29000
+Time sent: Wed Apr 24 23:28:07 2019
+
+
+
+**************************************************
+
+
+DSRC MessageID: veh2_10
+
+vehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Angle Trajectory: 0
+Vehicle Coordinates: 235.626,395.05
+Vehicle Speed: 10.1614
+Vehicle Acceleration: -5
+Vehicle Slope Angle: 0
+time step is: 30000
+Time sent: Wed Apr 24 23:28:07 2019
+
+
+
+**************************************************
+
+
+DSRC MessageID: veh2_11
+
+vehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Angle Trajectory: 0
+Vehicle Coordinates: 240.788,395.05
+Vehicle Speed: 5.16142
+Vehicle Acceleration: -5
+Vehicle Slope Angle: 0
+time step is: 31000
+Time sent: Wed Apr 24 23:28:07 2019
+
+
+
+**************************************************
+
+
+DSRC MessageID: veh2_12
+
+vehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Angle Trajectory: 0
+Vehicle Coordinates: 240.949,395.05
+Vehicle Speed: 0.161417
+Vehicle Acceleration: -5
+Vehicle Slope Angle: 0
+time step is: 32000
+Time sent: Wed Apr 24 23:28:07 2019
+
+
+
+**************************************************
+
+
+DSRC MessageID: veh2_13
+
+vehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Angle Trajectory: 0
+Vehicle Coordinates: 240.949,395.05
+Vehicle Speed: 0
+Vehicle Acceleration: -0.161417
+Vehicle Slope Angle: 0
+time step is: 33000
+Time sent: Wed Apr 24 23:28:07 2019
+
+
+
+**************************************************
+
+
+DSRC MessageID: veh2_14
+
+vehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Angle Trajectory: 0
+Vehicle Coordinates: 240.949,395.05
+Vehicle Speed: 0
+Vehicle Acceleration: 0
+Vehicle Slope Angle: 0
+time step is: 34000
+Time sent: Wed Apr 24 23:28:08 2019
+
+
+
+**************************************************
+
+
+DSRC MessageID: veh2_15
+
+vehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Angle Trajectory: 0
+Vehicle Coordinates: 240.949,395.05
+Vehicle Speed: 0
+Vehicle Acceleration: 0
+Vehicle Slope Angle: 0
+time step is: 35000
+Time sent: Wed Apr 24 23:28:08 2019
+
+
+
+**************************************************
+
+
+DSRC MessageID: veh2_16
+
+vehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Angle Trajectory: 0
+Vehicle Coordinates: 240.949,395.05
+Vehicle Speed: 0
+Vehicle Acceleration: 0
+Vehicle Slope Angle: 0
+time step is: 36000
+Time sent: Wed Apr 24 23:28:08 2019
+
+
+
+**************************************************
+
+
+DSRC MessageID: veh2_17
+
+vehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Angle Trajectory: 0
+Vehicle Coordinates: 240.949,395.05
+Vehicle Speed: 0
+Vehicle Acceleration: 0
+Vehicle Slope Angle: 0
+time step is: 37000
+Time sent: Wed Apr 24 23:28:08 2019
+
+
+
+**************************************************
+
+
+DSRC MessageID: veh2_18
+
+vehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Angle Trajectory: 0
+Vehicle Coordinates: 240.949,395.05
+Vehicle Speed: 0
+Vehicle Acceleration: 0
+Vehicle Slope Angle: 0
+time step is: 38000
+Time sent: Wed Apr 24 23:28:08 2019
+
+
+
+**************************************************
+
+
+DSRC MessageID: veh2_19
+
+vehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Angle Trajectory: 0
+Vehicle Coordinates: 240.949,395.05
+Vehicle Speed: 0
+Vehicle Acceleration: 0
+Vehicle Slope Angle: 0
+time step is: 39000
+Time sent: Wed Apr 24 23:28:08 2019
+
+
+
+**************************************************
+
+
+DSRC MessageID: veh2_20
+
+vehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Angle Trajectory: 0
+Vehicle Coordinates: 240.949,395.05
+Vehicle Speed: 0
+Vehicle Acceleration: 0
+Vehicle Slope Angle: 0
+time step is: 40000
+Time sent: Wed Apr 24 23:28:08 2019
+
+
+
+**************************************************
+
+
+DSRC MessageID: veh2_21
+
+vehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Angle Trajectory: 0
+Vehicle Coordinates: 240.949,395.05
+Vehicle Speed: 0
+Vehicle Acceleration: 0
+Vehicle Slope Angle: 0
+time step is: 41000
+Time sent: Wed Apr 24 23:28:08 2019
+
+
+
+**************************************************
+
+
+DSRC MessageID: veh2_22
+
+vehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Angle Trajectory: 0
+Vehicle Coordinates: 240.949,395.05
+Vehicle Speed: 0
+Vehicle Acceleration: 0
+Vehicle Slope Angle: 0
+time step is: 42000
+Time sent: Wed Apr 24 23:28:08 2019
+
+
+
+**************************************************
+
+
+DSRC MessageID: veh2_23
+
+vehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Angle Trajectory: 0
+Vehicle Coordinates: 240.949,395.05
+Vehicle Speed: 0
+Vehicle Acceleration: 0
+Vehicle Slope Angle: 0
+time step is: 43000
+Time sent: Wed Apr 24 23:28:08 2019
+
+
+
+**************************************************
+
+
+DSRC MessageID: veh2_24
+
+vehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Angle Trajectory: 0
+Vehicle Coordinates: 240.949,395.05
+Vehicle Speed: 0
+Vehicle Acceleration: 0
+Vehicle Slope Angle: 0
+time step is: 44000
+Time sent: Wed Apr 24 23:28:09 2019
+
+
+
+**************************************************
+
+
+DSRC MessageID: veh2_25
+
+vehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Angle Trajectory: 0
+Vehicle Coordinates: 240.949,395.05
+Vehicle Speed: 0
+Vehicle Acceleration: 0
+Vehicle Slope Angle: 0
+time step is: 45000
+Time sent: Wed Apr 24 23:28:09 2019
+
+
+
+**************************************************
+
+
+DSRC MessageID: veh2_26
+
+vehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Angle Trajectory: 0
+Vehicle Coordinates: 240.949,395.05
+Vehicle Speed: 0
+Vehicle Acceleration: 0
+Vehicle Slope Angle: 0
+time step is: 46000
+Time sent: Wed Apr 24 23:28:09 2019
+
+
+
+**************************************************
+
+
+DSRC MessageID: veh2_27
+
+vehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Angle Trajectory: 0
+Vehicle Coordinates: 240.949,395.05
+Vehicle Speed: 0
+Vehicle Acceleration: 0
+Vehicle Slope Angle: 0
+time step is: 47000
+Time sent: Wed Apr 24 23:28:09 2019
+
+
+
+**************************************************
+
+
+DSRC MessageID: veh2_28
+
+vehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Angle Trajectory: 0
+Vehicle Coordinates: 240.949,395.05
+Vehicle Speed: 0
+Vehicle Acceleration: 0
+Vehicle Slope Angle: 0
+time step is: 48000
+Time sent: Wed Apr 24 23:28:09 2019
+
+
+
+**************************************************
+
+
+DSRC MessageID: veh2_29
+
+vehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Angle Trajectory: 0
+Vehicle Coordinates: 240.949,395.05
+Vehicle Speed: 0
+Vehicle Acceleration: 0
+Vehicle Slope Angle: 0
+time step is: 49000
+Time sent: Wed Apr 24 23:28:09 2019
+
+
+
+**************************************************
+
+
+DSRC MessageID: veh2_30
+
+vehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Angle Trajectory: 0
+Vehicle Coordinates: 240.949,395.05
+Vehicle Speed: 0
+Vehicle Acceleration: 0
+Vehicle Slope Angle: 0
+time step is: 50000
+Time sent: Wed Apr 24 23:28:09 2019
+
+
+
+**************************************************
+
+
+DSRC MessageID: veh2_31
+
+vehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Angle Trajectory: 0
+Vehicle Coordinates: 240.949,395.05
+Vehicle Speed: 0
+Vehicle Acceleration: 0
+Vehicle Slope Angle: 0
+time step is: 51000
+Time sent: Wed Apr 24 23:28:09 2019
+
+
+
+**************************************************
+
+
+DSRC MessageID: veh2_32
+
+vehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Angle Trajectory: -1.5708
+Vehicle Coordinates: 245.05,387.951
+Vehicle Speed: 10
+Vehicle Acceleration: 10
+Vehicle Slope Angle: 0
+time step is: 52000
+Time sent: Wed Apr 24 23:28:09 2019
+
+
+
+**************************************************
+
+
+DSRC MessageID: veh2_33
+
+vehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Angle Trajectory: -1.5708
+Vehicle Coordinates: 245.05,367.951
+Vehicle Speed: 20
+Vehicle Acceleration: 10
+Vehicle Slope Angle: 0
+time step is: 53000
+Time sent: Wed Apr 24 23:28:09 2019
+
+
+
+**************************************************
+
+
+DSRC MessageID: veh2_34
+
+vehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Angle Trajectory: -1.5708
+Vehicle Coordinates: 245.05,337.951
+Vehicle Speed: 30
+Vehicle Acceleration: 10
+Vehicle Slope Angle: 0
+time step is: 54000
+Time sent: Wed Apr 24 23:28:10 2019
+
+
+
+**************************************************
+
+
+DSRC MessageID: veh2_35
+
+vehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Angle Trajectory: -1.5708
+Vehicle Coordinates: 245.05,297.951
+Vehicle Speed: 40
+Vehicle Acceleration: 10
+Vehicle Slope Angle: 0
+time step is: 55000
+Time sent: Wed Apr 24 23:28:10 2019
+
+
+
+**************************************************
+
+
+DSRC MessageID: veh2_36
+
+vehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Angle Trajectory: -1.5708
+Vehicle Coordinates: 245.05,247.951
+Vehicle Speed: 50
+Vehicle Acceleration: 10
+Vehicle Slope Angle: 0
+time step is: 56000
+Time sent: Wed Apr 24 23:28:10 2019
+
+
+
+**************************************************
+
+
+DSRC MessageID: veh2_37
+
+vehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Angle Trajectory: -1.02915
+Vehicle Coordinates: 247.582,198.509
+Vehicle Speed: 50
+Vehicle Acceleration: 0
+Vehicle Slope Angle: 0
+time step is: 57000
+Time sent: Wed Apr 24 23:28:10 2019
+
+
+
+**************************************************
+
+
+DSRC MessageID: veh2_38
+
+vehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Angle Trajectory: 0
+Vehicle Coordinates: 306.599,195.05
+Vehicle Speed: 60
+Vehicle Acceleration: 10
+Vehicle Slope Angle: 0
+time step is: 58000
+Time sent: Wed Apr 24 23:28:10 2019
+
+
+
+**************************************************
+
+
+DSRC MessageID: veh2_39
+
+vehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Angle Trajectory: 0
+Vehicle Coordinates: 376.599,195.05
+Vehicle Speed: 70
+Vehicle Acceleration: 10
+Vehicle Slope Angle: 0
+time step is: 59000
+Time sent: Wed Apr 24 23:28:10 2019
+
+
+
+**************************************************
+
+
+DSRC MessageID: veh2_40
+
+vehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Angle Trajectory: 0
+Vehicle Coordinates: 456.599,195.05
+Vehicle Speed: 80
+Vehicle Acceleration: 10
+Vehicle Slope Angle: 0
+time step is: 60000
+Time sent: Wed Apr 24 23:28:10 2019
+
+
+
+**************************************************
+
+
+DSRC MessageID: veh2_41
+
+vehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Angle Trajectory: -1.5708
+Vehicle Coordinates: 495.05,142.301
+Vehicle Speed: 90
+Vehicle Acceleration: 10
+Vehicle Slope Angle: 0
+time step is: 61000
+Time sent: Wed Apr 24 23:28:10 2019
+
+
+
+**************************************************
+
+
+DSRC MessageID: veh2_42
+
+vehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Angle Trajectory: -1.5708
+Vehicle Coordinates: 495.05,42.301
+Vehicle Speed: 100
+Vehicle Acceleration: 10
+Vehicle Slope Angle: 0
+time step is: 62000
+Time sent: Wed Apr 24 23:28:10 2019
+
+
+
+**************************************************
+
+
+DSRC MessageID: veh2_43
+
+vehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Angle Trajectory: 0
+Vehicle Coordinates: 552.249,-4.95
+Vehicle Speed: 100
+Vehicle Acceleration: 0
+Vehicle Slope Angle: 0
+time step is: 63000
+Time sent: Wed Apr 24 23:28:10 2019
+
+
+
+**************************************************
+
+
+DSRC MessageID: veh2_44
+
+vehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Angle Trajectory: 0
+Vehicle Coordinates: 652.249,-4.95
+Vehicle Speed: 100
+Vehicle Acceleration: 0
+Vehicle Slope Angle: 0
+time step is: 64000
+Time sent: Wed Apr 24 23:28:11 2019
+
+
+
+**************************************************
+
+
+DSRC MessageID: veh2_45
+
+vehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Angle Trajectory: 0
+Vehicle Coordinates: 750,-4.95
+Vehicle Speed: 100
+Vehicle Acceleration: 0
+Vehicle Slope Angle: 0
+time step is: 65000
+Time sent: Wed Apr 24 23:28:11 2019
+
+
+
+**************************************************
+
+

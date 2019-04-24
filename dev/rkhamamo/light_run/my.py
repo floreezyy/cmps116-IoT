@@ -81,5 +81,6 @@ if __name__ == "__main__":
         rogueVehicle = 'veh1' #default value
         
     print "running SUMO for", simRange, "steps"
+    print "operating on rogue vehicle:", rogueVehicle
     
     run()

@@ -139,25 +139,27 @@ MSDevice_DSRC::notifyMove(SUMOVehicle& veh, double /* oldPos */,
     //std::cout << "if this works the speed is: " << sped << "\n";
     std::cout << "just to check, signals: " << sus.getSignals() << "\n";
     //auto start = std::chrono::system_clock::now();
-    dsrcfile << "DSRC MessageID: " << veh.getID() << "_" << msg_num << "\n" <<std::endl;
-    dsrcfile << "vehicleID: " << veh.getID() << std::endl;
+    dsrcfile << "MsgCount: " << msg_num << std::endl;
+    dsrcfile << "TemporaryID: " << veh.getID() << "_" << msg_num << "\n" <<std::endl;
+    dsrcfile << "VehicleID: " << veh.getID() << std::endl;
     dsrcfile << "Vehicle Type: " << veh.getVehicleType().getID() << std::endl;
     dsrcfile << "Vehicle Length: " << veh.getVehicleType().getLength() << std::endl;
     dsrcfile << "Vehicle Width: " << veh.getVehicleType().getWidth() << std::endl;
     dsrcfile << "Vehicle Height: " << veh.getVehicleType().getHeight() << std::endl;
-    dsrcfile << "Vehicle Angle Trajectory: " << veh.getAngle() << std::endl;
-    dsrcfile << "Vehicle Coordinates: " << veh.getPosition() << std::endl;
+    dsrcfile << "Vehicle Wheel Angle: " << veh.getAngle() << std::endl;
+    dsrcfile << "Longitude: " << veh.getPosition().x() << std::endl;
+    dsrcfile << "Latitude: " << veh.getPosition().y() << std::endl;
     dsrcfile << "Vehicle Speed: " << sped << std::endl;
     dsrcfile << "Vehicle Acceleration: " << veh.getAcceleration() << std::endl;
     dsrcfile << "Vehicle Slope Angle: " << veh.getSlope() << std::endl;
-    dsrcfile << "time step is: " << SIMSTEP << std::endl;
+    //dsrcfile << "time step is: " << SIMSTEP << std::endl;
 
     auto sent = std::chrono::system_clock::now();
     
-    //std::chrono::duration<double> elapsed_seconds = end-start;
+    // for BSM standards data should be collected at lest 10 times a second
     std::time_t end_time = std::chrono::system_clock::to_time_t(sent);
 
-    dsrcfile << "Time sent: " << std::ctime(&end_time) << std::endl;
+    dsrcfile << "Dsecond: " << std::ctime(&end_time) << std::endl;
     dsrcfile << "\n\n**************************************************\n\n" << std::endl;
     return true; // keep the device
 }

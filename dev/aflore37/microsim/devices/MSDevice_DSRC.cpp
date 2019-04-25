@@ -132,6 +132,12 @@ MSDevice_DSRC::notifyMove(SUMOVehicle& veh, double /* oldPos */,
     if (otherDevice != 0) {
         std::cout << "  veh '" << veh.getID() << " has device '" << otherDevice->getID() << "'\n";
     }
+
+    
+    MSVehicle& sus = dynamic_cast<MSVehicle&>(veh);
+    int sped = sus.getSpeed();
+    //std::cout << "if this works the speed is: " << sped << "\n";
+    std::cout << "just to check, signals: " << sus.getSignals() << "\n";
     //auto start = std::chrono::system_clock::now();
     dsrcfile << "DSRC MessageID: " << veh.getID() << "_" << msg_num << "\n" <<std::endl;
     dsrcfile << "vehicleID: " << veh.getID() << std::endl;
@@ -141,7 +147,7 @@ MSDevice_DSRC::notifyMove(SUMOVehicle& veh, double /* oldPos */,
     dsrcfile << "Vehicle Height: " << veh.getVehicleType().getHeight() << std::endl;
     dsrcfile << "Vehicle Angle Trajectory: " << veh.getAngle() << std::endl;
     dsrcfile << "Vehicle Coordinates: " << veh.getPosition() << std::endl;
-    dsrcfile << "Vehicle Speed: " << newSpeed << std::endl;
+    dsrcfile << "Vehicle Speed: " << sped << std::endl;
     dsrcfile << "Vehicle Acceleration: " << veh.getAcceleration() << std::endl;
     dsrcfile << "Vehicle Slope Angle: " << veh.getSlope() << std::endl;
     dsrcfile << "time step is: " << SIMSTEP << std::endl;

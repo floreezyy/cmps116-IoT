@@ -38,7 +38,7 @@
 // class declarations
 // ===========================================================================
 class SUMOVehicle;
-
+class MSVehicle; // need for breake lights
 
 // ===========================================================================
 // class definitions

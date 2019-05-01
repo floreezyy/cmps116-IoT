@@ -49,6 +49,41 @@
 // ===========================================================================
 // method definitions
 // ===========================================================================
+// A basic getHelper function that calculates the current brakesystem status status
+// of the vehicle based on the speed of the vehicle at time t and t-1. If the
+// current vehicle speed is less than the previous speed at time t-1, we can
+// assume that the car is slowing down 
+int
+MSDevice_DSRC::getBrakeSystemStatus(double prevSpeed, double currSpeed){
+    
+    int brakeStatus; // returns if brakes are on or off
+    if(prevSpeed > currSpeed){ // if the speed is slowwinf down, then brakes are on
+        brakeStatus = BRAKES_ON;
+    }
+    else{
+        brakeStatus = BRAKES_OFF;
+    }
+    return brakeStatus;
+}
+
+
+// A basic getHelper function that calculates the current TransmissionStateSystem status status
+// of the vehicle based on the speed of the vehicle at time t. If the
+// current vehicle speed is 0, then the car is parked 
+int
+MSDevice_DSRC::getTransmissionStatus(double currSpeed){
+    
+    int transStatus; // returns if brakes are on or off
+    if(currSpeed != 0.0){ // if the speed is slowwinf down, then brakes are on
+        transStatus = DRIVE;
+    }
+    else{
+        transStatus = PARKED;
+    }
+    return transStatus;
+
+    // Need to find other ways to find REVERSE and NEUTRAL
+}
 // ---------------------------------------------------------------------------
 // static initialisation methods
 // ---------------------------------------------------------------------------
@@ -110,7 +145,13 @@ MSDevice_DSRC::MSDevice_DSRC(SUMOVehicle& holder, const std::string& id,
     myCustomValue1(customValue1),
     myCustomValue2(customValue2),
     myCustomValue3(customValue3) {
-    //std::cout << "initialized device '" << id << "' with myCustomValue1=" << myCustomValue1 << ", myCustomValue2=" << myCustomValue2 << ", myCustomValue3=" << myCustomValue3 << "\n";
+    
+    std::string file_name = "dsrc_out_" + holder.getID() + ".csv";   
+    std::ofstream dsrcfile (file_name, std::ios_base::app);
+
+    //Instantiate the json format by declaring the variables to use
+    dsrcfile << "MsgCount, TemporaryID, VehicleID, Vehicle Type, Vehicle Length, Vehicle Width, Vehicle Height, Vehicle Wheel Angle, Longitude, Latitude, Vehicle Speed, Vehicle Acceleration, Vehicle Slope Angle, BrakeSystemStatus, TransmissionState, Dsecond" << "\n"; 
+    //std::cout << "this should only pront once" << "\n";
 }
 
 
@@ -118,12 +159,13 @@ MSDevice_DSRC::~MSDevice_DSRC() {
 }
 
 int msg_num = 0;
-
+int brakeStatus = 0;
+int transStatus = 0;
 bool
 MSDevice_DSRC::notifyMove(SUMOVehicle& veh, double /* oldPos */,
                              double /* newPos */, double newSpeed) {
     msg_num++; //increment the message id
-    std::string file_name = "dsrc_out_" + veh.getID() + ".txt";                    
+    std::string file_name = "dsrc_out_" + veh.getID() + ".csv";                    
     std::ofstream dsrcfile (file_name, std::ios_base::app);
 
     //std::cout << "vehicleID: " << veh.getID() << " MoveUpdate: Speed=" << newSpeed << "\n";
@@ -135,32 +177,63 @@ MSDevice_DSRC::notifyMove(SUMOVehicle& veh, double /* oldPos */,
 
     
     MSVehicle& sus = dynamic_cast<MSVehicle&>(veh);
-    int sped = sus.getSpeed();
+    int veh_curr_speed = sus.getSpeed();
+    int veh_prev_speed = sus.getPreviousSpeed();
+    
+    
+    //std::cout << "last speed: " <<  << " curr speed: " << sped << std::endl;
     //std::cout << "if this works the speed is: " << sped << "\n";
     std::cout << "just to check, signals: " << sus.getSignals() << "\n";
     //auto start = std::chrono::system_clock::now();
-    dsrcfile << "MsgCount: " << msg_num << std::endl;
-    dsrcfile << "TemporaryID: " << veh.getID() << "_" << msg_num << "\n" <<std::endl;
-    dsrcfile << "VehicleID: " << veh.getID() << std::endl;
-    dsrcfile << "Vehicle Type: " << veh.getVehicleType().getID() << std::endl;
-    dsrcfile << "Vehicle Length: " << veh.getVehicleType().getLength() << std::endl;
-    dsrcfile << "Vehicle Width: " << veh.getVehicleType().getWidth() << std::endl;
-    dsrcfile << "Vehicle Height: " << veh.getVehicleType().getHeight() << std::endl;
-    dsrcfile << "Vehicle Wheel Angle: " << veh.getAngle() << std::endl;
-    dsrcfile << "Longitude: " << veh.getPosition().x() << std::endl;
-    dsrcfile << "Latitude: " << veh.getPosition().y() << std::endl;
-    dsrcfile << "Vehicle Speed: " << sped << std::endl;
-    dsrcfile << "Vehicle Acceleration: " << veh.getAcceleration() << std::endl;
-    dsrcfile << "Vehicle Slope Angle: " << veh.getSlope() << std::endl;
-    //dsrcfile << "time step is: " << SIMSTEP << std::endl;
+    // dsrcfile << "MsgCount: " << msg_num << std::endl;
+    // dsrcfile << "TemporaryID: " << veh.getID() << "_" << msg_num << "\n" <<std::endl;
+    // dsrcfile << "VehicleID: " << veh.getID() << std::endl;
+    // dsrcfile << "Vehicle Type: " << veh.getVehicleType().getID() << std::endl;
+    // dsrcfile << "Vehicle Length: " << veh.getVehicleType().getLength() << std::endl;
+    // dsrcfile << "Vehicle Width: " << veh.getVehicleType().getWidth() << std::endl;
+    // dsrcfile << "Vehicle Height: " << veh.getVehicleType().getHeight() << std::endl;
+    // dsrcfile << "Vehicle Wheel Angle: " << veh.getAngle() << std::endl;
+    // dsrcfile << "Longitude: " << veh.getPosition().x() << std::endl;
+    // dsrcfile << "Latitude: " << veh.getPosition().y() << std::endl;
+    // dsrcfile << "Vehicle Speed: " << sped << std::endl;
+    // dsrcfile << "Vehicle Acceleration: " << veh.getAcceleration() << std::endl;
+    // dsrcfile << "Vehicle Slope Angle: " << veh.getSlope() << std::endl;
 
+    dsrcfile << msg_num << ", "; //MsgCount
+    dsrcfile << veh.getID() << "_" << msg_num << ", "; //TemporaryID
+    dsrcfile << veh.getID() << ", "; // VehicleID
+    dsrcfile << veh.getVehicleType().getID() << ", "; // Vehicle Type
+    dsrcfile << veh.getVehicleType().getLength() << ", "; // Vehicle Length
+    dsrcfile << veh.getVehicleType().getWidth() << ", "; // Vehicle Width
+    dsrcfile << veh.getVehicleType().getHeight() << ", "; // Vehicle Height
+    dsrcfile << veh.getAngle() << ", "; // Vehicle Wheel Angle
+    dsrcfile << veh.getPosition().x() << ", "; // Vehicle Longitude
+    dsrcfile << veh.getPosition().y() << ", "; // Vehicle Latitude
+    dsrcfile << veh_curr_speed << ", "; // Vehicle Speed
+    dsrcfile << veh.getAcceleration() << ", "; //vehicle acceleration
+    dsrcfile << veh.getSlope() << ", "; // Vehicle Slope
+    //dsrcfile << "time step is: " << SIMSTEP << std::endl;
+    brakeStatus = getBrakeSystemStatus(veh_prev_speed, veh_curr_speed);
+    if(brakeStatus == BRAKES_ON){
+        dsrcfile << "BRAKES_ON" << ", ";
+    }
+    else{
+        dsrcfile << "BRAKES_OFF" << ", ";
+    }
+    transStatus = getTransmissionStatus(veh_curr_speed);
+    if(transStatus == PARKED){
+        dsrcfile << "PARK" << ", ";
+    }
+    else{
+        dsrcfile << "DRIVE" << ", ";
+    }
     auto sent = std::chrono::system_clock::now();
     
     // for BSM standards data should be collected at lest 10 times a second
     std::time_t end_time = std::chrono::system_clock::to_time_t(sent);
 
-    dsrcfile << "Dsecond: " << std::ctime(&end_time) << std::endl;
-    dsrcfile << "\n\n**************************************************\n\n" << std::endl;
+    dsrcfile << std::ctime(&end_time);
+    dsrcfile << std::endl;
     return true; // keep the device
 }
 
@@ -220,4 +293,3 @@ MSDevice_DSRC::setParameter(const std::string& key, const std::string& value) {
 
 
 /****************************************************************************/
-

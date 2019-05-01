@@ -33,6 +33,11 @@
 #include "MSDevice.h"
 #include <utils/common/SUMOTime.h>
 
+#define PARKED 0
+#define DRIVE 1
+
+#define BRAKES_OFF 0 // brakes are on
+#define BRAKES_ON 1 // brakes are off
 
 // ===========================================================================
 // class declarations
@@ -78,7 +83,11 @@ public:
     ~MSDevice_DSRC();
 
 
+    // generates data about a vehicles BrakeSystemStatus. Very primal and only
+    // provides data on whether the car is braking or not
+    int getBrakeSystemStatus(double prevSpeed, double currSpeed);
 
+    int getTransmissionStatus(double currSpeed);
     /// @name Methods called on vehicle movement / state change, overwriting MSDevice
     /// @{
 
@@ -138,7 +147,7 @@ public:
      */
     void generateOutput() const;
 
-
+    
 
 private:
     /** @brief Constructor

@@ -1,0 +1,945 @@
+MsgCount: 1
+TemporaryID: veh2_1
+
+VehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Wheel Angle: 0
+Longitude: 12.1
+Latitude: 395.05
+Vehicle Speed: 10
+Vehicle Acceleration: 10
+Vehicle Slope Angle: 0
+Dsecond: Thu Apr 25 07:25:47 2019
+
+
+
+**************************************************
+
+
+MsgCount: 2
+TemporaryID: veh2_2
+
+VehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Wheel Angle: 0
+Longitude: 32.1
+Latitude: 395.05
+Vehicle Speed: 20
+Vehicle Acceleration: 10
+Vehicle Slope Angle: 0
+Dsecond: Thu Apr 25 07:25:47 2019
+
+
+
+**************************************************
+
+
+MsgCount: 3
+TemporaryID: veh2_3
+
+VehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Wheel Angle: 0
+Longitude: 62.1
+Latitude: 398.35
+Vehicle Speed: 30
+Vehicle Acceleration: 10
+Vehicle Slope Angle: 0
+Dsecond: Thu Apr 25 07:25:47 2019
+
+
+
+**************************************************
+
+
+MsgCount: 4
+TemporaryID: veh2_4
+
+VehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Wheel Angle: 0
+Longitude: 101.394
+Latitude: 398.35
+Vehicle Speed: 39
+Vehicle Acceleration: 9.2935
+Vehicle Slope Angle: 0
+Dsecond: Thu Apr 25 07:25:47 2019
+
+
+
+**************************************************
+
+
+MsgCount: 5
+TemporaryID: veh2_5
+
+VehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Wheel Angle: 0
+Longitude: 135.687
+Latitude: 398.35
+Vehicle Speed: 34
+Vehicle Acceleration: -5
+Vehicle Slope Angle: 0
+Dsecond: Thu Apr 25 07:25:48 2019
+
+
+
+**************************************************
+
+
+MsgCount: 6
+TemporaryID: veh2_6
+
+VehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Wheel Angle: 0
+Longitude: 164.981
+Latitude: 398.35
+Vehicle Speed: 29
+Vehicle Acceleration: -5
+Vehicle Slope Angle: 0
+Dsecond: Thu Apr 25 07:25:48 2019
+
+
+
+**************************************************
+
+
+MsgCount: 7
+TemporaryID: veh2_7
+
+VehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Wheel Angle: 0
+Longitude: 190.142
+Latitude: 395.05
+Vehicle Speed: 25
+Vehicle Acceleration: -4.13208
+Vehicle Slope Angle: 0
+Dsecond: Thu Apr 25 07:25:48 2019
+
+
+
+**************************************************
+
+
+MsgCount: 8
+TemporaryID: veh2_8
+
+VehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Wheel Angle: 0
+Longitude: 210.303
+Latitude: 395.05
+Vehicle Speed: 20
+Vehicle Acceleration: -5
+Vehicle Slope Angle: 0
+Dsecond: Thu Apr 25 07:25:48 2019
+
+
+
+**************************************************
+
+
+MsgCount: 9
+TemporaryID: veh2_9
+
+VehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Wheel Angle: 0
+Longitude: 225.465
+Latitude: 395.05
+Vehicle Speed: 15
+Vehicle Acceleration: -5
+Vehicle Slope Angle: 0
+Dsecond: Thu Apr 25 07:25:48 2019
+
+
+
+**************************************************
+
+
+MsgCount: 10
+TemporaryID: veh2_10
+
+VehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Wheel Angle: 0
+Longitude: 235.626
+Latitude: 395.05
+Vehicle Speed: 10
+Vehicle Acceleration: -5
+Vehicle Slope Angle: 0
+Dsecond: Thu Apr 25 07:25:48 2019
+
+
+
+**************************************************
+
+
+MsgCount: 11
+TemporaryID: veh2_11
+
+VehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Wheel Angle: 0
+Longitude: 240.788
+Latitude: 395.05
+Vehicle Speed: 5
+Vehicle Acceleration: -5
+Vehicle Slope Angle: 0
+Dsecond: Thu Apr 25 07:25:48 2019
+
+
+
+**************************************************
+
+
+MsgCount: 12
+TemporaryID: veh2_12
+
+VehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Wheel Angle: 0
+Longitude: 240.949
+Latitude: 395.05
+Vehicle Speed: 0
+Vehicle Acceleration: -5
+Vehicle Slope Angle: 0
+Dsecond: Thu Apr 25 07:25:48 2019
+
+
+
+**************************************************
+
+
+MsgCount: 13
+TemporaryID: veh2_13
+
+VehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Wheel Angle: 0
+Longitude: 240.949
+Latitude: 395.05
+Vehicle Speed: 0
+Vehicle Acceleration: -0.161417
+Vehicle Slope Angle: 0
+Dsecond: Thu Apr 25 07:25:48 2019
+
+
+
+**************************************************
+
+
+MsgCount: 14
+TemporaryID: veh2_14
+
+VehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Wheel Angle: 0
+Longitude: 240.949
+Latitude: 395.05
+Vehicle Speed: 0
+Vehicle Acceleration: 0
+Vehicle Slope Angle: 0
+Dsecond: Thu Apr 25 07:25:48 2019
+
+
+
+**************************************************
+
+
+MsgCount: 15
+TemporaryID: veh2_15
+
+VehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Wheel Angle: 0
+Longitude: 240.949
+Latitude: 395.05
+Vehicle Speed: 0
+Vehicle Acceleration: 0
+Vehicle Slope Angle: 0
+Dsecond: Thu Apr 25 07:25:49 2019
+
+
+
+**************************************************
+
+
+MsgCount: 16
+TemporaryID: veh2_16
+
+VehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Wheel Angle: 0
+Longitude: 240.949
+Latitude: 395.05
+Vehicle Speed: 0
+Vehicle Acceleration: 0
+Vehicle Slope Angle: 0
+Dsecond: Thu Apr 25 07:25:49 2019
+
+
+
+**************************************************
+
+
+MsgCount: 17
+TemporaryID: veh2_17
+
+VehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Wheel Angle: 0
+Longitude: 240.949
+Latitude: 395.05
+Vehicle Speed: 0
+Vehicle Acceleration: 0
+Vehicle Slope Angle: 0
+Dsecond: Thu Apr 25 07:25:49 2019
+
+
+
+**************************************************
+
+
+MsgCount: 18
+TemporaryID: veh2_18
+
+VehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Wheel Angle: 0
+Longitude: 240.949
+Latitude: 395.05
+Vehicle Speed: 0
+Vehicle Acceleration: 0
+Vehicle Slope Angle: 0
+Dsecond: Thu Apr 25 07:25:49 2019
+
+
+
+**************************************************
+
+
+MsgCount: 19
+TemporaryID: veh2_19
+
+VehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Wheel Angle: 0
+Longitude: 240.949
+Latitude: 395.05
+Vehicle Speed: 0
+Vehicle Acceleration: 0
+Vehicle Slope Angle: 0
+Dsecond: Thu Apr 25 07:25:49 2019
+
+
+
+**************************************************
+
+
+MsgCount: 20
+TemporaryID: veh2_20
+
+VehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Wheel Angle: 0
+Longitude: 240.949
+Latitude: 395.05
+Vehicle Speed: 0
+Vehicle Acceleration: 0
+Vehicle Slope Angle: 0
+Dsecond: Thu Apr 25 07:25:49 2019
+
+
+
+**************************************************
+
+
+MsgCount: 21
+TemporaryID: veh2_21
+
+VehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Wheel Angle: 0
+Longitude: 240.949
+Latitude: 395.05
+Vehicle Speed: 0
+Vehicle Acceleration: 0
+Vehicle Slope Angle: 0
+Dsecond: Thu Apr 25 07:25:49 2019
+
+
+
+**************************************************
+
+
+MsgCount: 22
+TemporaryID: veh2_22
+
+VehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Wheel Angle: 0
+Longitude: 240.949
+Latitude: 395.05
+Vehicle Speed: 0
+Vehicle Acceleration: 0
+Vehicle Slope Angle: 0
+Dsecond: Thu Apr 25 07:25:49 2019
+
+
+
+**************************************************
+
+
+MsgCount: 23
+TemporaryID: veh2_23
+
+VehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Wheel Angle: 0
+Longitude: 240.949
+Latitude: 395.05
+Vehicle Speed: 0
+Vehicle Acceleration: 0
+Vehicle Slope Angle: 0
+Dsecond: Thu Apr 25 07:25:49 2019
+
+
+
+**************************************************
+
+
+MsgCount: 24
+TemporaryID: veh2_24
+
+VehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Wheel Angle: 0
+Longitude: 240.949
+Latitude: 395.05
+Vehicle Speed: 0
+Vehicle Acceleration: 0
+Vehicle Slope Angle: 0
+Dsecond: Thu Apr 25 07:25:49 2019
+
+
+
+**************************************************
+
+
+MsgCount: 25
+TemporaryID: veh2_25
+
+VehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Wheel Angle: 0
+Longitude: 240.949
+Latitude: 395.05
+Vehicle Speed: 0
+Vehicle Acceleration: 0
+Vehicle Slope Angle: 0
+Dsecond: Thu Apr 25 07:25:50 2019
+
+
+
+**************************************************
+
+
+MsgCount: 26
+TemporaryID: veh2_26
+
+VehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Wheel Angle: 0
+Longitude: 240.949
+Latitude: 395.05
+Vehicle Speed: 0
+Vehicle Acceleration: 0
+Vehicle Slope Angle: 0
+Dsecond: Thu Apr 25 07:25:50 2019
+
+
+
+**************************************************
+
+
+MsgCount: 27
+TemporaryID: veh2_27
+
+VehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Wheel Angle: 0
+Longitude: 240.949
+Latitude: 395.05
+Vehicle Speed: 0
+Vehicle Acceleration: 0
+Vehicle Slope Angle: 0
+Dsecond: Thu Apr 25 07:25:50 2019
+
+
+
+**************************************************
+
+
+MsgCount: 28
+TemporaryID: veh2_28
+
+VehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Wheel Angle: 0
+Longitude: 240.949
+Latitude: 395.05
+Vehicle Speed: 0
+Vehicle Acceleration: 0
+Vehicle Slope Angle: 0
+Dsecond: Thu Apr 25 07:25:50 2019
+
+
+
+**************************************************
+
+
+MsgCount: 29
+TemporaryID: veh2_29
+
+VehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Wheel Angle: 0
+Longitude: 240.949
+Latitude: 395.05
+Vehicle Speed: 0
+Vehicle Acceleration: 0
+Vehicle Slope Angle: 0
+Dsecond: Thu Apr 25 07:25:50 2019
+
+
+
+**************************************************
+
+
+MsgCount: 30
+TemporaryID: veh2_30
+
+VehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Wheel Angle: 0
+Longitude: 240.949
+Latitude: 395.05
+Vehicle Speed: 0
+Vehicle Acceleration: 0
+Vehicle Slope Angle: 0
+Dsecond: Thu Apr 25 07:25:50 2019
+
+
+
+**************************************************
+
+
+MsgCount: 31
+TemporaryID: veh2_31
+
+VehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Wheel Angle: 0
+Longitude: 240.949
+Latitude: 395.05
+Vehicle Speed: 0
+Vehicle Acceleration: 0
+Vehicle Slope Angle: 0
+Dsecond: Thu Apr 25 07:25:50 2019
+
+
+
+**************************************************
+
+
+MsgCount: 32
+TemporaryID: veh2_32
+
+VehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Wheel Angle: -1.5708
+Longitude: 245.05
+Latitude: 387.951
+Vehicle Speed: 10
+Vehicle Acceleration: 10
+Vehicle Slope Angle: 0
+Dsecond: Thu Apr 25 07:25:50 2019
+
+
+
+**************************************************
+
+
+MsgCount: 33
+TemporaryID: veh2_33
+
+VehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Wheel Angle: -1.5708
+Longitude: 245.05
+Latitude: 367.951
+Vehicle Speed: 20
+Vehicle Acceleration: 10
+Vehicle Slope Angle: 0
+Dsecond: Thu Apr 25 07:25:50 2019
+
+
+
+**************************************************
+
+
+MsgCount: 34
+TemporaryID: veh2_34
+
+VehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Wheel Angle: -1.5708
+Longitude: 245.05
+Latitude: 337.951
+Vehicle Speed: 30
+Vehicle Acceleration: 10
+Vehicle Slope Angle: 0
+Dsecond: Thu Apr 25 07:25:50 2019
+
+
+
+**************************************************
+
+
+MsgCount: 35
+TemporaryID: veh2_35
+
+VehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Wheel Angle: -1.5708
+Longitude: 245.05
+Latitude: 297.951
+Vehicle Speed: 40
+Vehicle Acceleration: 10
+Vehicle Slope Angle: 0
+Dsecond: Thu Apr 25 07:25:51 2019
+
+
+
+**************************************************
+
+
+MsgCount: 36
+TemporaryID: veh2_36
+
+VehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Wheel Angle: -1.5708
+Longitude: 245.05
+Latitude: 247.951
+Vehicle Speed: 50
+Vehicle Acceleration: 10
+Vehicle Slope Angle: 0
+Dsecond: Thu Apr 25 07:25:51 2019
+
+
+
+**************************************************
+
+
+MsgCount: 37
+TemporaryID: veh2_37
+
+VehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Wheel Angle: -1.02915
+Longitude: 247.582
+Latitude: 198.509
+Vehicle Speed: 50
+Vehicle Acceleration: 0
+Vehicle Slope Angle: 0
+Dsecond: Thu Apr 25 07:25:51 2019
+
+
+
+**************************************************
+
+
+MsgCount: 38
+TemporaryID: veh2_38
+
+VehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Wheel Angle: 0
+Longitude: 306.599
+Latitude: 195.05
+Vehicle Speed: 60
+Vehicle Acceleration: 10
+Vehicle Slope Angle: 0
+Dsecond: Thu Apr 25 07:25:51 2019
+
+
+
+**************************************************
+
+
+MsgCount: 39
+TemporaryID: veh2_39
+
+VehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Wheel Angle: 0
+Longitude: 376.599
+Latitude: 195.05
+Vehicle Speed: 70
+Vehicle Acceleration: 10
+Vehicle Slope Angle: 0
+Dsecond: Thu Apr 25 07:25:51 2019
+
+
+
+**************************************************
+
+
+MsgCount: 40
+TemporaryID: veh2_40
+
+VehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Wheel Angle: 0
+Longitude: 456.599
+Latitude: 195.05
+Vehicle Speed: 80
+Vehicle Acceleration: 10
+Vehicle Slope Angle: 0
+Dsecond: Thu Apr 25 07:25:51 2019
+
+
+
+**************************************************
+
+
+MsgCount: 41
+TemporaryID: veh2_41
+
+VehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Wheel Angle: -1.5708
+Longitude: 495.05
+Latitude: 142.301
+Vehicle Speed: 90
+Vehicle Acceleration: 10
+Vehicle Slope Angle: 0
+Dsecond: Thu Apr 25 07:25:51 2019
+
+
+
+**************************************************
+
+
+MsgCount: 42
+TemporaryID: veh2_42
+
+VehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Wheel Angle: -1.5708
+Longitude: 495.05
+Latitude: 42.301
+Vehicle Speed: 100
+Vehicle Acceleration: 10
+Vehicle Slope Angle: 0
+Dsecond: Thu Apr 25 07:25:51 2019
+
+
+
+**************************************************
+
+
+MsgCount: 43
+TemporaryID: veh2_43
+
+VehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Wheel Angle: 0
+Longitude: 552.249
+Latitude: -4.95
+Vehicle Speed: 100
+Vehicle Acceleration: 0
+Vehicle Slope Angle: 0
+Dsecond: Thu Apr 25 07:25:51 2019
+
+
+
+**************************************************
+
+
+MsgCount: 44
+TemporaryID: veh2_44
+
+VehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Wheel Angle: 0
+Longitude: 652.249
+Latitude: -4.95
+Vehicle Speed: 100
+Vehicle Acceleration: 0
+Vehicle Slope Angle: 0
+Dsecond: Thu Apr 25 07:25:51 2019
+
+
+
+**************************************************
+
+
+MsgCount: 45
+TemporaryID: veh2_45
+
+VehicleID: veh2
+Vehicle Type: Car
+Vehicle Length: 2
+Vehicle Width: 1.8
+Vehicle Height: 1.5
+Vehicle Wheel Angle: 0
+Longitude: 750
+Latitude: -4.95
+Vehicle Speed: 100
+Vehicle Acceleration: 0
+Vehicle Slope Angle: 0
+Dsecond: Thu Apr 25 07:25:52 2019
+
+
+
+**************************************************
+
+

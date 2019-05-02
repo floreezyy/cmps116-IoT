@@ -30,16 +30,15 @@ def run():
         
         #increment sim step
         traci.simulationStep() 
+        if step == 20:
+            traci.vehicle.superclass(rogueVehicle, 'route1', typeID = 'Rogue', 
+                                  depart='triggered')
+            
         
         #wait until rogue vehicle is deployed
-        #if step > 10: 
-        #addVehicle('dummy', 'passenger', 'route1', '2to3_0', 10, -1)
-        #traci.vehicle.add("car", "route1", typeID="passenger")
-        traci.vehicle.moveTo('veh2', '2to3_0', 44.7)
-        traci.vehicle.setSpeed('veh2', 0)
+        #if step > 20: 
             #print rogue position to terminal
             #print traci.vehicle.getPosition(rogueVehicle)
-            
             #make vehicle stop at this intersection
             #x, y = traci.junction.getPosition("n2")
             #traci.vehicle.rogueNodeException(rogueVehicle, x, y)

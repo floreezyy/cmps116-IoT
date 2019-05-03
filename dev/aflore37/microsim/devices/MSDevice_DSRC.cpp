@@ -150,7 +150,7 @@ MSDevice_DSRC::MSDevice_DSRC(SUMOVehicle& holder, const std::string& id,
     std::ofstream dsrcfile (file_name, std::ios_base::app);
 
     //Instantiate the json format by declaring the variables to use
-    dsrcfile << "MsgCount, TemporaryID, VehicleID, Vehicle Type, Vehicle Length, Vehicle Width, Vehicle Height, Vehicle Wheel Angle, Longitude, Latitude, Vehicle Speed, Vehicle Acceleration, Vehicle Slope Angle, BrakeSystemStatus, TransmissionState, Dsecond" << "\n"; 
+    dsrcfile << "MsgCount,TemporaryID,VehicleID,Vehicle Type,Vehicle Length,Vehicle Width,Vehicle Height,Vehicle Wheel Angle,Longitude,Latitude,Vehicle Speed,Vehicle Acceleration,Vehicle Slope Angle,BrakeSystemStatus,TransmissionState,Dsecond" << "\n"; 
     //std::cout << "this should only pront once" << "\n";
 }
 
@@ -199,33 +199,33 @@ MSDevice_DSRC::notifyMove(SUMOVehicle& veh, double /* oldPos */,
     // dsrcfile << "Vehicle Acceleration: " << veh.getAcceleration() << std::endl;
     // dsrcfile << "Vehicle Slope Angle: " << veh.getSlope() << std::endl;
 
-    dsrcfile << msg_num << ", "; //MsgCount
-    dsrcfile << veh.getID() << "_" << msg_num << ", "; //TemporaryID
-    dsrcfile << veh.getID() << ", "; // VehicleID
-    dsrcfile << veh.getVehicleType().getID() << ", "; // Vehicle Type
-    dsrcfile << veh.getVehicleType().getLength() << ", "; // Vehicle Length
-    dsrcfile << veh.getVehicleType().getWidth() << ", "; // Vehicle Width
-    dsrcfile << veh.getVehicleType().getHeight() << ", "; // Vehicle Height
-    dsrcfile << veh.getAngle() << ", "; // Vehicle Wheel Angle
-    dsrcfile << veh.getPosition().x() << ", "; // Vehicle Longitude
-    dsrcfile << veh.getPosition().y() << ", "; // Vehicle Latitude
-    dsrcfile << veh_curr_speed << ", "; // Vehicle Speed
-    dsrcfile << veh.getAcceleration() << ", "; //vehicle acceleration
-    dsrcfile << veh.getSlope() << ", "; // Vehicle Slope
+    dsrcfile << msg_num << ","; //MsgCount
+    dsrcfile << veh.getID() << "_" << msg_num << ","; //TemporaryID
+    dsrcfile << veh.getID() << ","; // VehicleID
+    dsrcfile << veh.getVehicleType().getID() << ","; // Vehicle Type
+    dsrcfile << veh.getVehicleType().getLength() << ","; // Vehicle Length
+    dsrcfile << veh.getVehicleType().getWidth() << ","; // Vehicle Width
+    dsrcfile << veh.getVehicleType().getHeight() << ","; // Vehicle Height
+    dsrcfile << veh.getAngle() << ","; // Vehicle Wheel Angle
+    dsrcfile << veh.getPosition().x() << ","; // Vehicle Longitude
+    dsrcfile << veh.getPosition().y() << ","; // Vehicle Latitude
+    dsrcfile << veh_curr_speed << ","; // Vehicle Speed
+    dsrcfile << veh.getAcceleration() << ","; //vehicle acceleration
+    dsrcfile << veh.getSlope() << ","; // Vehicle Slope
     //dsrcfile << "time step is: " << SIMSTEP << std::endl;
     brakeStatus = getBrakeSystemStatus(veh_prev_speed, veh_curr_speed);
     if(brakeStatus == BRAKES_ON){
-        dsrcfile << "BRAKES_ON" << ", ";
+        dsrcfile << "BRAKES_ON" << ",";
     }
     else{
-        dsrcfile << "BRAKES_OFF" << ", ";
+        dsrcfile << "BRAKES_OFF" << ",";
     }
     transStatus = getTransmissionStatus(veh_curr_speed);
     if(transStatus == PARKED){
-        dsrcfile << "PARK" << ", ";
+        dsrcfile << "PARK" << ",";
     }
     else{
-        dsrcfile << "DRIVE" << ", ";
+        dsrcfile << "DRIVE" << ",";
     }
     auto sent = std::chrono::system_clock::now();
     

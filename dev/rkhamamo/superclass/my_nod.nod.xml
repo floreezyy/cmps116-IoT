@@ -1,0 +1,15 @@
+<nodes>
+<node id="n1" x = "-500" y="0" type="priority"/>
+<node id="n2" x = "-250" y="0" type="traffic_light"/>
+<node id="n3" x = "-250" y="200"/>
+<node id="n4" x = "-250" y="-200"/>
+<node id="n5" x = "0" y="200" type="traffic_light"/>
+<node id="n6" x = "0" y="-200" type="traffic_light"/>
+<node id="n7" x = "0" y="400"/>
+<node id="n8" x = "0" y="-400"/>
+<node id="n9" x = "250" y="400"/>
+<node id="n10" x = "250" y="-400"/>
+<node id="n11" x = "0" y="0" type="traffic_light"/>
+<node id="n12" x = "250" y="0"/>
+</nodes>
+

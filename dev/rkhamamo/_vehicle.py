@@ -1249,6 +1249,102 @@ class VehicleDomain(Domain):
             self._connection._sendIntCmd(
                 tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_SPEEDSETMODE, vehID, 1.0)
         
+    def superclass(self, vehID, routeID, typeID="DEFAULT_VEHTYPE", depart=None,
+                departLane="first", departPos="base", departSpeed="0",
+                arrivalLane="current", arrivalPos="max", arrivalSpeed="current",
+                fromTaz="", toTaz="", line="", personCapacity=0, personNumber=0):
+        """
+        Add a new vehicle (new style with all possible parameters)
+        """
+        messageString = struct.pack("!Bi", tc.TYPE_COMPOUND, 14)
+        if depart is None:
+            depart = str(self._connection.simulation.getCurrentTime() / 1000.)
+        for val in (routeID, typeID, depart, departLane, departPos, departSpeed,
+                    arrivalLane, arrivalPos, arrivalSpeed, fromTaz, toTaz, line):
+            messageString += struct.pack("!Bi",
+                                         tc.TYPE_STRING, len(val)) + str(val).encode("latin1")
+        messageString += struct.pack("!Bi", tc.TYPE_INTEGER, personCapacity)
+        messageString += struct.pack("!Bi", tc.TYPE_INTEGER, personNumber)
+
+        #spawn 4 vehicles
+        self._connection._beginMessage(
+            tc.CMD_SET_VEHICLE_VARIABLE, tc.ADD_FULL, vehID + 'a', len(messageString))
+        self._connection._string += messageString
+        self._connection._sendExact()
+        #and make them invisible
+        self._connection._beginMessage(
+            tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_COLOR, vehID + 'a', 1 + 1 + 1 + 1 + 1)
+        self._connection._string += struct.pack("!BBBBB", tc.TYPE_COLOR, 
+            255, 0, 0, 0)
+        self._connection._sendExact()
+        
+        self._connection._beginMessage(
+            tc.CMD_SET_VEHICLE_VARIABLE, tc.ADD_FULL, vehID + 'b', len(messageString))
+        self._connection._string += messageString
+        self._connection._sendExact()
+        
+        self._connection._beginMessage(
+            tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_COLOR, vehID + 'b', 1 + 1 + 1 + 1 + 1)
+        self._connection._string += struct.pack("!BBBBB", tc.TYPE_COLOR,
+            255, 0, 0, 0)
+        self._connection._sendExact()
+        
+        self._connection._beginMessage(
+            tc.CMD_SET_VEHICLE_VARIABLE, tc.ADD_FULL, vehID + 'c', len(messageString))
+        self._connection._string += messageString
+        self._connection._sendExact()
+        
+        self._connection._beginMessage(
+            tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_COLOR, vehID + 'c', 1 + 1 + 1 + 1 + 1)
+        self._connection._string += struct.pack("!BBBBB", tc.TYPE_COLOR, 
+            255, 0, 0, 0)
+        self._connection._sendExact()
+        
+        self._connection._beginMessage(
+            tc.CMD_SET_VEHICLE_VARIABLE, tc.ADD_FULL, vehID + 'd', len(messageString))
+        self._connection._string += messageString
+        self._connection._sendExact()
+        
+        self._connection._beginMessage(
+            tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_COLOR, vehID  + 'd', 1 + 1 + 1 + 1 + 1)
+        self._connection._string += struct.pack("!BBBBB", tc.TYPE_COLOR, 
+            255, 0, 0, 0)
+        self._connection._sendExact()
+        
+        #retrieve lane and index values of rogue car being classed
+        lane = self._getUniversal(tc.VAR_LANE_ID, vehID)
+
+        index = self._getUniversal(tc.VAR_LANE_INDEX, vehID)
+        
+        #move all spawned vehicles
+        self._connection._beginMessage(tc.CMD_SET_VEHICLE_VARIABLE,
+                                       tc.VAR_MOVE_TO, vehID + 'a', 1 + 4 + 1 + 4 + len(lane) + 1 + 8)
+        self._connection._string += struct.pack("!Bi", tc.TYPE_COMPOUND, 2)
+        self._connection._packString(lane)
+        self._connection._string += struct.pack("!Bd", tc.TYPE_DOUBLE, index - 10)
+        self._connection._sendExact()
+        
+        self._connection._beginMessage(tc.CMD_SET_VEHICLE_VARIABLE,
+                                       tc.VAR_MOVE_TO, vehID + 'b', 1 + 4 + 1 + 4 + len(lane) + 1 + 8)
+        self._connection._string += struct.pack("!Bi", tc.TYPE_COMPOUND, 2)
+        self._connection._packString(lane)
+        self._connection._string += struct.pack("!Bd", tc.TYPE_DOUBLE, index - 20)
+        self._connection._sendExact()
+        
+        self._connection._beginMessage(tc.CMD_SET_VEHICLE_VARIABLE,
+                                       tc.VAR_MOVE_TO, vehID + 'c', 1 + 4 + 1 + 4 + len(lane) + 1 + 8)
+        self._connection._string += struct.pack("!Bi", tc.TYPE_COMPOUND, 2)
+        self._connection._packString(lane)
+        self._connection._string += struct.pack("!Bd", tc.TYPE_DOUBLE, index - 30)
+        self._connection._sendExact()
+        
+        self._connection._beginMessage(tc.CMD_SET_VEHICLE_VARIABLE,
+                                       tc.VAR_MOVE_TO, vehID + 'd', 1 + 4 + 1 + 4 + len(lane) + 1 + 8)
+        self._connection._string += struct.pack("!Bi", tc.TYPE_COMPOUND, 2)
+        self._connection._packString(lane)
+        self._connection._string += struct.pack("!Bd", tc.TYPE_DOUBLE, index - 40)
+        self._connection._sendExact()
+        
     def add(self, vehID, routeID, depart=tc.DEPARTFLAG_NOW, pos=0, speed=0,
             lane=tc.DEPARTFLAG_LANE_FIRST_ALLOWED, typeID="DEFAULT_VEHTYPE"):
         """

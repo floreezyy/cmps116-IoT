@@ -34,7 +34,11 @@ def run():
         #wait until rogue vehicle is deployed
         if step > 20: 
             #print rogue position to terminal
-            print traci.vehicle.getPosition(rogueVehicle)
+            print traci.vehicle.getPosition('veh1')
+            print traci.vehicle.getPosition('veh1a')
+            print traci.vehicle.getPosition('veh1b')
+            print traci.vehicle.getPosition('veh1c')
+            print traci.vehicle.getPosition('veh1d')
             #make vehicle stop at this intersection
             #x, y = traci.junction.getPosition("n2")
             #traci.vehicle.rogueNodeException(rogueVehicle, x, y)

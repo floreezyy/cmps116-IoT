@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on Fri 03 May 2019 09:41:23 AM UTC by SUMO gui Version 0.32.0
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
+
+    <input>
+        <net-file value="my_net.net.xml"/>
+        <route-files value="my_rou.rou.xml"/>
+        <additional-files value="my_add.add.xml"/>
+    </input>
+
+    <output>
+        <tripinfo-output value="tripinfo.xml"/>
+    </output>
+
+    <time>
+        <begin value="0"/>
+        <end value="2000"/>
+    </time>
+
+    <traci_server>
+        <remote-port value="35637"/>
+    </traci_server>
+
+</configuration>
+-->
+
+<detector xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/det_e1_file.xsd">
+    <interval begin="0.00" end="500.00" id="det_0" nVehContrib="20" flow="144.00" occupancy="0.48" speed="16.95" length="2.00" nVehEntered="20"/>
+    <interval begin="500.00" end="1000.00" id="det_0" nVehContrib="24" flow="172.80" occupancy="0.58" speed="16.56" length="2.00" nVehEntered="24"/>
+    <interval begin="1000.00" end="1500.00" id="det_0" nVehContrib="21" flow="151.20" occupancy="0.50" speed="16.75" length="2.00" nVehEntered="21"/>
+    <interval begin="1500.00" end="2000.00" id="det_0" nVehContrib="19" flow="136.80" occupancy="0.47" speed="16.34" length="2.00" nVehEntered="19"/>
+    <interval begin="2000.00" end="2500.00" id="det_0" nVehContrib="23" flow="165.60" occupancy="0.55" speed="16.72" length="2.00" nVehEntered="23"/>
+    <interval begin="2500.00" end="3000.00" id="det_0" nVehContrib="18" flow="129.60" occupancy="0.43" speed="16.87" length="2.00" nVehEntered="18"/>
+    <interval begin="3000.00" end="3500.00" id="det_0" nVehContrib="19" flow="136.80" occupancy="0.47" speed="16.34" length="2.00" nVehEntered="19"/>
+    <interval begin="3500.00" end="4000.00" id="det_0" nVehContrib="26" flow="187.20" occupancy="0.62" speed="16.87" length="2.00" nVehEntered="26"/>
+    <interval begin="4000.00" end="4500.00" id="det_0" nVehContrib="19" flow="136.80" occupancy="0.47" speed="16.34" length="2.00" nVehEntered="19"/>
+    <interval begin="4500.00" end="5000.00" id="det_0" nVehContrib="20" flow="144.00" occupancy="0.48" speed="16.83" length="2.00" nVehEntered="20"/>
+    <interval begin="5000.00" end="5001.00" id="det_0" nVehContrib="0" flow="0.00" occupancy="0.00" speed="-1.00" length="-1.00" nVehEntered="0"/>
+</detector>

@@ -6,7 +6,7 @@
 <route id="route1" edges="1to2 2to3 3to5 5to7 7to9"/>
 
 <vehicle depart="10" id="veh2" route="route1" type="Car" color = "blue"/>
-<vehicle depart="15" id="veh3" route="route1" type="Car" />
+<vehicle depart="15" id="veh3" route="route1" type="Car" color = "blue"/>
     
 
 <vehicle depart="20" id="veh1" route="route1" type="Rogue" color = "255,0,0,255">

@@ -81,7 +81,7 @@ public:
 public:
     /// @brief Destructor.
     ~MSDevice_DSRC();
-
+    int RoadSideUnitDetect(double X_coordinate, double y_coordinate);
 
     // generates data about a vehicles BrakeSystemStatus. Very primal and only
     // provides data on whether the car is braking or not

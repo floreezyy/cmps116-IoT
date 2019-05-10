@@ -45,6 +45,10 @@
 #include "MSDevice_Tripinfo.h"
 #include "MSDevice_DSRC.h"
 
+#define RSU1_X_COR_MIN 300
+#define RSU1_Y_COR_MIN 500
+#define RSU1_X_COR_MAX 400
+#define RSU1_Y_COR_MAX 600
 
 // ===========================================================================
 // method definitions
@@ -83,6 +87,23 @@ MSDevice_DSRC::getTransmissionStatus(double currSpeed){
     return transStatus;
 
     // Need to find other ways to find REVERSE and NEUTRAL
+}
+
+// currently there is no interobject communication between a vehicle and Road Side Unit,
+// so as a temporary "hacky" solution is to hardcode the location of a RSU in the simulation
+// and output data to a file when it comes across the vicinity of the RSU
+int MSDevice_DSRC::RoadSideUnitDetect(double x_coordinate, double y_coordinate){
+
+    int rsu_detected = 0; // signal if the vehicle is near the RSU vicinity
+    
+    if (((x_coordinate >= RSU1_X_COR_MIN) && (x_coordinate <= RSU1_X_COR_MAX)) &&
+        ((y_coordinate >= RSU1_Y_COR_MIN) && (y_coordinate <= RSU1_Y_COR_MAX))) {
+        
+        rsu_detected = 1; // vehicle IS in the vicinity of RSU1
+
+    }
+    
+    return rsu_detected;
 }
 // ---------------------------------------------------------------------------
 // static initialisation methods
@@ -165,25 +186,25 @@ bool
 MSDevice_DSRC::notifyMove(SUMOVehicle& veh, double /* oldPos */,
                              double /* newPos */, double newSpeed) {
     msg_num++; //increment the message id
-    std::string file_name = "dsrc_out_" + veh.getID() + ".csv";                    
+    std::string file_name = "rsu_incoming_msg.csv";                    
     std::ofstream dsrcfile (file_name, std::ios_base::app);
-
+    
     //std::cout << "vehicleID: " << veh.getID() << " MoveUpdate: Speed=" << newSpeed << "\n";
     // check whether another device is present on the vehicle:
     MSDevice_Tripinfo* otherDevice = static_cast<MSDevice_Tripinfo*>(veh.getDevice(typeid(MSDevice_Tripinfo)));
-    if (otherDevice != 0) {
-        std::cout << "  veh '" << veh.getID() << " has device '" << otherDevice->getID() << "'\n";
-    }
+    // if (otherDevice != 0) {
+    //     std::cout << "  veh '" << veh.getID() << " has device '" << otherDevice->getID() << "'\n";
+    // }
 
     
     MSVehicle& sus = dynamic_cast<MSVehicle&>(veh);
     int veh_curr_speed = sus.getSpeed();
     int veh_prev_speed = sus.getPreviousSpeed();
-    
+    int rsu_detected = 0;
     
     //std::cout << "last speed: " <<  << " curr speed: " << sped << std::endl;
     //std::cout << "if this works the speed is: " << sped << "\n";
-    std::cout << "just to check, signals: " << sus.getSignals() << "\n";
+    //std::cout << "just to check, signals: " << sus.getSignals() << "\n";
     //auto start = std::chrono::system_clock::now();
     // dsrcfile << "MsgCount: " << msg_num << std::endl;
     // dsrcfile << "TemporaryID: " << veh.getID() << "_" << msg_num << "\n" <<std::endl;
@@ -199,41 +220,46 @@ MSDevice_DSRC::notifyMove(SUMOVehicle& veh, double /* oldPos */,
     // dsrcfile << "Vehicle Acceleration: " << veh.getAcceleration() << std::endl;
     // dsrcfile << "Vehicle Slope Angle: " << veh.getSlope() << std::endl;
 
-    dsrcfile << msg_num << ","; //MsgCount
-    dsrcfile << veh.getID() << "_" << msg_num << ","; //TemporaryID
-    dsrcfile << veh.getID() << ","; // VehicleID
-    dsrcfile << veh.getVehicleType().getID() << ","; // Vehicle Type
-    dsrcfile << veh.getVehicleType().getLength() << ","; // Vehicle Length
-    dsrcfile << veh.getVehicleType().getWidth() << ","; // Vehicle Width
-    dsrcfile << veh.getVehicleType().getHeight() << ","; // Vehicle Height
-    dsrcfile << veh.getAngle() << ","; // Vehicle Wheel Angle
-    dsrcfile << veh.getPosition().x() << ","; // Vehicle Longitude
-    dsrcfile << veh.getPosition().y() << ","; // Vehicle Latitude
-    dsrcfile << veh_curr_speed << ","; // Vehicle Speed
-    dsrcfile << veh.getAcceleration() << ","; //vehicle acceleration
-    dsrcfile << veh.getSlope() << ","; // Vehicle Slope
-    //dsrcfile << "time step is: " << SIMSTEP << std::endl;
-    brakeStatus = getBrakeSystemStatus(veh_prev_speed, veh_curr_speed);
-    if(brakeStatus == BRAKES_ON){
-        dsrcfile << "BRAKES_ON" << ",";
-    }
-    else{
-        dsrcfile << "BRAKES_OFF" << ",";
-    }
-    transStatus = getTransmissionStatus(veh_curr_speed);
-    if(transStatus == PARKED){
-        dsrcfile << "PARK" << ",";
-    }
-    else{
-        dsrcfile << "DRIVE" << ",";
-    }
-    auto sent = std::chrono::system_clock::now();
-    
-    // for BSM standards data should be collected at lest 10 times a second
-    std::time_t end_time = std::chrono::system_clock::to_time_t(sent);
+    rsu_detected = RoadSideUnitDetect(veh.getPosition().x(), veh.getPosition().y());
+    if(rsu_detected == 1){
+        std::cout << "VEHICLE IS IN THE VICINITY OF RSU 1 \n";
+        dsrcfile << msg_num << ","; //MsgCount
+        dsrcfile << veh.getID() << "_" << msg_num << ","; //TemporaryID
+        dsrcfile << veh.getID() << ","; // VehicleID
+        dsrcfile << veh.getVehicleType().getID() << ","; // Vehicle Type
+        dsrcfile << veh.getVehicleType().getLength() << ","; // Vehicle Length
+        dsrcfile << veh.getVehicleType().getWidth() << ","; // Vehicle Width
+        dsrcfile << veh.getVehicleType().getHeight() << ","; // Vehicle Height
+        dsrcfile << veh.getAngle() << ","; // Vehicle Wheel Angle
+        dsrcfile << veh.getPosition().x() << ","; // Vehicle Longitude
+        dsrcfile << veh.getPosition().y() << ","; // Vehicle Latitude
+        dsrcfile << veh_curr_speed << ","; // Vehicle Speed
+        dsrcfile << veh.getAcceleration() << ","; //vehicle acceleration
+        dsrcfile << veh.getSlope() << ","; // Vehicle Slope
+        //dsrcfile << "time step is: " << SIMSTEP << std::endl;
+        brakeStatus = getBrakeSystemStatus(veh_prev_speed, veh_curr_speed);
+        if(brakeStatus == BRAKES_ON){
+            dsrcfile << "BRAKES_ON" << ",";
+        }
+        else{
+            dsrcfile << "BRAKES_OFF" << ",";
+        }
+        transStatus = getTransmissionStatus(veh_curr_speed);
+        if(transStatus == PARKED){
+            dsrcfile << "PARK" << ",";
+        }
+        else{
+            dsrcfile << "DRIVE" << ",";
+        }
+        auto sent = std::chrono::system_clock::now();
+        
+        // for BSM standards data should be collected at lest 10 times a second
+        std::time_t end_time = std::chrono::system_clock::to_time_t(sent);
 
-    dsrcfile << std::ctime(&end_time);
-    dsrcfile << std::endl;
+        dsrcfile << std::ctime(&end_time);
+        dsrcfile << std::endl;
+    }
+    
     return true; // keep the device
 }
 

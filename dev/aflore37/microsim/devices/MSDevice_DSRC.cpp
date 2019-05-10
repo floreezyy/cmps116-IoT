@@ -167,7 +167,7 @@ MSDevice_DSRC::MSDevice_DSRC(SUMOVehicle& holder, const std::string& id,
     myCustomValue2(customValue2),
     myCustomValue3(customValue3) {
     
-    std::string file_name = "dsrc_out_" + holder.getID() + ".csv";   
+    std::string file_name = "rsu_incoming_msg.csv";   
     std::ofstream dsrcfile (file_name, std::ios_base::app);
 
     //Instantiate the json format by declaring the variables to use

@@ -37,6 +37,8 @@
 		   <destProbReroute id="3to5"/>
 		</interval>
     </rerouter>
-    <e1Detector id="det_0" lane="3to5_0" pos="100" freq="500" file="my_out.out.xml" />
+    <e1Detector id="rsu_1" lane="3to5_0" pos="100" freq="500" file="my_out.out.xml" />
+    <e1Detector id="rsu_2" lane="11to6_0" pos="100" freq="500" file="my_out.out.xml" />
+    <e1Detector id="rsu_3" lane="4to2_0" pos="100" freq="500" file="my_out.out.xml" />
 
 </additionals>

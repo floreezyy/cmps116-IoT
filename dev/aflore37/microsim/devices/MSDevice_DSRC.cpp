@@ -325,8 +325,9 @@ MSDevice_DSRC::notifyMove(SUMOVehicle& veh, double /* oldPos */,
         
         // for BSM standards data should be collected at lest 10 times a second
         std::time_t end_time = std::chrono::system_clock::to_time_t(sent);
-
-        dsrcfile << std::ctime(&end_time) << ",";
+        std::string timestamp(std::ctime(&end_time));
+        dsrcfile << timestamp.substr(0, timestamp.length()-1) << ",";
+        //dsrcfile << timestamp << ",";
         dsrcfile << "rsu_" << rsu_domain << ",";
         rsu_sig_strength = RSUSignalStrength(veh.getPosition().x(), veh.getPosition().y(), rsu_x_coordinate, rsu_y_coordinate);
         dsrcfile << rsu_sig_strength;

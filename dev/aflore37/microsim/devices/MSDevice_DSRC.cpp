@@ -28,6 +28,11 @@
 #include <config.h>
 #endif
 
+
+
+#include <string>
+#include <iomanip>
+#include <sstream>
 #include <iostream>
 #include <fstream> //file creation to output BSM data
 #include <chrono> //for calculating time of computations
@@ -45,65 +50,100 @@
 #include "MSDevice_Tripinfo.h"
 #include "MSDevice_DSRC.h"
 
-#define RSU1_X_COR_MIN 300
-#define RSU1_Y_COR_MIN 500
-#define RSU1_X_COR_MAX 400
-#define RSU1_Y_COR_MAX 600
-
+// ===========================================================================
+// module-level variables
+// ===========================================================================
+int msg_num = 0; // message count for DSRC communication standards
+int brakeStatus = 0; // variable holding the brake status information
+int transStatus = 0; // variable holding the transmission state information
+int rsu_domain = NONE; // holds information on the vehicles current location in terms of RSU domains
+int rsu_detected = NONE;
+double rsu_x_coordinate = 0;
+double rsu_y_coordinate = 0;
+double rsu_sig_strength = 0; // calculates the signal strength of the RSU to the vehicle
 // ===========================================================================
 // method definitions
 // ===========================================================================
-// A basic getHelper function that calculates the current brakesystem status status
-// of the vehicle based on the speed of the vehicle at time t and t-1. If the
-// current vehicle speed is less than the previous speed at time t-1, we can
-// assume that the car is slowing down 
+
 int
 MSDevice_DSRC::getBrakeSystemStatus(double prevSpeed, double currSpeed){
     
     int brakeStatus; // returns if brakes are on or off
-    if(prevSpeed > currSpeed){ // if the speed is slowwinf down, then brakes are on
+    if(prevSpeed > currSpeed){ // if the speed is slowwing down, then brakes are on
         brakeStatus = BRAKES_ON;
     }
-    else{
+    else{ // the vehicle is not slowing down, so brakes must be on
         brakeStatus = BRAKES_OFF;
     }
-    return brakeStatus;
+    return brakeStatus; // return the brake status of the vehicle  
 }
 
 
-// A basic getHelper function that calculates the current TransmissionStateSystem status status
-// of the vehicle based on the speed of the vehicle at time t. If the
-// current vehicle speed is 0, then the car is parked 
+
 int
 MSDevice_DSRC::getTransmissionStatus(double currSpeed){
     
-    int transStatus; // returns if brakes are on or off
-    if(currSpeed != 0.0){ // if the speed is slowwinf down, then brakes are on
+    int transStatus; // variable that holds the current transmission status of the vehicle
+    if(currSpeed != 0.0){ // if the speed is positive and non zero, car is driving
         transStatus = DRIVE;
     }
+    else if(currSpeed < 0.0){ // if vehicle speed is negative, meaning car is backtracking
+        transStatus = REVERSE; // transmission is in reverse
+    }
     else{
-        transStatus = PARKED;
+        transStatus = PARKED; // car speed is 0.0, so it is parked or vehicle has stopped
     }
     return transStatus;
 
-    // Need to find other ways to find REVERSE and NEUTRAL
+    // Need to find other ways to find REVERSE and NEUTRAL to better represent transmissionStatus
 }
 
-// currently there is no interobject communication between a vehicle and Road Side Unit,
-// so as a temporary "hacky" solution is to hardcode the location of a RSU in the simulation
-// and output data to a file when it comes across the vicinity of the RSU
-int MSDevice_DSRC::RoadSideUnitDetect(double x_coordinate, double y_coordinate){
 
-    int rsu_detected = 0; // signal if the vehicle is near the RSU vicinity
+
+int 
+MSDevice_DSRC::RoadSideUnitDetect(double x_coordinate, double y_coordinate){
+
+    int rsu_detected = 0; // signal if the vehicle is near a RSU vicinity
     
-    if (((x_coordinate >= RSU1_X_COR_MIN) && (x_coordinate <= RSU1_X_COR_MAX)) &&
-        ((y_coordinate >= RSU1_Y_COR_MIN) && (y_coordinate <= RSU1_Y_COR_MAX))) {
+    // if the vehicles current coordinates are within the range of RSU 1
+    if (((x_coordinate >= RSU1_X_COR_MIN_RANGE) && (x_coordinate <= RSU1_X_COR_MAX_RANGE)) &&
+        ((y_coordinate >= RSU1_Y_COR_MIN_RANGE) && (y_coordinate <= RSU1_Y_COR_MAX_RANGE))) {
         
-        rsu_detected = 1; // vehicle IS in the vicinity of RSU1
+        rsu_detected = RSU_1_DOMAIN; // vehicle IS in the vicinity of RSU1
 
     }
-    
+    // if the vehicles current coordinates are within the range of RSU 2
+    else if (((x_coordinate >= RSU2_X_COR_MIN_RANGE) && (x_coordinate <= RSU2_X_COR_MAX_RANGE)) &&
+        ((y_coordinate >= RSU2_Y_COR_MIN_RANGE) && (y_coordinate <= RSU2_Y_COR_MAX_RANGE))) {
+        
+        rsu_detected = RSU_2_DOMAIN; // vehicle IS in the vicinity of RSU2
+
+    }
+    // if the vehicles current coordinates are within the range of RSU 3
+    else if (((x_coordinate >= RSU3_X_COR_MIN_RANGE) && (x_coordinate <= RSU3_X_COR_MAX_RANGE)) &&
+        ((y_coordinate >= RSU3_Y_COR_MIN_RANGE) && (y_coordinate <= RSU3_Y_COR_MAX_RANGE))) {
+        
+        rsu_detected = RSU_3_DOMAIN; // vehicle IS in the vicinity of RSU3
+
+    }
+    else{ // the vehicle is currently not in the range of any RSU mentioned within light_run sim
+        rsu_detected = NONE; 
+    }
     return rsu_detected;
+}
+
+int 
+MSDevice_DSRC::RSUSignalStrength(double x_coordinate, double y_coordinate, double x_rsu_coordinate, double y_rsu_coordinate){
+
+    double signal_strength = 0;
+
+	double x_distance = x_coordinate - x_rsu_coordinate;
+	double y_distance = y_coordinate - y_rsu_coordinate;
+	
+	double abs_distance = sqrt((x_distance*x_distance) + (y_distance*y_distance));
+    signal_strength = 100.0 - (abs_distance * 2);
+    
+    return abs(signal_strength);
 }
 // ---------------------------------------------------------------------------
 // static initialisation methods
@@ -167,27 +207,59 @@ MSDevice_DSRC::MSDevice_DSRC(SUMOVehicle& holder, const std::string& id,
     myCustomValue2(customValue2),
     myCustomValue3(customValue3) {
     
-    std::string file_name = "rsu_incoming_msg.csv";   
-    std::ofstream dsrcfile (file_name, std::ios_base::app);
+    int i = 0; // counter for number of RSU files to generate
+    //std::ostringstream file_name;
+    std::string file_name;
+    for (i = 1; i <= NUM_RSU_ACTIVE; i++) // for every RSU active on simulation, create own RSU file
+    {
+        std::stringstream file_name;
+        file_name << "RSU_" << std::to_string(i) << "_dsrc_pkt_received" << ".csv";
+        //std::string query(file_name.str());
+        std::ofstream file(file_name.str()); // make string into file name
 
-    //Instantiate the json format by declaring the variables to use
-    dsrcfile << "MsgCount,TemporaryID,VehicleID,Vehicle Type,Vehicle Length,Vehicle Width,Vehicle Height,Vehicle Wheel Angle,Longitude,Latitude,Vehicle Speed,Vehicle Acceleration,Vehicle Slope Angle,BrakeSystemStatus,TransmissionState,Dsecond" << "\n"; 
-    //std::cout << "this should only pront once" << "\n";
+        // data is formatted as a csv file for processing, data collecting purposes
+        file << "MsgCount,TemporaryID,VehicleID,Vehicle Type,Vehicle Length,Vehicle Width," << 
+        "Vehicle Height,Vehicle Wheel Angle,Longitude,Latitude,Vehicle Speed,Vehicle Acceleration," << 
+        "Vehicle Slope Angle,BrakeSystemStatus,TransmissionState,Dsecond,RSU_ID,RSU_SIG_STRENGTH" << "\n"; 
+    }
 }
 
 
 MSDevice_DSRC::~MSDevice_DSRC() {
 }
 
-int msg_num = 0;
-int brakeStatus = 0;
-int transStatus = 0;
+
 bool
 MSDevice_DSRC::notifyMove(SUMOVehicle& veh, double /* oldPos */,
                              double /* newPos */, double newSpeed) {
+    
+    std::string rsu_file;                       
+    rsu_domain = RoadSideUnitDetect(veh.getPosition().x(), veh.getPosition().y());
+    switch(rsu_domain){
+        case RSU_1_DOMAIN:
+            rsu_file = "RSU_1_dsrc_pkt_received.csv";
+            rsu_x_coordinate = RSU1_X_COORDINATE;
+            rsu_y_coordinate = RSU1_Y_COORDINATE;
+            break;
+        case RSU_2_DOMAIN:
+            rsu_file = "RSU_2_dsrc_pkt_received.csv";
+            rsu_x_coordinate = RSU2_X_COORDINATE;
+            rsu_y_coordinate = RSU2_Y_COORDINATE;
+            break;
+        case RSU_3_DOMAIN:
+            rsu_file = "RSU_3_dsrc_pkt_received.csv";
+            rsu_x_coordinate = RSU3_X_COORDINATE;
+            rsu_y_coordinate = RSU3_Y_COORDINATE;
+            break;
+    }
+    rsu_detected = NONE;
+    if(rsu_domain != NONE){
+        rsu_detected = rsu_domain;
+    }
+    //std::string rsu_id = "RSU_" << rsu_domain;
     msg_num++; //increment the message id
-    std::string file_name = "rsu_incoming_msg.csv";                    
-    std::ofstream dsrcfile (file_name, std::ios_base::app);
+    //std::string file_name = "rsu_incoming_msg.csv";                    
+    std::ofstream dsrcfile (rsu_file, std::ios_base::app);
     
     //std::cout << "vehicleID: " << veh.getID() << " MoveUpdate: Speed=" << newSpeed << "\n";
     // check whether another device is present on the vehicle:
@@ -200,7 +272,6 @@ MSDevice_DSRC::notifyMove(SUMOVehicle& veh, double /* oldPos */,
     MSVehicle& sus = dynamic_cast<MSVehicle&>(veh);
     int veh_curr_speed = sus.getSpeed();
     int veh_prev_speed = sus.getPreviousSpeed();
-    int rsu_detected = 0;
     
     //std::cout << "last speed: " <<  << " curr speed: " << sped << std::endl;
     //std::cout << "if this works the speed is: " << sped << "\n";
@@ -220,9 +291,8 @@ MSDevice_DSRC::notifyMove(SUMOVehicle& veh, double /* oldPos */,
     // dsrcfile << "Vehicle Acceleration: " << veh.getAcceleration() << std::endl;
     // dsrcfile << "Vehicle Slope Angle: " << veh.getSlope() << std::endl;
 
-    rsu_detected = RoadSideUnitDetect(veh.getPosition().x(), veh.getPosition().y());
-    if(rsu_detected == 1){
-        std::cout << "VEHICLE IS IN THE VICINITY OF RSU 1 \n";
+    if(rsu_detected != NONE){
+        //std::cout << "VEHICLE IS IN THE VICINITY OF RSU 1 \n";
         dsrcfile << msg_num << ","; //MsgCount
         dsrcfile << veh.getID() << "_" << msg_num << ","; //TemporaryID
         dsrcfile << veh.getID() << ","; // VehicleID
@@ -256,7 +326,10 @@ MSDevice_DSRC::notifyMove(SUMOVehicle& veh, double /* oldPos */,
         // for BSM standards data should be collected at lest 10 times a second
         std::time_t end_time = std::chrono::system_clock::to_time_t(sent);
 
-        dsrcfile << std::ctime(&end_time);
+        dsrcfile << std::ctime(&end_time) << ",";
+        dsrcfile << "rsu_" << rsu_domain << ",";
+        rsu_sig_strength = RSUSignalStrength(veh.getPosition().x(), veh.getPosition().y(), rsu_x_coordinate, rsu_y_coordinate);
+        dsrcfile << rsu_sig_strength;
         dsrcfile << std::endl;
     }
     

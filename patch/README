@@ -1,1 +1,1 @@
-diff -ruN src_new/ src_old/ > file.patch
+diff -ruN old/ new/ > file.patch

@@ -39,8 +39,9 @@ def run():
         traci.vehicle.moveToXY('veh2', '2to3', 0, 254.85, 453)
         traci.vehicle.setSpeed('veh2', 0)
         potholeColors = [205,133,63,255]
-        #traci.polygon.add('pothole_1', 's', potholeColors, True, "", 2.00);
-        traci.polygon.add("sdvav", ((1, 1), (float('nan'), 42), (1, 10), (10, 10)), (1, 2, 3, 4), True, "test")
+        #potholeShape = [256.3,450]shape="256.3,450 253.7,450 253.7,453 256.3,453"
+        traci.polygon.add('pothole_1', ([256.4,450],[253.7,450],[253.7,453],[256.3,453]), potholeColors, True, '', 2);
+        #traci.polygon.add("sdvav", ((1, 1), (float('nan'), 42), (1, 10), (10, 10)), (1, 2, 3, 4), True, "test")
             #print rogue position to termon.add('pothole_1', {[4inal
             #print traci.vehicle.getPosition(rogueVehicle)
             

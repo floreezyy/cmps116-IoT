@@ -1,6 +1,6 @@
 <additionals>
     
-    <!--<poly id="1" type = "building" color="205,133,63" fill="1" layer="2.00" shape="256.3,450 253.7,450 253.7,453 256.3,453"/>-->
+    <poly id="1" type = "building" color="255,230,230" fill="1" layer="-1.00" shape="1952.28,1419.89 1966.35,1420.19 1966.85,1396.76 1952.78,1396.46 1952.28,1419.89"/>
 
     <rerouter id="rerouter_0" edges="3to5" probability="1">
         <interval begin="0" end="10000">
@@ -37,6 +37,8 @@
 		   <destProbReroute id="3to5"/>
 		</interval>
     </rerouter>
-    <e1Detector id="det_0" lane="3to5_0" pos="100" freq="500" file="my_out.out.xml" />
+    <e1Detector id="rsu_1" lane="3to5_0" pos="100" freq="500" file="my_out.out.xml" />
+    <e1Detector id="rsu_2" lane="11to6_0" pos="100" freq="500" file="my_out.out.xml" />
+    <e1Detector id="rsu_3" lane="4to2_0" pos="100" freq="500" file="my_out.out.xml" />
 
 </additionals>

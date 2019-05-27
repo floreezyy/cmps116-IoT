@@ -1,4 +1,6 @@
 MsgCount,TemporaryID,VehicleID,Vehicle Type,Vehicle Length,Vehicle Width,Vehicle Height,Vehicle Wheel Angle,Longitude,Latitude,Vehicle Speed,Vehicle Acceleration,Vehicle Slope Angle,BrakeSystemStatus,TransmissionState,Dsecond,RSU_ID,RSU_SIG_STRENGTH
+<<<<<<< HEAD
+=======
 548,veh1a_548,veh1a,Rogue,2,1.8,1.5,0,304.607,598.35,14,1,0,BRAKES_OFF,DRIVE,5-26-2019 23:49:21:302
 rsu_1,4
 557,veh1a_557,veh1a,Rogue,2,1.8,1.5,0,319.607,598.35,15,1,0,BRAKES_OFF,DRIVE,5-26-2019 23:49:21:315
@@ -349,3 +351,4 @@ rsu_1,96
 rsu_1,66
 2926,veh1d_2926,veh1d,Rogue,2,1.8,1.5,0,392.07,595.05,19,1,0,BRAKES_OFF,DRIVE,5-26-2019 23:49:23:997
 rsu_1,28
+>>>>>>> 16f8aee19b444d88438d4f2b9dddf0909885d53f

@@ -9,6 +9,7 @@ src/utils/common/SUMOVehicleClass.cpp
 	added string converter for rogue class and shape
 erCapacity(0), boardingDuration(500),
       loadingDuration(90000), width(1.8), height(1.5), shape(SVS_UNKNOWN), osgFile("car-normal-citrus.obj"),
+
 src/utils/vehicle/SUMOVTypeParameter.cpp
 	added switch case for SVC_ROGUE with:
 	SVS_PASSENGER shape

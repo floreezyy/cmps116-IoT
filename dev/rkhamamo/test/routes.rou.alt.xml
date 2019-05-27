@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on Fri May 24 02:48:13 2019 by SUMO duarouter Version 0.32.0
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/duarouterConfiguration.xsd">
+
+    <input>
+        <net-file value="my_net.net.xml"/>
+        <route-files value="trips.trips.xml"/>
+    </input>
+
+    <output>
+        <output-file value="routes.rou.xml"/>
+        <alternatives-output value="routes.rou.alt.xml"/>
+    </output>
+
+    <processing>
+        <ignore-errors value="true"/>
+    </processing>
+
+    <time>
+        <begin value="0"/>
+        <end value="5.0"/>
+    </time>
+
+    <report>
+        <no-warnings value="true"/>
+        <no-step-log value="true"/>
+    </report>
+
+</configuration>
+-->
+
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+    <vType id="rogue" vClass="rogue" accel="1.0"/>
+    <vehicle id="0" type="rogue" depart="0.00">
+        <routeDistribution last="0">
+            <route cost="14.34" probability="1.00000000" edges="6to8 8to6 6to11 11to12"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="1" type="rogue" depart="1.00">
+        <routeDistribution last="0">
+            <route cost="32.73" probability="1.00000000" edges="2to4 4to6 6to11 11to5 5to7"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="2" type="rogue" depart="2.00">
+        <routeDistribution last="0">
+            <route cost="23.57" probability="1.00000000" edges="6to4 4to6 6to11 11to5 5to3 3to5"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="3" type="rogue" depart="3.00">
+        <routeDistribution last="0">
+            <route cost="16.14" probability="1.00000000" edges="12to11 11to6 6to4 4to6"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="4" type="rogue" depart="4.00">
+        <routeDistribution last="0">
+            <route cost="49.04" probability="1.00000000" edges="4to2 2to3 3to5 5to7 7to9"/>
+        </routeDistribution>
+    </vehicle>
+</routes>

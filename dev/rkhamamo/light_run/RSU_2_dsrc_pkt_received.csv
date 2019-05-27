@@ -1,4 +1,6 @@
 MsgCount,TemporaryID,VehicleID,Vehicle Type,Vehicle Length,Vehicle Width,Vehicle Height,Vehicle Wheel Angle,Longitude,Latitude,Vehicle Speed,Vehicle Acceleration,Vehicle Slope Angle,BrakeSystemStatus,TransmissionState,Dsecond,RSU_ID,RSU_SIG_STRENGTH
+<<<<<<< HEAD
+=======
 719,veh1a_719,veh1a,Rogue,2,1.8,1.5,-1.5708,495.05,333.613,33,1,0,BRAKES_OFF,DRIVE,Thu May 23 23:58:09 2019,rsu_2,16
 729,veh1a_729,veh1a,Rogue,2,1.8,1.5,-1.5708,495.05,299.613,34,1,0,BRAKES_OFF,DRIVE,Thu May 23 23:58:09 2019,rsu_2,84
 730,veh1b_730,veh1b,Rogue,2,1.8,1.5,-1.5708,495.05,336.114,33,1,0,BRAKES_OFF,DRIVE,Thu May 23 23:58:09 2019,rsu_2,11
@@ -115,3 +117,4 @@ MsgCount,TemporaryID,VehicleID,Vehicle Type,Vehicle Length,Vehicle Width,Vehicle
 1644,veh1_1644,veh1,Rogue,2,1.8,1.5,-1.5708,495.05,252.681,9,1,0,BRAKES_OFF,DRIVE,Thu May 23 23:58:10 2019,rsu_2,21
 1645,veh1d_1645,veh1d,Rogue,2,1.8,1.5,-1.5708,495.05,265.125,8,1,0,BRAKES_OFF,DRIVE,Thu May 23 23:58:10 2019,rsu_2,46
 1653,veh1d_1653,veh1d,Rogue,2,1.8,1.5,-1.5708,495.05,255.182,9,1,0,BRAKES_OFF,DRIVE,Thu May 23 23:58:10 2019,rsu_2,26
+>>>>>>> 16f8aee19b444d88438d4f2b9dddf0909885d53f

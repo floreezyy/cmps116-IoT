@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<<<<<<< HEAD
+<!-- generated on Tue 21 May 2019 12:29:36 AM UTC by SUMO gui Version 0.32.0
+=======
 <!-- generated on Thu 23 May 2019 11:57:55 PM UTC by SUMO gui Version 0.32.0
+>>>>>>> 16f8aee19b444d88438d4f2b9dddf0909885d53f
 <?xml version="1.0" encoding="UTF-8"?>
 
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
@@ -21,14 +25,24 @@
     </time>
 
     <traci_server>
+<<<<<<< HEAD
+        <remote-port value="50999"/>
+=======
         <remote-port value="54883"/>
+>>>>>>> 16f8aee19b444d88438d4f2b9dddf0909885d53f
     </traci_server>
 
 </configuration>
 -->
 
 <detector xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/det_e1_file.xsd">
+<<<<<<< HEAD
+    <interval begin="0.00" end="38.00" id="rsu_1" nVehContrib="0" flow="0.00" occupancy="0.00" speed="-1.00" length="-1.00" nVehEntered="0"/>
+    <interval begin="0.00" end="38.00" id="rsu_2" nVehContrib="0" flow="0.00" occupancy="0.00" speed="-1.00" length="-1.00" nVehEntered="0"/>
+    <interval begin="0.00" end="38.00" id="rsu_3" nVehContrib="0" flow="0.00" occupancy="0.00" speed="-1.00" length="-1.00" nVehEntered="0"/>
+=======
     <interval begin="0.00" end="231.00" id="rsu_1" nVehContrib="8" flow="124.68" occupancy="0.43" speed="16.41" length="2.00" nVehEntered="8"/>
     <interval begin="0.00" end="231.00" id="rsu_2" nVehContrib="12" flow="187.01" occupancy="0.98" speed="19.55" length="2.00" nVehEntered="12"/>
     <interval begin="0.00" end="231.00" id="rsu_3" nVehContrib="3" flow="46.75" occupancy="0.26" speed="10.00" length="2.00" nVehEntered="4"/>
+>>>>>>> 16f8aee19b444d88438d4f2b9dddf0909885d53f
 </detector>

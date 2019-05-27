@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- generated on 2019-05-24 02:48:13.770794 by $Id$ via randomTrips.py
+  options: -n my_net.net.xml -e 5 <doubleminus>vehicle-class rogue -l <doubleminus>validate <doubleminus>trip-attributes=accel="1.0"
+-->
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+    <vType accel="1.0" id="rogue" vClass="rogue">
+    </vType>
+    <trip id="0" depart="0.00" from="6to8" to="11to12" type="rogue"/>
+    <trip id="1" depart="1.00" from="2to4" to="5to7" type="rogue"/>
+    <trip id="2" depart="2.00" from="6to4" to="3to5" type="rogue"/>
+    <trip id="3" depart="3.00" from="12to11" to="4to6" type="rogue"/>
+    <trip id="4" depart="4.00" from="4to2" to="7to9" type="rogue"/>
+</routes>

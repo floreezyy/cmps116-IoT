@@ -39,6 +39,10 @@ def run():
             print traci.vehicle.getPosition('veh1b')
             print traci.vehicle.getPosition('veh1c')
             print traci.vehicle.getPosition('veh1d')
+            print traci.vehicle.getPosition('veh2')
+            print traci.vehicle.getPosition('veh3')
+            print traci.vehicle.getPosition('veh4')
+            print traci.vehicle.getPosition('veh5')
             #make vehicle stop at this intersection
             #x, y = traci.junction.getPosition("n2")
             #traci.vehicle.rogueNodeException(rogueVehicle, x, y)

@@ -1,7 +1,6 @@
 <configuration>
 	<input>
 		<net-file value="my_net.net.xml"/>
-        <route-files value="routes.rou.xml"/>
 		<additional-files value="trips.trips.xml"/>
 	</input>
 	<time>

@@ -1,7 +1,8 @@
 
 <routes>
-<vType vClass ="passenger" accel="1.0" decel="5.0" id="Car" length = "2.0" maxSpeed="100.0" sigma="0.0" />
-<vType vClass ="rogue" accel="1.0" decel="5.0" id="Rogue" length = "2.0" maxSpeed="100.0" sigma="0.0" />
+
+        <vType id="Rogue" vClass="rogue" accel="1.0" probability="0.5"/>
+        <vType id="Car" vClass="passenger" accel="1.0" probability="0.5"/>
 
 <route id="route1" edges="1to2 2to3 3to5 5to7 7to9"/>
 

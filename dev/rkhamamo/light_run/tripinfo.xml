@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<<<<<<< HEAD
-<!-- generated on Tue 21 May 2019 12:29:36 AM UTC by SUMO gui Version 0.32.0
-=======
-<!-- generated on Thu 23 May 2019 11:57:55 PM UTC by SUMO gui Version 0.32.0
->>>>>>> 16f8aee19b444d88438d4f2b9dddf0909885d53f
+<!-- generated on Tue 28 May 2019 05:44:06 PM UTC by SUMO gui Version 0.32.0
 <?xml version="1.0" encoding="UTF-8"?>
 
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
@@ -25,11 +21,7 @@
     </time>
 
     <traci_server>
-<<<<<<< HEAD
-        <remote-port value="50999"/>
-=======
-        <remote-port value="54883"/>
->>>>>>> 16f8aee19b444d88438d4f2b9dddf0909885d53f
+        <remote-port value="51041"/>
     </traci_server>
 
 </configuration>

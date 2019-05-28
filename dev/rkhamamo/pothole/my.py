@@ -36,28 +36,14 @@ def run():
         #addVehicle('dummy', 'passenger', 'route1', '2to3_0', 10, -1)
         #traci.vehicle.add("car", "route1", typeID="passenger")
         #traci.vehicle.moveTo('veh2', '2to3_0', 44.7)
-        traci.vehicle.moveToXY('veh2', '2to3', 0, 254.85, 453)
-        traci.vehicle.setSpeed('veh2', 0)
+        
         potholeColors = [205,133,63,255]
         #potholeShape = [256.3,450]shape="256.3,450 253.7,450 253.7,453 256.3,453"
-        traci.polygon.add('pothole_1', ([256.4,450],[253.7,450],[253.7,453],[256.3,453]), potholeColors, True, '', 2);
-        #traci.polygon.add("sdvav", ((1, 1), (float('nan'), 42), (1, 10), (10, 10)), (1, 2, 3, 4), True, "test")
-            #print rogue position to termon.add('pothole_1', {[4inal
-            #print traci.vehicle.getPosition(rogueVehicle)
-            
-            #make vehicle stop at this intersection
-            #x, y = traci.junction.getPosition("n2")
-            #traci.vehicle.rogueNodeException(rogueVehicle, x, y)
-            
-        #if step == 20:
-
-            #traci.vehicle.rogueToggleFollowSpeed(rogueVehicle) 
-            #traci.vehicle.rogueToggleFollowDistance(rogueVehicle) 
-        
-        #if step == 21:
-
-            #traci.vehicle.rogueToggleFollowSpeed(rogueVehicle) 
-            #traci.vehicle.rogueToggleFollowDistance(rogueVehicle) 
+        if step == 2:
+            traci.vehicle.add("pothile", "a")
+            traci.vehicle.moveToXY('pothile', '2to3', 0, 254.85, 453)
+            traci.vehicle.setSpeed('pothile', 0)
+            #traci.polygon.add('pothole_1', ([256.3,450],[253.7,450],[253.7,453],[256.3,453]), potholeColors, fill=True, polygonType='building', layer=2);
         
         step += 1
 

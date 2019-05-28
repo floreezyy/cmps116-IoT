@@ -1,1 +1,4 @@
-diff -ruN old/ new/ > file.patch
+diff -urBNs sumo-OLD-0.32.0/ sumo-0.32.0/ >file.patch
+
+patch -t -p0 <file.patch
+

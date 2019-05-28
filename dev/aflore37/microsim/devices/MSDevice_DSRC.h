@@ -10,12 +10,18 @@
 //
 /****************************************************************************/
 /// @file    MSDevice_DSRC.h
+/// @author  Alexis Flores
+
+/// based on the work from the example device provided by:
 /// @author  Daniel Krajzewicz
 /// @author  Jakob Erdmann
-/// @date    11.06.2013
+///
+///
+/// @date    05.27.2019
 /// @version $Id$
 ///
-// A device which stands as an implementation DSRC and which outputs movereminder calls
+// A device which generates Basic Safety Messages of a vehicle and outputs them 
+// to console or Road Side Unit files specified by the User
 /****************************************************************************/
 #ifndef MSDevice_DSRC_h
 #define MSDevice_DSRC_h
@@ -33,10 +39,12 @@
 #include "MSDevice.h"
 #include <utils/common/SUMOTime.h>
 
+// 3 currently implemented states for TransmissionStateStatus based on vehicle speed
 #define PARKED 0
 #define DRIVE 1
 #define REVERSE 2
 
+// 2 currently implemented states of BrakeSystemStatus parameter based on vehicle speed
 #define BRAKES_OFF 0 // brakes are on
 #define BRAKES_ON 1 // brakes are off
 
@@ -54,27 +62,28 @@
 
 #define NUM_RSU_ACTIVE 3 // number of RSU devices inside light_run simulation, will create X number of RSU message files
 
-#define RSU1_X_COORDINATE 356.57 
-#define RSU1_Y_COORDINATE 594.94 
-#define RSU1_X_COR_MIN_RANGE 300 
+#define RSU1_X_COORDINATE 356.57 // absolute x coordinate of the RSU 1 polygon in the simulation
+#define RSU1_Y_COORDINATE 594.94 // absolute y coordinate of the RSU 1 polygon in the simulation
+#define RSU1_X_COR_MIN_RANGE 300 // these values are the ranges that determine RSU signal strength 
 #define RSU1_Y_COR_MIN_RANGE 550
 #define RSU1_X_COR_MAX_RANGE 400
 #define RSU1_Y_COR_MAX_RANGE 650
 
-#define RSU2_X_COORDINATE 495.03
-#define RSU2_Y_COORDINATE 291.76
-#define RSU2_X_COR_MIN_RANGE 450
+#define RSU2_X_COORDINATE 495.03 // absolute x coordinate of the RSU 2 polygon in the simulation
+#define RSU2_Y_COORDINATE 291.76 // absolute y coordinate of the RSU 2 polygon in the simulation
+#define RSU2_X_COR_MIN_RANGE 450 // these values are the ranges that determine RSU signal strength 
 #define RSU2_Y_COR_MIN_RANGE 250
 #define RSU2_X_COR_MAX_RANGE 550
 #define RSU2_Y_COR_MAX_RANGE 350
 
-#define RSU3_X_COORDINATE 254.99 
-#define RSU3_Y_COORDINATE 306.39
-#define RSU3_X_COR_MIN_RANGE 200
+#define RSU3_X_COORDINATE 254.99 // absolute x coordinate of the RSU 3 polygon in the simulation
+#define RSU3_Y_COORDINATE 306.39 // absolute y coordinate of the RSU 3 polygon in the simulation
+#define RSU3_X_COR_MIN_RANGE 200 // these values are the ranges that determine RSU signal strength 
 #define RSU3_Y_COR_MIN_RANGE 250
 #define RSU3_X_COR_MAX_RANGE 300
 #define RSU3_Y_COR_MAX_RANGE 350
 
+// vehicles will pass through 3 different RSU ranges and will output to the corresponding file based on the location domain
 #define NONE 0
 #define RSU_1_DOMAIN 1
 #define RSU_2_DOMAIN 2
@@ -137,6 +146,9 @@ public:
      * current vehicle speed is less than the previous speed at time t-1, we can
      * assume that the car is slowing down 
      * 
+     * NOTE: brake system is not currently supported in SUMO so braking status returned
+     *       is completely based on the changing speed of the vehicle
+     * 
      * @param[in] prevSpeed is the speed of the vehicle at the previous timestep t-1
      * @param[in] currSpeed is the speed of the vehicle at the current timestep t
      *
@@ -150,6 +162,9 @@ public:
      * current vehicle speed is 0, then the car is PARKED. Less than 0 we assume the vehicle is
      * in REVERSE, or if speed is positive, then the vehicle is in the DRIVE state.
      *
+     * NOTE: transmission status is not currently supported in SUMO so the transmission status
+     *       returned is completely based on the changing speed of the vehicle
+     * 
      * @param[in] currSpeed is the speed of the vehicle at the current timestep t
      *
      * @return the transmission status of the vehicle based current speed
@@ -162,6 +177,10 @@ public:
      * so as a temporary "hacky" solution is to hardcode the location of a RSU 
      * (found inside the additional files) in the simulatio and output data to a file 
      * when it comes across the vicinity of the RSU
+     * 
+     * NOTE: x_coordinate and y_coordinate are the x and y coordinates of the vehicle.
+     *       this will check the hardcoded #define'd values on lines 65-90 and return
+     *       whether the vehicle is inside the range of hardcoded values
      * 
      * @param[in] x_coordinate is the current longitudal coordiate of the vehicle
      * @param[in] y_coordinate is the current latitudal coordiate of the vehicle
@@ -198,30 +217,6 @@ public:
                     double newPos, double newSpeed);
 
 
-    /** @brief Saves departure info on insertion
-     *
-     * @param[in] veh The entering vehicle.
-     * @param[in] reason how the vehicle enters the lane
-     * @return Always true
-     * @see MSMoveReminder::notifyEnter
-     * @see MSMoveReminder::Notification
-     */
-    //bool notifyEnter(SUMOVehicle& veh, MSMoveReminder::Notification reason, const MSLane* enteredLane = 0);
-
-
-    /** @brief Saves arrival info
-     *
-     * @param[in] veh The leaving vehicle.
-     * @param[in] lastPos Position on the lane when leaving.
-     * @param[in] isArrival whether the vehicle arrived at its destination
-     * @param[in] isLaneChange whether the vehicle changed from the lane
-     * @return True if it did not leave the net.
-     */
-    bool notifyLeave(SUMOVehicle& veh, double lastPos,
-                     MSMoveReminder::Notification reason, const MSLane* enteredLane = 0);
-    /// @}
-
-
     /// @brief return the name for this type of device
     const std::string deviceName() const {
         return "dsrc";
@@ -255,7 +250,7 @@ private:
 
 
 private:
-    // private state members of the DSRC device
+    // private state members of the DSRC device, not really used for anything. Based on example device.
 
     /// @brief a value which is initialised based on a commandline/configuration option
     double myCustomValue1;
@@ -282,4 +277,3 @@ private:
 #endif
 
 /****************************************************************************/
-

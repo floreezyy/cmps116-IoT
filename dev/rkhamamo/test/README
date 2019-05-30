@@ -1,0 +1,2 @@
+~/src/sumo/tools/randomTrips.py -n my_net.net.xml -e 40 --vehicle-class rogue --vehicle-percentage 13 --device dsrc --vehicle-class passenger --vehicle-percentage 24 --device dsrc --vehicle-class emergency --vehicle-percentage 77 --device none --trip-attributes="accel=\"1.0\" color=\"red\""
+

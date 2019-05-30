@@ -195,8 +195,8 @@ SUMOVTypeParameter::SUMOVTypeParameter(const std::string& vtid, const SUMOVehicl
             break;
         case SVC_ROGUE:
             speedFactor.parse("2.0"); //double the speed limit
-            impatience = 1.0; //behavior merges to avoid stops
-            minGap = 0.5; //smaller space left between cars
+            impatience = 1.0; //behavior merges to avoid deceleration
+            minGap = 0.5; //tailgating
             shape = SVS_PASSENGER; //appear as default car
             emissionClass = PollutantsInterface::getClassByName(EMPREFIX + "PC_G_EU4", vclass);
             break;

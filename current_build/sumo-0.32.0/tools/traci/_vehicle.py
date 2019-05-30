@@ -177,8 +177,6 @@ class VehicleDomain(Domain):
 
         Returns the position of the named vehicle within the last step [m,m].
         """
-        self._connection._sendIntCmd(
-            tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_SPEEDSETMODE, vehID, 7)
         return self._getUniversal(tc.VAR_POSITION, vehID)
 
     def getPosition3D(self, vehID):
@@ -1196,19 +1194,23 @@ class VehicleDomain(Domain):
             self._connection._sendDoubleCmd(
             tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_MINGAP, vehID, 0.5)
         
-    def rogueToggleLightRun(self, vehID):
+    def rogueDisableLightRun(self, vehID):
         """rogueToggleLightRun(string) -> None
 
         Sets the vehicle's light respecting status with a bitset.
         """
-        if self._getUniversal(tc.VAR_SPEEDSETMODE, vehID) == 7:
-            self._connection._sendIntCmd(
-            tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_SPEEDSETMODE, vehID, 31)
-        else:
-            self._connection._sendIntCmd(
-            tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_SPEEDSETMODE, vehID, 7)
-                    
-    def rogueToggleFollowSpeed(self, vehID):
+        self._connection._sendIntCmd(
+        tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_SPEEDSETMODE, vehID, 31)
+        
+    def rogueEnableLightRun(self, vehID):
+        """rogueToggleLightRun(string) -> None
+
+        Sets the vehicle's light respecting status with a bitset.
+        """
+        self._connection._sendIntCmd(
+        tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_SPEEDSETMODE, vehID, 0)
+        
+    def rogueToggleSpeeding(self, vehID):
         """rogueToggleFollowSpeed(string) -> None
 
         Makes rogue vehicle follow the speed limit/disobey speed limit.
@@ -1227,29 +1229,14 @@ class VehicleDomain(Domain):
         """
         xs, ys = self._getUniversal(tc.VAR_POSITION, vehID)
         
-        if xs > (x - 30) and xs < (x + 30) and ys > (y - 30) and ys < (y + 30):
+        if xs > (x - 65) and xs < (x + 65) and ys > (y - 65) and ys < (y + 65):
             self._connection._sendIntCmd(
                 tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_SPEEDSETMODE, vehID, 31)
         else:
             self._connection._sendIntCmd(
-                tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_SPEEDSETMODE, vehID, 7)
+                tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_SPEEDSETMODE, vehID, 0)
         
-    def rogueEdgeException(self, vehID, x1, y1, x2, y2):
-
-        """rogueEdgeException(string, double, double, double) -> None
-
-        Sets the vehicle's rogue exception with edge coordinates.
-        """
-        xs, ys = self._getUniversal(tc.VAR_POSITION, vehID)
-        
-        if xs > x1 and xs < x2 and ys > (y1 - 20) and ys < (y2 + 20):
-            self._connection._sendDoubleCmd(
-                tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_SPEED_FACTOR, vehID, 1.0)
-        else:
-            self._connection._sendIntCmd(
-                tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_SPEEDSETMODE, vehID, 1.0)
-        
-    def superclass(self, vehID, routeID, typeID="DEFAULT_VEHTYPE", depart=None,
+    def spoof(self, vehID, routeID, typeID="DEFAULT_VEHTYPE", depart=None,
                 departLane="first", departPos="base", departSpeed="0",
                 arrivalLane="current", arrivalPos="max", arrivalSpeed="current",
                 fromTaz="", toTaz="", line="", personCapacity=0, personNumber=0):

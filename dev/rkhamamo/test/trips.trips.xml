@@ -1,50 +1,129 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- generated on 2019-05-28 17:07:02.444064 by $Id$
-  options: -n my_net.net.xml -e 40 <doubleminus>vehicle-class rogue <doubleminus>trip-attributes=accel="1.0" probability="0..02" color="red"
+<!-- generated on 2019-05-30 12:54:37.544559 by $Id$
+  options: -n my_net.net.xml -e 40 <doubleminus>vehicle-class rogue <doubleminus>vehicle-percentage 13 <doubleminus>device none <doubleminus>vehicle-class passenger <doubleminus>vehicle-percentage 24 <doubleminus>device dsrc <doubleminus>vehicle-class emergency <doubleminus>vehicle-percentage 77 <doubleminus>device dsrc <doubleminus>trip-attributes=accel="1.0" color="red"
 -->
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
-<vTypeDistribution id="rogue_vs_passenger">
-    <vType id="rogue" vClass="rogue" accel="1.0" probability="0.02" color="red"/>
-    <vType id="passenger" vClass="passenger" accel="1.0" probability="0.98" color="blue"/>
-</vTypeDistribution>
-    <trip id="0" depart="0.00" from="3to2" to="2to1" type="rogue"/>
-    <trip id="1" depart="1.00" from="2to4" to="2to3" type="rogue"/>
-    <trip id="2" depart="2.00" from="12to11" to="8to6" type="rogue"/>
-    <trip id="3" depart="3.00" from="6to4" to="5to3" type="rogue_vs_passenger"/>
-    <trip id="4" depart="4.00" from="4to6" to="6to11" type="rogue_vs_passenger"/>
-    <trip id="5" depart="5.00" from="1to2" to="2to4" type="rogue_vs_passenger"/>
-    <trip id="6" depart="6.00" from="4to6" to="3to2" type="rogue_vs_passenger"/>
-    <trip id="7" depart="7.00" from="6to8" to="8to6" type="rogue_vs_passenger"/>
-    <trip id="8" depart="8.00" from="11to5" to="11to12" type="rogue_vs_passenger"/>
-    <trip id="9" depart="9.00" from="4to6" to="4to6" type="rogue_vs_passenger"/>
-    <trip id="10" depart="10.00" from="12to11" to="2to3" type="rogue_vs_passenger"/>
-    <trip id="11" depart="11.00" from="2to3" to="3to2" type="rogue_vs_passenger"/>
-    <trip id="12" depart="12.00" from="12to11" to="6to4" type="rogue_vs_passenger"/>
-    <trip id="13" depart="13.00" from="11to6" to="5to11" type="rogue_vs_passenger"/>
-    <trip id="14" depart="14.00" from="5to11" to="8to6" type="rogue_vs_passenger"/>
-    <trip id="15" depart="15.00" from="12to11" to="6to11" type="rogue_vs_passenger"/>
-    <trip id="16" depart="16.00" from="4to2" to="6to4" type="rogue_vs_passenger"/>
-    <trip id="17" depart="17.00" from="6to8" to="11to5" type="rogue_vs_passenger"/>
-    <trip id="18" depart="18.00" from="11to6" to="3to2" type="rogue_vs_passenger"/>
-    <trip id="19" depart="19.00" from="11to5" to="8to6" type="rogue_vs_passenger"/>
-    <trip id="20" depart="20.00" from="5to7" to="4to6" type="rogue_vs_passenger"/>
-    <trip id="21" depart="21.00" from="5to11" to="6to11" type="rogue_vs_passenger"/>
-    <trip id="22" depart="22.00" from="4to6" to="4to2" type="rogue_vs_passenger"/>
-    <trip id="23" depart="23.00" from="6to8" to="2to3" type="rogue_vs_passenger"/>
-    <trip id="24" depart="24.00" from="11to5" to="8to6" type="rogue_vs_passenger"/>
-    <trip id="25" depart="25.00" from="5to11" to="7to5" type="rogue_vs_passenger"/>
-    <trip id="26" depart="26.00" from="2to4" to="6to8" type="rogue_vs_passenger"/>
-    <trip id="27" depart="27.00" from="6to11" to="11to12" type="rogue_vs_passenger"/>
-    <trip id="28" depart="28.00" from="4to6" to="2to3" type="rogue_vs_passenger"/>
-    <trip id="29" depart="29.00" from="4to2" to="2to3" type="rogue_vs_passenger"/>
-    <trip id="30" depart="30.00" from="4to2" to="7to5" type="rogue_vs_passenger"/>
-    <trip id="31" depart="31.00" from="6to4" to="5to7" type="rogue_vs_passenger"/>
-    <trip id="32" depart="32.00" from="10to8" to="11to12" type="rogue_vs_passenger"/>
-    <trip id="33" depart="33.00" from="5to11" to="4to2" type="rogue_vs_passenger"/>
-    <trip id="34" depart="34.00" from="7to5" to="8to10" type="rogue_vs_passenger"/>
-    <trip id="35" depart="35.00" from="2to3" to="2to1" type="rogue_vs_passenger"/>
-    <trip id="36" depart="36.00" from="10to8" to="6to4" type="rogue_vs_passenger"/>
-    <trip id="37" depart="37.00" from="11to6" to="7to5" type="rogue_vs_passenger"/>
-    <trip id="38" depart="38.00" from="1to2" to="2to1" type="rogue_vs_passenger"/>
-    <trip id="39" depart="39.00" from="7to5" to="11to12" type="rogue_vs_passenger"/>
+    <vType id="rogue" vClass="rogue" accel="1.0" color="red"/>
+    <vType id="passenger" vClass="passenger" accel="1.0" color="red"/>
+    <vType id="emergency" vClass="emergency" accel="1.0" color="red"/>
+    <trip id="0" depart="0.00" from="3to2" to="6to4" type="rogue">
+        <param key="has.none.device" value="true"/>
+    </trip>
+    <trip id="1" depart="1.00" from="5to7" to="2to3" type="rogue">
+        <param key="has.none.device" value="true"/>
+    </trip>
+    <trip id="2" depart="2.00" from="7to5" to="2to3" type="rogue">
+        <param key="has.none.device" value="true"/>
+    </trip>
+    <trip id="3" depart="3.00" from="10to8" to="11to6" type="rogue">
+        <param key="has.none.device" value="true"/>
+    </trip>
+    <trip id="4" depart="4.00" from="3to5" to="8to6" type="rogue">
+        <param key="has.none.device" value="true"/>
+    </trip>
+    <trip id="5" depart="5.00" from="4to2" to="2to4" type="passenger">
+        <param key="has.dsrc.device" value="true"/>
+    </trip>
+    <trip id="6" depart="6.00" from="11to5" to="6to4" type="passenger">
+        <param key="has.dsrc.device" value="true"/>
+    </trip>
+    <trip id="7" depart="7.00" from="3to5" to="8to6" type="passenger">
+        <param key="has.dsrc.device" value="true"/>
+    </trip>
+    <trip id="8" depart="8.00" from="1to2" to="5to3" type="passenger">
+        <param key="has.dsrc.device" value="true"/>
+    </trip>
+    <trip id="9" depart="9.00" from="6to8" to="4to6" type="passenger">
+        <param key="has.dsrc.device" value="true"/>
+    </trip>
+    <trip id="10" depart="10.00" from="12to11" to="5to7" type="passenger">
+        <param key="has.dsrc.device" value="true"/>
+    </trip>
+    <trip id="11" depart="11.00" from="2to4" to="6to8" type="passenger">
+        <param key="has.dsrc.device" value="true"/>
+    </trip>
+    <trip id="12" depart="12.00" from="2to3" to="2to4" type="passenger">
+        <param key="has.dsrc.device" value="true"/>
+    </trip>
+    <trip id="13" depart="13.00" from="2to3" to="6to8" type="passenger">
+        <param key="has.dsrc.device" value="true"/>
+    </trip>
+    <trip id="14" depart="14.00" from="11to5" to="5to3" type="emergency">
+        <param key="has.dsrc.device" value="true"/>
+    </trip>
+    <trip id="15" depart="15.00" from="7to5" to="2to4" type="emergency">
+        <param key="has.dsrc.device" value="true"/>
+    </trip>
+    <trip id="16" depart="16.00" from="5to7" to="11to6" type="emergency">
+        <param key="has.dsrc.device" value="true"/>
+    </trip>
+    <trip id="17" depart="17.00" from="11to5" to="2to4" type="emergency">
+        <param key="has.dsrc.device" value="true"/>
+    </trip>
+    <trip id="18" depart="18.00" from="5to3" to="11to5" type="emergency">
+        <param key="has.dsrc.device" value="true"/>
+    </trip>
+    <trip id="19" depart="19.00" from="6to11" to="6to8" type="emergency">
+        <param key="has.dsrc.device" value="true"/>
+    </trip>
+    <trip id="20" depart="20.00" from="12to11" to="6to11" type="emergency">
+        <param key="has.dsrc.device" value="true"/>
+    </trip>
+    <trip id="21" depart="21.00" from="6to8" to="2to3" type="emergency">
+        <param key="has.dsrc.device" value="true"/>
+    </trip>
+    <trip id="22" depart="22.00" from="5to7" to="8to6" type="emergency">
+        <param key="has.dsrc.device" value="true"/>
+    </trip>
+    <trip id="23" depart="23.00" from="1to2" to="11to5" type="emergency">
+        <param key="has.dsrc.device" value="true"/>
+    </trip>
+    <trip id="24" depart="24.00" from="3to5" to="2to4" type="emergency">
+        <param key="has.dsrc.device" value="true"/>
+    </trip>
+    <trip id="25" depart="25.00" from="6to8" to="2to1" type="emergency">
+        <param key="has.dsrc.device" value="true"/>
+    </trip>
+    <trip id="26" depart="26.00" from="6to8" to="6to11" type="emergency">
+        <param key="has.dsrc.device" value="true"/>
+    </trip>
+    <trip id="27" depart="27.00" from="2to4" to="6to8" type="emergency">
+        <param key="has.dsrc.device" value="true"/>
+    </trip>
+    <trip id="28" depart="28.00" from="12to11" to="4to2" type="emergency">
+        <param key="has.dsrc.device" value="true"/>
+    </trip>
+    <trip id="29" depart="29.00" from="4to2" to="6to11" type="emergency">
+        <param key="has.dsrc.device" value="true"/>
+    </trip>
+    <trip id="30" depart="30.00" from="6to11" to="4to6" type="emergency">
+        <param key="has.dsrc.device" value="true"/>
+    </trip>
+    <trip id="31" depart="31.00" from="6to11" to="3to5" type="emergency">
+        <param key="has.dsrc.device" value="true"/>
+    </trip>
+    <trip id="32" depart="32.00" from="7to5" to="11to12" type="emergency">
+        <param key="has.dsrc.device" value="true"/>
+    </trip>
+    <trip id="33" depart="33.00" from="4to6" to="11to12" type="emergency">
+        <param key="has.dsrc.device" value="true"/>
+    </trip>
+    <trip id="34" depart="34.00" from="3to2" to="6to11" type="emergency">
+        <param key="has.dsrc.device" value="true"/>
+    </trip>
+    <trip id="35" depart="35.00" from="5to7" to="6to11" type="emergency">
+        <param key="has.dsrc.device" value="true"/>
+    </trip>
+    <trip id="36" depart="36.00" from="4to6" to="2to1" type="emergency">
+        <param key="has.dsrc.device" value="true"/>
+    </trip>
+    <trip id="37" depart="37.00" from="11to5" to="8to6" type="emergency">
+        <param key="has.dsrc.device" value="true"/>
+    </trip>
+    <trip id="38" depart="38.00" from="11to6" to="5to7" type="emergency">
+        <param key="has.dsrc.device" value="true"/>
+    </trip>
+    <trip id="39" depart="39.00" from="3to5" to="6to8" type="emergency">
+        <param key="has.dsrc.device" value="true"/>
+    </trip>
 </routes>

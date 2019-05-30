@@ -1,0 +1,11 @@
+MsgCount,TemporaryID,VehicleID,Vehicle Type,Vehicle Length,Vehicle Width,Vehicle Height,Vehicle Wheel Angle,Longitude,Latitude,Vehicle Speed,Vehicle Acceleration,Vehicle Slope Angle,BrakeSystemStatus,TransmissionState,Dsecond,RSU_ID,RSU_SIG_STRENGTH
+244,19_244,19,emergency,6.5,2.16,2.86,-1.5708,498.35,348.734,6,0.714906,0,BRAKES_OFF,DRIVE,5-30-2019 12:50:36:420
+rsu_2,14
+267,19_267,19,emergency,6.5,2.16,2.86,-1.5708,498.35,340.972,7,0.940147,0,BRAKES_OFF,DRIVE,5-30-2019 12:50:36:641
+rsu_2,1
+291,19_291,19,emergency,6.5,2.16,2.86,-1.5708,498.35,332.356,8,0.854809,0,BRAKES_OFF,DRIVE,5-30-2019 12:50:36:862
+rsu_2,18
+314,5_314,5,passenger,5,1.8,1.5,1.5708,504.95,267.691,20,0.906122,0,BRAKES_OFF,DRIVE,5-30-2019 12:50:37:83
+rsu_2,47
+316,19_316,19,emergency,6.5,2.16,2.86,-1.5708,498.35,323.06,9,0.679987,0,BRAKES_OFF,DRIVE,5-30-2019 12:50:37:83
+rsu_2,37

@@ -100,7 +100,11 @@ def get_options(args=None):
         "-c", "--vclass", "--edge-permission", default="passenger",
         help="only from and to edges which permit the given vehicle class")
     optParser.add_option(
-        "--vehicle-class", help="The vehicle class assigned to the generated trips (adds a standard vType definition to the output file).")
+        "--vehicle-class", action="append", help="The vehicle class assigned to the generated trips (adds a standard vType definition to the output file).")
+    optParser.add_option(
+        "--vehicle-percentage", action="append", type="int", help="The percentage of total vehicles that will be this particular vehicle class.")
+    optParser.add_option("--device", dest="device", action="append",
+                         help="define the net file (mandatory)")
     optParser.add_option("--validate", default=False, action="store_true",
                          help="Whether to produce trip output that is already checked for connectivity")
     optParser.add_option("-v", "--verbose", action="store_true",
@@ -113,6 +117,13 @@ def get_options(args=None):
     if options.persontrips:
         options.pedestrians = True
 
+    if options.vehicle_percentage:
+        for i in range(len(options.vehicle_percentage)):
+            # calculate percentage of cars that will be each vehicle class
+            options.vehicle_percentage[i] = (options.vehicle_percentage[i] * int(options.end)) / 100
+            
+    #print(options.vehicle_percentage)    
+    #print(options.device)
     if options.pedestrians:
         options.vclass = 'pedestrian'
         if options.flows > 0:
@@ -353,6 +364,10 @@ def prependSpace(s):
 
 
 def main(options):
+    #print(options.vehicle_class[1])
+    #print(len(options.vehicle_class))
+    #print(options.vehicle_percentage)
+    
     if options.seed:
         random.seed(options.seed)
 
@@ -371,7 +386,7 @@ def main(options):
 
     vias = {}
 
-    def generate_one(idx):
+    def generate_one(idx, vehicle_idx):
         label = "%s%s" % (options.tripprefix, idx)
         try:
             source_edge, sink_edge, intermediate = trip_generator.get_trip(
@@ -401,8 +416,15 @@ def main(options):
                     fouttrips.write('    <flow id="%s" begin="%s" end="%s" period="%s" from="%s" to="%s"%s%s/>\n' % (
                         label, options.begin, options.end, options.period * options.flows, source_edge.getID(), sink_edge.getID(), via, options.tripattrs))
             else:
-                fouttrips.write('    <trip id="%s" depart="%.2f" from="%s" to="%s"%s%s/>\n' % (
-                    label, depart, source_edge.getID(), sink_edge.getID(), via, options.tripattrs))
+                fouttrips.write('    <trip id="%s" depart="%.2f" from="%s" to="%s"%s%s type="%s">\n' % (
+                    label, depart, source_edge.getID(), sink_edge.getID(), via, options.tripattrs, options.vehicle_class[vehicle_idx]))
+                if options.device: #add device parameters
+                    try:
+                        if options.device[vehicle_idx]:
+                            fouttrips.write('        <param key="has.%s.device" value="true"/>\n' % options.device[vehicle_idx])
+                    except IndexError:
+                        pass
+                fouttrips.write('    </trip>\n')
         except Exception as exc:
             print(exc, file=sys.stderr)
         return idx + 1
@@ -411,20 +433,28 @@ def main(options):
         sumolib.writeXMLHeader(
             fouttrips, "$Id$", "routes")
         if options.vehicle_class:
-            fouttrips.write("<vTypeDistribution id=\"%s_vs_passenger\">\n" % options.vehicle_class)
-            fouttrips.write('    <vType id="%s" vClass="%s"%s/>\n' %
-                            (options.vehicle_class, options.vehicle_class, vtypeattrs))
-            fouttrips.write('    <vType id="passenger" vClass="passenger"%s/>\n' %
-                            (vtypeattrs))
-            options.tripattrs += ' type="%s_vs_passenger"' % options.vehicle_class
-            fouttrips.write("</vTypeDistribution>\n")
+            for i in range(len(options.vehicle_class)):
+                fouttrips.write('    <vType id="%s" vClass="%s"%s/>\n' %
+                                (options.vehicle_class[i], options.vehicle_class[i], vtypeattrs))
+                #options.tripattrs += ' type="%s"' % options.vehicle_class[i]
         depart = options.begin
         if trip_generator:
             if options.flows == 0:
+                #initialize percentage indexer and accumulator
+                vehicle_idx = 0
+                accumulator = options.vehicle_percentage[vehicle_idx]
                 while depart < options.end:
                     if options.binomial is None:
                         # generate with constant spacing
-                        idx = generate_one(idx)
+                        if options.vehicle_percentage is None:
+                            # make all cars single, initial vehicle class
+                            idx = generate_one(idx, 0)
+                        else:
+                                idx = generate_one(idx, vehicle_idx)
+                                if idx == accumulator: #percentage reached
+                                    vehicle_idx += 1
+                                    accumulator += options.vehicle_percentage[vehicle_idx]
+                                    #print('here %d' % accumulator)
                         depart += options.period
                     else:
                         # draw n times from a Bernoulli distribution

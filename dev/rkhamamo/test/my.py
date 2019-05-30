@@ -39,10 +39,9 @@ def run():
             
         if step == 40:
 
-            traci.vehicle.rogueToggleFollowSpeed('1') 
-            traci.vehicle.rogueToggleFollowSpeed('1') 
-            traci.vehicle.rogueToggleFollowDistance('2') 
-            traci.vehicle.rogueToggleFollowDistance('2') 
+            traci.vehicle.rogueDisableLightRun('1') 
+            traci.vehicle.rogueDisableLightRun('2') 
+            
         
         #if step == 21:
 

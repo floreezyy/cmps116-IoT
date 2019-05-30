@@ -995,6 +995,11 @@ public:
      */
     bool isParking() const;
 
+    /** @brief Returns whether the vehicle is rogue class
+     * @return Whether the vehicle is rogue class
+     */
+    bool isRogue() const;
+    
     /** @brief Returns the information whether the vehicle is fully controlled via TraCI
      * @return Whether the vehicle is remote-controlled
      */
@@ -1393,6 +1398,14 @@ public:
          */
         double changeRequestRemainingSeconds(const SUMOTime currentTime) const;
 
+        /** @brief Returns whether safe velocity rules shall be respected
+         * @return Whether safe velocity rules shall be respected
+         */
+        inline bool getConsiderSafeVelocity() const {
+            return myConsiderSafeVelocity;
+        }
+        
+        
         /** @brief Returns whether junction priority rules shall be respected
          * @return Whether junction priority rules be respected
          */
@@ -1443,7 +1456,7 @@ public:
 
         /// @brief return the change in longitudinal position that is implicit in the new remote position
         double implicitDeltaPosRemote(const MSVehicle* veh);
-
+        
         bool isRemoteControlled() const;
 
         bool isRemoteAffected(SUMOTime t) const;

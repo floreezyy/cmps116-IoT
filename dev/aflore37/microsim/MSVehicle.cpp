@@ -467,6 +467,7 @@ MSVehicle::Influencer::setRemoteControlled(Position xyPos, MSLane* l, double pos
     myLastRemoteAccess = t;
 }
 
+
 bool
 MSVehicle::Influencer::isRemoteControlled() const {
     return myLastRemoteAccess == MSNet::getInstance()->getCurrentTimeStep();
@@ -4850,10 +4851,6 @@ MSVehicle::setRemoteState(Position xyPos) {
 }
 
 #endif
-bool
-MSVehicle::isRogue() const {
-    return getVehicleType().getID() == "Rogue";
-}
 
 bool
 MSVehicle::isRemoteControlled() const {
@@ -4881,24 +4878,9 @@ MSVehicle::keepClear(const MSLink* link) const {
 
 bool
 MSVehicle::ignoreRed(const MSLink* link, bool canBrake) const {
-    
-    
-    if (isRogue() && myInfluencer != 0 && myInfluencer->getEmergencyBrakeRedLight()) { //if rogue with TraCI speedMode() called
-        return false; //don't run red lights
-    } else if (isRogue() && myInfluencer != 0 && !myInfluencer->getEmergencyBrakeRedLight()) { //if rogue with TraCI speedMode() reset
-        std::cout << "TRACI RUNNING LIGHTS \n";
-        fflush(stdout);
-        return true; //run red lights again
-    } else if (isRogue() && myInfluencer == 0) { //if rogue without TraCI speedMode() called
-        std::cout << "off\n";
-        fflush(stdout);
-        return true; //run red lights by default
-    }
-    
     if ((myInfluencer != 0 && !myInfluencer->getEmergencyBrakeRedLight())) {
         return true;
     }
-    
     const double ignoreRedTime = getVehicleType().getParameter().getJMParam(SUMO_ATTR_JM_DRIVE_AFTER_RED_TIME, -1);
 #ifdef DEBUG_IGNORE_RED
     if (DEBUG_COND) {

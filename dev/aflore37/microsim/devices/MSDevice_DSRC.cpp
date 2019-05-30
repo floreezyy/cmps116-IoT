@@ -299,12 +299,30 @@ MSDevice_DSRC::notifyMove(SUMOVehicle& veh, double /* oldPos */,
         else{
             dsrcfile << "DRIVE" << ",";
         }
-        auto sent = std::chrono::system_clock::now(); // generate date and time with millisecond precision
+
+        time_t t = time(NULL);
+	    tm* timePtr = localtime(&t);
         
-        // for BSM standards data should be collected at lest 10 times a second
-        std::time_t end_time = std::chrono::system_clock::to_time_t(sent);
-        std::string timestamp(std::ctime(&end_time));
-        dsrcfile << timestamp.substr(0, timestamp.length()-1) << ",";
+        // this block is used to calculate Dsecond timestamp
+        typedef std::chrono::system_clock Clock;
+        auto sent = std::chrono::system_clock::now(); // generate date and time with millisecond precision
+        auto now = Clock::now();
+        auto seconds = std::chrono::time_point_cast<std::chrono::seconds>(now);
+        auto fraction = now - seconds;
+        
+        auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(fraction);
+        dsrcfile << timePtr->tm_mon+1 << "-";
+        dsrcfile << timePtr->tm_mday << "-";
+        dsrcfile << timePtr->tm_year << " ";
+        
+        dsrcfile << timePtr->tm_hour << ":";
+        dsrcfile << timePtr->tm_min << ":";
+        dsrcfile << timePtr->tm_sec << ":";
+        dsrcfile << milliseconds.count() << std::endl;
+        
+        // end of Dsecond timestamp
+
+        // Roadside Unit iD based on location
         dsrcfile << "rsu_" << rsu_domain << ",";
         
         // calculate signal strength from RSU to vehicle based on current position

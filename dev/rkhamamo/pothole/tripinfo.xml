@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on Tue 28 May 2019 02:50:01 AM UTC by SUMO gui Version 0.32.0
+<!-- generated on Wed 29 May 2019 11:59:31 PM UTC by SUMO gui Version 0.32.0
 <?xml version="1.0" encoding="UTF-8"?>
 
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
@@ -18,11 +18,20 @@
     <time>
         <begin value="0"/>
         <end value="2000"/>
+        <step-length value="0.01"/>
     </time>
 
+    <processing>
+        <time-to-teleport value="-1"/>
+    </processing>
+
     <traci_server>
-        <remote-port value="46677"/>
+        <remote-port value="55327"/>
     </traci_server>
+
+    <gui_only>
+        <tracker-interval value="0.01"/>
+    </gui_only>
 
 </configuration>
 -->

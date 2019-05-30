@@ -1,0 +1,49 @@
+
+<routes>
+
+        <vType id="Rogue" vClass="rogue" accel="1.0" probability="0.5"/>
+        <vType id="Car" vClass="passenger" accel="1.0" probability="0.5"/>
+
+<route id="route1" edges="1to2 2to3 3to5 5to7 7to9"/>
+
+<vehicle depart="10" id="veh2" route="route1" type="Rogue">
+    <param key="has.dsrc.device" value="true"/>
+</vehicle>
+<vehicle depart="15" id="veh3" route="route1" type="Car">
+    <param key="has.dsrc.device" value="true"/>
+</vehicle>
+    
+
+<vehicle depart="20" id="veh1a" route="route1" type="Rogue" color = "255,0,0,0">
+    <param key="has.dsrc.device" value="true"/>
+</vehicle>
+<vehicle depart="20" id="veh1b" route="route1" type="Rogue" color = "255,0,0,0">
+    <param key="has.dsrc.device" value="true"/>
+</vehicle>
+<vehicle depart="20" id="veh1" route="route1" type="Rogue" color = "255,0,0,255">
+    <param key="has.dsrc.device" value="true"/>
+</vehicle>
+<vehicle depart="20" id="veh1c" route="route1" type="Rogue" color = "255,0,0,0">
+    <param key="has.dsrc.device" value="true"/>
+</vehicle>
+<vehicle depart="20" id="veh1d" route="route1" type="Rogue" color = "255,0,0,0">
+    <param key="has.dsrc.device" value="true"/>
+</vehicle>
+    
+<vehicle depart="25" id="veh4" route="route1" type="Car" >
+    <param key="has.dsrc.device" value="true"/>
+</vehicle>
+<vehicle depart="30" id="veh5" route="route1" type="Car" >
+    <param key="has.dsrc.device" value="true"/>
+</vehicle>
+<!--<route id="route2" edges="1to2 2to4 4to6 6to8 8to10"/>-->
+<!--<vehicle depart="20" id="veh2" route="route2" type="Ambulance" />-->
+
+<!--<route id="route3" edges="1to2 2to3 3to5 5to11 11to12"/>-->
+<!--<vehicle depart="30" id="veh3" route="route3" type="Car" />-->
+
+<!--<route id="route4" edges="1to2 2to4 4to6 6to11 11to12"/>-->
+<!--<vehicle depart="40" id="veh4" route="route4" type="Car" />-->
+
+</routes>
+

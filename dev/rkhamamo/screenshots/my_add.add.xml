@@ -1,0 +1,44 @@
+<additionals>
+    
+    <poly id="1" type = "building" color="255,230,230" fill="1" layer="-1.00" shape="1952.28,1419.89 1966.35,1420.19 1966.85,1396.76 1952.78,1396.46 1952.28,1419.89"/>
+
+    <rerouter id="rerouter_0" edges="3to5" probability="1">
+        <interval begin="0" end="10000">
+		   <destProbReroute id="5to11"/>
+		</interval>
+    </rerouter>
+
+    <rerouter id="rerouter_2" edges="5to11" probability="1">
+        <interval begin="0" end="10000">
+		   <destProbReroute id="11to6"/>
+		</interval>
+    </rerouter>
+    
+    <rerouter id="rerouter_2" edges="11to6" probability="1">
+        <interval begin="0" end="10000">
+		   <destProbReroute id="6to4"/>
+		</interval>
+    </rerouter>
+    
+    <rerouter id="rerouter_2" edges="6to4" probability="1">
+        <interval begin="0" end="10000">
+		   <destProbReroute id="4to2"/>
+		</interval>
+    </rerouter>
+    
+    <rerouter id="rerouter_2" edges="4to2" probability="1">
+        <interval begin="0" end="10000">
+		   <destProbReroute id="2to3"/>
+		</interval>
+    </rerouter>
+    
+    <rerouter id="rerouter_2" edges="2to3" probability="1">
+        <interval begin="0" end="10000">
+		   <destProbReroute id="3to5"/>
+		</interval>
+    </rerouter>
+    <e1Detector id="rsu_1" lane="3to5_0" pos="100" freq="500" file="my_out.out.xml" />
+    <e1Detector id="rsu_2" lane="11to6_0" pos="100" freq="500" file="my_out.out.xml" />
+    <e1Detector id="rsu_3" lane="4to2_0" pos="100" freq="500" file="my_out.out.xml" />
+
+</additionals>

@@ -40,10 +40,10 @@ def run():
         potholeColors = [205,133,63,255]
         #potholeShape = [256.3,450]shape="256.3,450 253.7,450 253.7,453 256.3,453"
         if step == 2:
-            traci.vehicle.add("pothile", "a")
-            traci.vehicle.moveToXY('pothile', '2to3', 0, 254.85, 453)
-            traci.vehicle.setSpeed('pothile', 0)
-            #traci.polygon.add('pothole_1', ([256.3,450],[253.7,450],[253.7,453],[256.3,453]), potholeColors, fill=True, polygonType='building', layer=2);
+            #traci.vehicle.add("pothile", "route1")
+            traci.vehicle.moveToXY('veh2', '2to3', 0, 254.85, 453)
+            traci.vehicle.setSpeed('veh2', 0)
+            traci.polygon.add('pothole_1', ([256.3,450],[253.7,450],[253.7,453],[256.3,453]), potholeColors, fill=True, polygonType='building', layer=2);
         
         step += 1
 
@@ -69,7 +69,7 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         simRange = int(sys.argv[1])
     else:
-        simRange = 5000 #default value
+        simRange = 500000 #default value
            
     if len(sys.argv) > 2:
         rogueVehicle = sys.argv[2]

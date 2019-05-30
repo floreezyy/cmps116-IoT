@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on Thu 30 May 2019 12:03:00 AM UTC by SUMO gui Version 0.32.0
+<!-- generated on Wed 29 May 2019 11:27:00 PM UTC by SUMO gui Version 0.32.0
 <?xml version="1.0" encoding="UTF-8"?>
 
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
@@ -12,26 +12,17 @@
     </input>
 
     <output>
-        <precision value="3"/>
-        <netstate-dump.precision value="3"/>
-        <emission-output.precision value="3"/>
-        <battery-output.precision value="3"/>
         <tripinfo-output value="tripinfo.xml"/>
     </output>
 
     <time>
         <begin value="0"/>
         <end value="2000"/>
-        <step-length value="0.001"/>
     </time>
 
     <traci_server>
-        <remote-port value="49743"/>
+        <remote-port value="33075"/>
     </traci_server>
-
-    <gui_only>
-        <tracker-interval value="0.001"/>
-    </gui_only>
 
 </configuration>
 -->

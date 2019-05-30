@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on Wed 29 May 2019 11:59:31 PM UTC by SUMO gui Version 0.32.0
+<!-- generated on Wed 29 May 2019 11:27:00 PM UTC by SUMO gui Version 0.32.0
 <?xml version="1.0" encoding="UTF-8"?>
 
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
@@ -18,24 +18,17 @@
     <time>
         <begin value="0"/>
         <end value="2000"/>
-        <step-length value="0.01"/>
     </time>
 
-    <processing>
-        <time-to-teleport value="-1"/>
-    </processing>
-
     <traci_server>
-        <remote-port value="55327"/>
+        <remote-port value="33075"/>
     </traci_server>
-
-    <gui_only>
-        <tracker-interval value="0.01"/>
-    </gui_only>
 
 </configuration>
 -->
 
 <detector xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/det_e1_file.xsd">
-    <interval begin="0.00" end="374.92" id="det_0" nVehContrib="7" flow="67.21" occupancy="0.24" speed="15.56" length="2.00" nVehEntered="7"/>
+    <interval begin="0.00" end="53.00" id="rsu_1" nVehContrib="0" flow="0.00" occupancy="0.00" speed="-1.00" length="-1.00" nVehEntered="0"/>
+    <interval begin="0.00" end="53.00" id="rsu_2" nVehContrib="0" flow="0.00" occupancy="0.00" speed="-1.00" length="-1.00" nVehEntered="0"/>
+    <interval begin="0.00" end="53.00" id="rsu_3" nVehContrib="0" flow="0.00" occupancy="0.00" speed="-1.00" length="-1.00" nVehEntered="0"/>
 </detector>

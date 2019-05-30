@@ -3,6 +3,9 @@
 		<net-file value="my_net.net.xml"/>
 		<route-files value="my_rou.rou.xml"/>
 		<additional-files value="my_add.add.xml"/>
+        <step-length value="0.01"/>
+        <time-to-teleport value="-1"/>
+        
 	</input>
 	<time>
 	<begin value="0"/>

@@ -313,7 +313,7 @@ MSDevice_DSRC::notifyMove(SUMOVehicle& veh, double /* oldPos */,
         auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(fraction);
         dsrcfile << timePtr->tm_mon+1 << "-";
         dsrcfile << timePtr->tm_mday << "-";
-        dsrcfile << timePtr->tm_year << " ";
+        dsrcfile << timePtr->tm_year+1900 << " ";
         
         dsrcfile << timePtr->tm_hour << ":";
         dsrcfile << timePtr->tm_min << ":";

@@ -318,7 +318,7 @@ MSDevice_DSRC::notifyMove(SUMOVehicle& veh, double /* oldPos */,
         dsrcfile << timePtr->tm_hour << ":";
         dsrcfile << timePtr->tm_min << ":";
         dsrcfile << timePtr->tm_sec << ":";
-        dsrcfile << milliseconds.count() << std::endl;
+        dsrcfile << milliseconds.count() << ",";
         
         // end of Dsecond timestamp
 
@@ -331,7 +331,6 @@ MSDevice_DSRC::notifyMove(SUMOVehicle& veh, double /* oldPos */,
         
         dsrcfile << std::endl; // end appending to file
     }
-    
     return true; // keep the device
 }
 

@@ -4852,7 +4852,7 @@ MSVehicle::setRemoteState(Position xyPos) {
 #endif
 bool
 MSVehicle::isRogue() const {
-    return getVehicleType().getID() == "Rogue";
+    return getVehicleType().getID() == "rogue";
 }
 
 bool

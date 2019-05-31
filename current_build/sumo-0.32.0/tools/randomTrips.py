@@ -452,9 +452,11 @@ def main(options):
                         else:
                                 idx = generate_one(idx, vehicle_idx)
                                 if idx == accumulator: #percentage reached
-                                    vehicle_idx += 1
-                                    accumulator += options.vehicle_percentage[vehicle_idx]
-                                    #print('here %d' % accumulator)
+                                    try:
+                                        vehicle_idx += 1
+                                        accumulator += options.vehicle_percentage[vehicle_idx]
+                                    except:
+                                        pass
                         depart += options.period
                     else:
                         # draw n times from a Bernoulli distribution

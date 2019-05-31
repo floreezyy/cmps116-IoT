@@ -38863,14 +38863,14 @@ Files sumo-OLD-0.32.0/src/microsim/MSVehicleControl.h and sumo-0.32.0/src/micros
 Files sumo-OLD-0.32.0/src/microsim/MSVehicleControl.o and sumo-0.32.0/src/microsim/MSVehicleControl.o are identical
 diff -urBNs sumo-OLD-0.32.0/src/microsim/MSVehicle.cpp sumo-0.32.0/src/microsim/MSVehicle.cpp
 --- sumo-OLD-0.32.0/src/microsim/MSVehicle.cpp	2017-12-19 07:43:20.000000000 +0000
-+++ sumo-0.32.0/src/microsim/MSVehicle.cpp	2019-05-27 12:43:51.753371000 +0000
++++ sumo-0.32.0/src/microsim/MSVehicle.cpp	2019-05-30 17:36:34.617679899 +0000
 @@ -4851,6 +4850,10 @@
  }
  
  #endif
 +bool
 +MSVehicle::isRogue() const {
-+    return getVehicleType().getID() == "Rogue";
++    return getVehicleType().getID() == "rogue";
 +}
  
  bool
@@ -47521,7 +47521,7 @@ Files sumo-OLD-0.32.0/tools/purgatory/splitTripsByHours.pl and sumo-0.32.0/tools
 Files sumo-OLD-0.32.0/tools/purgatory/xml2cvs.pl and sumo-0.32.0/tools/purgatory/xml2cvs.pl are identical
 diff -urBNs sumo-OLD-0.32.0/tools/randomTrips.py sumo-0.32.0/tools/randomTrips.py
 --- sumo-OLD-0.32.0/tools/randomTrips.py	2017-12-19 08:01:01.000000000 +0000
-+++ sumo-0.32.0/tools/randomTrips.py	2019-05-30 12:54:33.033952996 +0000
++++ sumo-0.32.0/tools/randomTrips.py	2019-05-31 07:35:29.049061318 +0000
 @@ -100,7 +100,11 @@
          "-c", "--vclass", "--edge-permission", default="passenger",
          help="only from and to edges which permit the given vehicle class")
@@ -47587,7 +47587,7 @@ diff -urBNs sumo-OLD-0.32.0/tools/randomTrips.py sumo-0.32.0/tools/randomTrips.p
          except Exception as exc:
              print(exc, file=sys.stderr)
          return idx + 1
-@@ -411,16 +433,28 @@
+@@ -411,16 +433,30 @@
          sumolib.writeXMLHeader(
              fouttrips, "$Id$", "routes")
          if options.vehicle_class:
@@ -47614,9 +47614,11 @@ diff -urBNs sumo-OLD-0.32.0/tools/randomTrips.py sumo-0.32.0/tools/randomTrips.p
 +                        else:
 +                                idx = generate_one(idx, vehicle_idx)
 +                                if idx == accumulator: #percentage reached
-+                                    vehicle_idx += 1
-+                                    accumulator += options.vehicle_percentage[vehicle_idx]
-+                                    #print('here %d' % accumulator)
++                                    try:
++                                        vehicle_idx += 1
++                                        accumulator += options.vehicle_percentage[vehicle_idx]
++                                    except:
++                                        pass
                          depart += options.period
                      else:
                          # draw n times from a Bernoulli distribution

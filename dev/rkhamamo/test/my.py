@@ -37,10 +37,10 @@ def run():
             #x, y = traci.junction.getPosition("n2")
             #traci.vehicle.rogueNodeException(rogueVehicle, x, y)
             
-        if step == 40:
+        #if step == 40:
 
-            traci.vehicle.rogueDisableLightRun('1') 
-            traci.vehicle.rogueDisableLightRun('2') 
+            #traci.vehicle.rogueDisableLightRun('1') 
+            #traci.vehicle.rogueDisableLightRun('2') 
             
         
         #if step == 21:

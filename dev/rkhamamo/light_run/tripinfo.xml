@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on Thu 30 May 2019 01:36:54 AM UTC by SUMO gui Version 0.32.0
+<!-- generated on Fri 31 May 2019 07:39:58 PM UTC by SUMO gui Version 0.32.0
 <?xml version="1.0" encoding="UTF-8"?>
 
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
@@ -21,11 +21,38 @@
     </time>
 
     <traci_server>
-        <remote-port value="53673"/>
+        <remote-port value="58953"/>
     </traci_server>
 
 </configuration>
 -->
 
 <tripinfos xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/tripinfo_file.xsd">
+    <tripinfo id----="veh1a" depart="20.00" departLane="1to2_0" departPos="5.10" departSpeed="0.00" departDelay="0.00" arrival="10020.00" arrivalLane="2to3_0" arrivalPos="185.40" arrivalSpeed="9.69" duration="10000.00" routeLength="69559.69" waitSteps="2534" timeLoss="6982.30" rerouteNo="330" devices="tripinfo_veh1a dsrc_veh1a" vType="Rogue" speedFactor="2.00" vaporized="">
+        <dsrc_device customValue1="0.00" customValue2="-1.00"/>
+    </tripinfo>
+    <tripinfo id----="veh2" depart="10.00" departLane="1to2_0" departPos="5.10" departSpeed="0.00" departDelay="0.00" arrival="10022.00" arrivalLane="2to3_0" arrivalPos="185.40" arrivalSpeed="9.57" duration="10012.00" routeLength="69559.69" waitSteps="2727" timeLoss="6997.61" rerouteNo="330" devices="tripinfo_veh2 dsrc_veh2" vType="Rogue" speedFactor="2.00" vaporized="">
+        <dsrc_device customValue1="0.00" customValue2="-1.00"/>
+    </tripinfo>
+    <tripinfo id----="veh3" depart="15.00" departLane="1to2_0" departPos="5.10" departSpeed="0.00" departDelay="0.00" arrival="10024.00" arrivalLane="6to4_0" arrivalPos="235.40" arrivalSpeed="25.27" duration="10009.00" routeLength="69170.21" waitSteps="1411" timeLoss="4170.51" rerouteNo="328" devices="tripinfo_veh3 dsrc_veh3" vType="Car" speedFactor="1.00" vaporized="">
+        <dsrc_device customValue1="0.00" customValue2="-1.00"/>
+    </tripinfo>
+    <tripinfo id----="veh5" depart="46.00" departLane="1to2_0" departPos="5.10" departSpeed="0.00" departDelay="16.00" arrival="10029.00" arrivalLane="6to4_0" arrivalPos="235.40" arrivalSpeed="24.37" duration="9983.00" routeLength="69170.21" waitSteps="1445" timeLoss="4147.22" rerouteNo="328" devices="tripinfo_veh5 dsrc_veh5" vType="Car" speedFactor="1.00" vaporized="">
+        <dsrc_device customValue1="0.00" customValue2="-1.00"/>
+    </tripinfo>
+    <tripinfo id----="veh1c" depart="32.00" departLane="1to2_0" departPos="5.10" departSpeed="0.00" departDelay="12.00" arrival="10030.00" arrivalLane="3to5_0" arrivalPos="235.40" arrivalSpeed="22.33" duration="9998.00" routeLength="69797.67" waitSteps="2668" timeLoss="6973.43" rerouteNo="331" devices="tripinfo_veh1c dsrc_veh1c" vType="Rogue" speedFactor="2.00" vaporized="">
+        <dsrc_device customValue1="0.00" customValue2="-1.00"/>
+    </tripinfo>
+    <tripinfo id----="veh4" depart="40.00" departLane="1to2_0" departPos="5.10" departSpeed="0.00" departDelay="15.00" arrival="10030.00" arrivalLane="6to4_0" arrivalPos="235.40" arrivalSpeed="23.33" duration="9990.00" routeLength="69170.21" waitSteps="1257" timeLoss="4169.91" rerouteNo="328" devices="tripinfo_veh4 dsrc_veh4" vType="Car" speedFactor="1.00" vaporized="">
+        <dsrc_device customValue1="0.00" customValue2="-1.00"/>
+    </tripinfo>
+    <tripinfo id----="veh1b" depart="24.00" departLane="1to2_0" departPos="5.10" departSpeed="0.00" departDelay="4.00" arrival="10031.00" arrivalLane="3to5_1" arrivalPos="235.40" arrivalSpeed="20.76" duration="10007.00" routeLength="69797.67" waitSteps="2833" timeLoss="6981.85" rerouteNo="331" devices="tripinfo_veh1b dsrc_veh1b" vType="Rogue" speedFactor="2.00" vaporized="">
+        <dsrc_device customValue1="0.00" customValue2="-1.00"/>
+    </tripinfo>
+    <tripinfo id----="veh1" depart="28.00" departLane="1to2_0" departPos="5.10" departSpeed="0.00" departDelay="8.00" arrival="10034.00" arrivalLane="3to5_1" arrivalPos="235.40" arrivalSpeed="21.66" duration="10006.00" routeLength="69797.67" waitSteps="2260" timeLoss="6982.08" rerouteNo="331" devices="tripinfo_veh1 dsrc_veh1" vType="Rogue" speedFactor="2.00" vaporized="">
+        <dsrc_device customValue1="0.00" customValue2="-1.00"/>
+    </tripinfo>
+    <tripinfo id----="veh1d" depart="36.00" departLane="1to2_0" departPos="5.10" departSpeed="0.00" departDelay="16.00" arrival="10034.00" arrivalLane="3to5_0" arrivalPos="235.40" arrivalSpeed="21.40" duration="9998.00" routeLength="69797.67" waitSteps="2487" timeLoss="6974.97" rerouteNo="331" devices="tripinfo_veh1d dsrc_veh1d" vType="Rogue" speedFactor="2.00" vaporized="">
+        <dsrc_device customValue1="0.00" customValue2="-1.00"/>
+    </tripinfo>
 </tripinfos>

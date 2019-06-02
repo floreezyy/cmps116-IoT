@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on Sun 02 Jun 2019 09:51:51 PM UTC by SUMO gui Version 0.32.0
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
+
+    <input>
+        <net-file value="my_net.net.xml"/>
+        <route-files value="my_rou.rou.xml"/>
+        <additional-files value="my_add.add.xml"/>
+    </input>
+
+    <output>
+        <precision value="3"/>
+        <netstate-dump.precision value="3"/>
+        <emission-output.precision value="3"/>
+        <battery-output.precision value="3"/>
+    </output>
+
+    <time>
+        <begin value="0"/>
+        <end value="2000"/>
+        <step-length value=".005"/>
+    </time>
+
+    <gui_only>
+        <tracker-interval value="0.005"/>
+    </gui_only>
+
+</configuration>

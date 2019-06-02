@@ -1,0 +1,22 @@
+<nodes>
+<node id="n1r" x = "-500" y="0" type="priority"/>
+<node id="n1l" x = "-500" y="1"/>
+<node id="n2d" x = "-251" y="1" type="traffic_light"/>
+<node id="n2u" x = "-250" y="0" type="traffic_light"/>
+<node id="n3r" x = "-250" y="200"/>
+<node id="n3l" x = "-251" y="201"/>
+<node id="n4l" x = "-250" y="-200"/>
+<node id="n4r" x = "-251" y="-201"/>
+<node id="n5d" x = "0" y="200" type="traffic_light"/>
+<node id="n5u" x = "1" y="201" type="traffic_light"/>
+<node id="n6d" x = "0" y="-200" type="traffic_light"/>
+<node id="n6u" x = "1" y="-201" type="traffic_light"/>
+<node id="n7" x = "1" y="400"/>
+<node id="n8" x = "1" y="-400"/>
+<node id="n9" x = "250" y="400"/>
+<node id="n10" x = "250" y="-400"/>
+<node id="n11d" x = "0" y="0" type="traffic_light"/>
+<node id="n11u" x = "1" y="0" type="traffic_light"/>
+<node id="n12" x = "250" y="0"/>
+</nodes>
+

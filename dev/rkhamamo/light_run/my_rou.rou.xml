@@ -1,35 +1,22 @@
 
 <routes>
 
-        <vType id="Rogue" vClass="rogue" accel="1.0" probability="0.5"/>
-        <vType id="Car" vClass="passenger" accel="1.0" probability="0.5"/>
+        <vType id="rogue" vClass="rogue" accel="1.0" probability="0.5" color="orange" length="2.0" maxSpeed="100.0" sigma="0.0" />
+        <vType id="Car" vClass="passenger" accel="1.0" probability="0.5" length="2.0" maxSpeed="100.0" sigma="0.0" />
 
 <route id="route1" edges="1to2 2to3 3to5 5to7 7to9"/>
 
-<vehicle depart="10" id="veh2" route="route1" type="Rogue">
+<vehicle depart="10" id="veh2" route="route1" type="rogue">
     <param key="has.dsrc.device" value="true"/>
 </vehicle>
 <vehicle depart="15" id="veh3" route="route1" type="Car">
     <param key="has.dsrc.device" value="true"/>
 </vehicle>
-    
 
-<vehicle depart="20" id="veh1a" route="route1" type="Rogue" color = "255,0,0,0">
+<vehicle depart="20" id="veh1" route="route1" type="Car">
     <param key="has.dsrc.device" value="true"/>
 </vehicle>
-<vehicle depart="20" id="veh1b" route="route1" type="Rogue" color = "255,0,0,0">
-    <param key="has.dsrc.device" value="true"/>
-</vehicle>
-<vehicle depart="20" id="veh1" route="route1" type="Rogue" color = "255,0,0,255">
-    <param key="has.dsrc.device" value="true"/>
-</vehicle>
-<vehicle depart="20" id="veh1c" route="route1" type="Rogue" color = "255,0,0,0">
-    <param key="has.dsrc.device" value="true"/>
-</vehicle>
-<vehicle depart="20" id="veh1d" route="route1" type="Rogue" color = "255,0,0,0">
-    <param key="has.dsrc.device" value="true"/>
-</vehicle>
-    
+
 <vehicle depart="25" id="veh4" route="route1" type="Car" >
     <param key="has.dsrc.device" value="true"/>
 </vehicle>

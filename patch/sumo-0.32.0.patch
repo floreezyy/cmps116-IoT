@@ -22343,7 +22343,7 @@ Files sumo-OLD-0.32.0/compile and sumo-0.32.0/compile are identical
 Files sumo-OLD-0.32.0/config.guess and sumo-0.32.0/config.guess are identical
 diff -urBNs sumo-OLD-0.32.0/config.log sumo-0.32.0/config.log
 --- sumo-OLD-0.32.0/config.log	2018-10-15 17:16:37.000000000 +0000
-+++ sumo-0.32.0/config.log	2019-05-30 01:34:46.074473781 +0000
++++ sumo-0.32.0/config.log	2019-05-30 01:34:46.074473000 +0000
 @@ -1702,3 +1702,453 @@
  #define HAVE_SQRT 1
  
@@ -37663,7 +37663,7 @@ Files sumo-OLD-0.32.0/src/microsim/devices/.deps/MSDevice_Emissions.Po and sumo-
 Files sumo-OLD-0.32.0/src/microsim/devices/.deps/MSDevice_Example.Po and sumo-0.32.0/src/microsim/devices/.deps/MSDevice_Example.Po are identical
 diff -urBNs sumo-OLD-0.32.0/src/microsim/devices/.deps/MSDevice.Po sumo-0.32.0/src/microsim/devices/.deps/MSDevice.Po
 --- sumo-OLD-0.32.0/src/microsim/devices/.deps/MSDevice.Po	2018-10-15 17:18:50.000000000 +0000
-+++ sumo-0.32.0/src/microsim/devices/.deps/MSDevice.Po	2019-05-30 01:34:40.602452045 +0000
++++ sumo-0.32.0/src/microsim/devices/.deps/MSDevice.Po	2019-05-30 01:34:40.602452000 +0000
 @@ -334,7 +334,8 @@
   MSDevice_Battery.h ../../../src/microsim/devices/MSDevice.h \
   MSDevice_SSM.h /usr/include/c++/6/queue \
@@ -38863,7 +38863,7 @@ Files sumo-OLD-0.32.0/src/microsim/MSVehicleControl.h and sumo-0.32.0/src/micros
 Files sumo-OLD-0.32.0/src/microsim/MSVehicleControl.o and sumo-0.32.0/src/microsim/MSVehicleControl.o are identical
 diff -urBNs sumo-OLD-0.32.0/src/microsim/MSVehicle.cpp sumo-0.32.0/src/microsim/MSVehicle.cpp
 --- sumo-OLD-0.32.0/src/microsim/MSVehicle.cpp	2017-12-19 07:43:20.000000000 +0000
-+++ sumo-0.32.0/src/microsim/MSVehicle.cpp	2019-05-30 17:36:34.617679899 +0000
++++ sumo-0.32.0/src/microsim/MSVehicle.cpp	2019-06-03 07:58:47.171186862 +0000
 @@ -4851,6 +4850,10 @@
  }
  
@@ -38875,24 +38875,17 @@ diff -urBNs sumo-OLD-0.32.0/src/microsim/MSVehicle.cpp sumo-0.32.0/src/microsim/
  
  bool
  MSVehicle::isRemoteControlled() const {
-@@ -4878,9 +4881,24 @@
+@@ -4878,9 +4881,17 @@
  
  bool
  MSVehicle::ignoreRed(const MSLink* link, bool canBrake) const {
-+    
-+    
 +    if (isRogue() && myInfluencer != 0 && myInfluencer->getEmergencyBrakeRedLight()) { //if rogue with TraCI speedMode() called
 +        return false; //don't run red lights
 +    } else if (isRogue() && myInfluencer != 0 && !myInfluencer->getEmergencyBrakeRedLight()) { //if rogue with TraCI speedMode() reset
-+        std::cout << "TRACI RUNNING LIGHTS \n";
-+        fflush(stdout);
 +        return true; //run red lights again
 +    } else if (isRogue() && myInfluencer == 0) { //if rogue without TraCI speedMode() called
-+        std::cout << "off\n";
-+        fflush(stdout);
 +        return true; //run red lights by default
 +    }
-+    
      if ((myInfluencer != 0 && !myInfluencer->getEmergencyBrakeRedLight())) {
          return true;
      }
@@ -46185,21 +46178,10 @@ Files sumo-OLD-0.32.0/src/utils/gui/settings/GUIPropertySchemeStorage.h and sumo
 Files sumo-OLD-0.32.0/src/utils/gui/settings/GUISettingsHandler.cpp and sumo-0.32.0/src/utils/gui/settings/GUISettingsHandler.cpp are identical
 Files sumo-OLD-0.32.0/src/utils/gui/settings/GUISettingsHandler.h and sumo-0.32.0/src/utils/gui/settings/GUISettingsHandler.h are identical
 Files sumo-OLD-0.32.0/src/utils/gui/settings/GUISettingsHandler.o and sumo-0.32.0/src/utils/gui/settings/GUISettingsHandler.o are identical
-diff -urBNs sumo-OLD-0.32.0/src/utils/gui/settings/GUIVisualizationSettings.cpp sumo-0.32.0/src/utils/gui/settings/GUIVisualizationSettings.cpp
---- sumo-OLD-0.32.0/src/utils/gui/settings/GUIVisualizationSettings.cpp	2017-12-08 18:34:59.000000000 +0000
-+++ sumo-0.32.0/src/utils/gui/settings/GUIVisualizationSettings.cpp	2019-04-19 13:03:20.062557286 +0000
-@@ -84,7 +84,7 @@
-     laneMinSize(0),
-     showLaneDirection(false),
-     showSublanes(true),
--    vehicleQuality(0), showBlinker(true),
-+    vehicleQuality(0), showBlinker(false),
-     drawLaneChangePreference(false), drawMinGap(false),
-     showBTRange(false), vehicleSize(1),
-     vehicleName(false, 50, RGBColor(204, 153, 0, 255)),
+Files sumo-OLD-0.32.0/src/utils/gui/settings/GUIVisualizationSettings.cpp and sumo-0.32.0/src/utils/gui/settings/GUIVisualizationSettings.cpp are identical
 Files sumo-OLD-0.32.0/src/utils/gui/settings/GUIVisualizationSettings.h and sumo-0.32.0/src/utils/gui/settings/GUIVisualizationSettings.h are identical
-Binary files sumo-OLD-0.32.0/src/utils/gui/settings/GUIVisualizationSettings.o and sumo-0.32.0/src/utils/gui/settings/GUIVisualizationSettings.o differ
-Binary files sumo-OLD-0.32.0/src/utils/gui/settings/libguiutilssettings.a and sumo-0.32.0/src/utils/gui/settings/libguiutilssettings.a differ
+Files sumo-OLD-0.32.0/src/utils/gui/settings/GUIVisualizationSettings.o and sumo-0.32.0/src/utils/gui/settings/GUIVisualizationSettings.o are identical
+Files sumo-OLD-0.32.0/src/utils/gui/settings/libguiutilssettings.a and sumo-0.32.0/src/utils/gui/settings/libguiutilssettings.a are identical
 Files sumo-OLD-0.32.0/src/utils/gui/settings/Makefile and sumo-0.32.0/src/utils/gui/settings/Makefile are identical
 Files sumo-OLD-0.32.0/src/utils/gui/settings/Makefile.am and sumo-0.32.0/src/utils/gui/settings/Makefile.am are identical
 Files sumo-OLD-0.32.0/src/utils/gui/settings/Makefile.in and sumo-0.32.0/src/utils/gui/settings/Makefile.in are identical
@@ -46371,7 +46353,7 @@ Files sumo-OLD-0.32.0/src/utils/vehicle/CHRouterWrapper.h and sumo-0.32.0/src/ut
 Files sumo-OLD-0.32.0/src/utils/vehicle/.deps/SUMOVehicleParameter.Po and sumo-0.32.0/src/utils/vehicle/.deps/SUMOVehicleParameter.Po are identical
 diff -urBNs sumo-OLD-0.32.0/src/utils/vehicle/.deps/SUMOVTypeParameter.Po sumo-0.32.0/src/utils/vehicle/.deps/SUMOVTypeParameter.Po
 --- sumo-OLD-0.32.0/src/utils/vehicle/.deps/SUMOVTypeParameter.Po	2018-10-15 17:17:12.000000000 +0000
-+++ sumo-0.32.0/src/utils/vehicle/.deps/SUMOVTypeParameter.Po	2019-05-29 22:49:47.135607379 +0000
++++ sumo-0.32.0/src/utils/vehicle/.deps/SUMOVTypeParameter.Po	2019-05-29 22:49:47.135607000 +0000
 @@ -144,10 +144,18 @@
   /usr/include/c++/6/bits/random.tcc /usr/include/c++/6/numeric \
   /usr/include/c++/6/bits/stl_numeric.h \
@@ -47063,7 +47045,7 @@ Files sumo-OLD-0.32.0/src/utils/vehicle/SUMOVehicleParameter.h and sumo-0.32.0/s
 Files sumo-OLD-0.32.0/src/utils/vehicle/SUMOVehicleParameter.o and sumo-0.32.0/src/utils/vehicle/SUMOVehicleParameter.o are identical
 diff -urBNs sumo-OLD-0.32.0/src/utils/vehicle/SUMOVTypeParameter.cpp sumo-0.32.0/src/utils/vehicle/SUMOVTypeParameter.cpp
 --- sumo-OLD-0.32.0/src/utils/vehicle/SUMOVTypeParameter.cpp	2017-12-08 18:34:59.000000000 +0000
-+++ sumo-0.32.0/src/utils/vehicle/SUMOVTypeParameter.cpp	2019-05-20 22:00:17.729163238 +0000
++++ sumo-0.32.0/src/utils/vehicle/SUMOVTypeParameter.cpp	2019-05-20 22:00:17.729163000 +0000
 @@ -31,6 +31,7 @@
  
  #include <algorithm>
@@ -47521,7 +47503,7 @@ Files sumo-OLD-0.32.0/tools/purgatory/splitTripsByHours.pl and sumo-0.32.0/tools
 Files sumo-OLD-0.32.0/tools/purgatory/xml2cvs.pl and sumo-0.32.0/tools/purgatory/xml2cvs.pl are identical
 diff -urBNs sumo-OLD-0.32.0/tools/randomTrips.py sumo-0.32.0/tools/randomTrips.py
 --- sumo-OLD-0.32.0/tools/randomTrips.py	2017-12-19 08:01:01.000000000 +0000
-+++ sumo-0.32.0/tools/randomTrips.py	2019-05-31 07:35:29.049061318 +0000
++++ sumo-0.32.0/tools/randomTrips.py	2019-05-31 07:35:29.049061000 +0000
 @@ -100,7 +100,11 @@
          "-c", "--vclass", "--edge-permission", default="passenger",
          help="only from and to edges which permit the given vehicle class")
@@ -47801,7 +47783,7 @@ Files sumo-OLD-0.32.0/tools/traci/_trafficlight.py and sumo-0.32.0/tools/traci/_
 Binary files sumo-OLD-0.32.0/tools/traci/_trafficlight.pyc and sumo-0.32.0/tools/traci/_trafficlight.pyc differ
 diff -urBNs sumo-OLD-0.32.0/tools/traci/_vehicle.py sumo-0.32.0/tools/traci/_vehicle.py
 --- sumo-OLD-0.32.0/tools/traci/_vehicle.py	2017-12-19 08:01:01.000000000 +0000
-+++ sumo-0.32.0/tools/traci/_vehicle.py	2019-05-28 02:49:49.380385947 +0000
++++ sumo-0.32.0/tools/traci/_vehicle.py	2019-05-28 02:49:49.380385000 +0000
 @@ -1181,7 +1181,157 @@
          """
          self._connection._sendIntCmd(

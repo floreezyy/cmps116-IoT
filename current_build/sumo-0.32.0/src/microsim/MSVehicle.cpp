@@ -4881,20 +4881,13 @@ MSVehicle::keepClear(const MSLink* link) const {
 
 bool
 MSVehicle::ignoreRed(const MSLink* link, bool canBrake) const {
-    
-    
     if (isRogue() && myInfluencer != 0 && myInfluencer->getEmergencyBrakeRedLight()) { //if rogue with TraCI speedMode() called
         return false; //don't run red lights
     } else if (isRogue() && myInfluencer != 0 && !myInfluencer->getEmergencyBrakeRedLight()) { //if rogue with TraCI speedMode() reset
-        std::cout << "TRACI RUNNING LIGHTS \n";
-        fflush(stdout);
         return true; //run red lights again
     } else if (isRogue() && myInfluencer == 0) { //if rogue without TraCI speedMode() called
-        std::cout << "off\n";
-        fflush(stdout);
         return true; //run red lights by default
     }
-    
     if ((myInfluencer != 0 && !myInfluencer->getEmergencyBrakeRedLight())) {
         return true;
     }

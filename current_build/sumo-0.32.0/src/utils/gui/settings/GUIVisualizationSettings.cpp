@@ -84,7 +84,7 @@ GUIVisualizationSettings::GUIVisualizationSettings(bool _netedit) :
     laneMinSize(0),
     showLaneDirection(false),
     showSublanes(true),
-    vehicleQuality(0), showBlinker(false),
+    vehicleQuality(0), showBlinker(true),
     drawLaneChangePreference(false), drawMinGap(false),
     showBTRange(false), vehicleSize(1),
     vehicleName(false, 50, RGBColor(204, 153, 0, 255)),

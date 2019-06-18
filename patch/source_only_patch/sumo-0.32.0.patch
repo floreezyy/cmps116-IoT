@@ -1,0 +1,1083 @@
+diff -urBNs sumo-OLD-0.32.0/src/microsim/devices/Makefile.am sumo-0.32.0/src/microsim/devices/Makefile.am
+--- sumo-OLD-0.32.0/src/microsim/devices/Makefile.am	2017-12-08 18:34:59.000000000 +0000
++++ sumo-0.32.0/src/microsim/devices/Makefile.am	2019-05-28 01:01:18.057582000 +0000
+@@ -11,4 +11,5 @@
+ MSDevice_Battery.cpp MSDevice_Battery.h \
+ MSDevice_Example.cpp MSDevice_Example.h \
+ MSDevice_Bluelight.cpp MSDevice_Bluelight.h \
+-MSDevice_Vehroutes.cpp MSDevice_Vehroutes.h 
++MSDevice_Vehroutes.cpp MSDevice_Vehroutes.h \
++MSDevice_DSRC.cpp MSDevice_DSRC.h
+\ No newline at end of file
+diff -urBNs sumo-OLD-0.32.0/src/microsim/devices/MSDevice.cpp sumo-0.32.0/src/microsim/devices/MSDevice.cpp
+--- sumo-OLD-0.32.0/src/microsim/devices/MSDevice.cpp	2017-12-19 07:43:20.000000000 +0000
++++ sumo-0.32.0/src/microsim/devices/MSDevice.cpp	2019-05-28 01:01:18.045582000 +0000
+@@ -42,6 +42,7 @@
+ #include "MSDevice_Battery.h"
+ #include "MSDevice_SSM.h"
+ #include "MSDevice_Bluelight.h"
++#include "MSDevice_DSRC.h"
+ 
+ 
+ // ===========================================================================
+@@ -66,6 +67,7 @@
+     MSDevice_Battery::insertOptions(oc);
+     MSDevice_SSM::insertOptions(oc);
+     MSDevice_Bluelight::insertOptions(oc);
++    MSDevice_DSRC::insertOptions(oc);
+ }
+ 
+ 
+@@ -89,6 +91,7 @@
+     MSDevice_Battery::buildVehicleDevices(v, into);
+     MSDevice_SSM::buildVehicleDevices(v, into);
+     MSDevice_Bluelight::buildVehicleDevices(v, into);
++    MSDevice_DSRC::buildVehicleDevices(v, into);
+ }
+ 
+ void
+diff -urBNs sumo-OLD-0.32.0/src/microsim/devices/MSDevice_DSRC.cpp sumo-0.32.0/src/microsim/devices/MSDevice_DSRC.cpp
+--- sumo-OLD-0.32.0/src/microsim/devices/MSDevice_DSRC.cpp	1970-01-01 00:00:00.000000000 +0000
++++ sumo-0.32.0/src/microsim/devices/MSDevice_DSRC.cpp	2019-05-30 01:33:17.922128000 +0000
+@@ -0,0 +1,379 @@
++/****************************************************************************/
++// Eclipse SUMO, Simulation of Urban MObility; see https://eclipse.org/sumo
++// Copyright (C) 2013-2017 German Aerospace Center (DLR) and others.
++/****************************************************************************/
++//
++//   This program and the accompanying materials
++//   are made available under the terms of the Eclipse Public License v2.0
++//   which accompanies this distribution, and is available at
++//   http://www.eclipse.org/legal/epl-v20.html
++//
++/****************************************************************************/
++/// @file    MSDevice_DSRC.cpp
++/// @author  Alexis Flores, based on Daniel Krajzewicz's MSDevice_Example framework
++/// @author  Michael Behrisch
++/// @author  Jakob Erdmann
++/// @date    05.27.2019
++/// @version $Id$
++///
++// A device which collects Basic Safety Messages from a vehicle and outputs to File
++/****************************************************************************/
++
++// ===========================================================================
++// included modules
++// ===========================================================================
++#ifdef _MSC_VER
++#include <windows_config.h>
++#else
++#include <config.h>
++#endif
++
++
++#include <string>
++#include <iomanip>
++#include <sstream>
++#include <iostream>
++#include <fstream> //file creation to output BSM data
++#include <chrono> //for calculating time of computations
++#include <ctime> // used to get time of message creation completion
++
++#include <utils/common/TplConvert.h>
++#include <utils/options/OptionsCont.h>
++#include <utils/iodevices/OutputDevice.h>
++#include <utils/vehicle/SUMOVehicle.h>
++#include <microsim/MSNet.h>
++#include <microsim/MSLane.h>
++#include <microsim/MSEdge.h>
++#include <microsim/MSVehicle.h>
++#include <utils/common/SUMOTime.h>
++#include "MSDevice_Tripinfo.h"
++#include "MSDevice_DSRC.h"
++
++// ===========================================================================
++// module-level variables
++// ===========================================================================
++int msg_num = 0; // message count for DSRC communication standards
++int brakeStatus = 0; // variable holding the brake status information
++int transStatus = 0; // variable holding the transmission state information
++int rsu_domain = NONE; // holds information on the vehicles current location in terms of RSU domains
++int rsu_detected = NONE; // default case where vehicle is not in the vicinity of a road side unit
++double rsu_x_coordinate = 0; // used to calculate the location of the road side unit
++double rsu_y_coordinate = 0;
++double rsu_sig_strength = 0; // calculates the signal strength of the RSU to the vehicle
++// ===========================================================================
++// method definitions
++// ===========================================================================
++
++int
++MSDevice_DSRC::getBrakeSystemStatus(double prevSpeed, double currSpeed){
++    
++    int brakeStatus; // returns if brakes are on or off
++    if(prevSpeed > currSpeed){ // if the speed is slowwing down, then brakes are on
++        brakeStatus = BRAKES_ON;
++    }
++    else{ // the vehicle is not slowing down, so brakes must be on
++        brakeStatus = BRAKES_OFF;
++    }
++    return brakeStatus; // return the brake status of the vehicle  
++}
++
++
++
++int
++MSDevice_DSRC::getTransmissionStatus(double currSpeed){
++    
++    int transStatus; // variable that holds the current transmission status of the vehicle
++    if(currSpeed != 0.0){ // if the speed is positive and non zero, car is driving
++        transStatus = DRIVE;
++    }
++    else if(currSpeed < 0.0){ // if vehicle speed is negative, meaning car is backtracking
++        transStatus = REVERSE; // transmission is in reverse
++    }
++    else{
++        transStatus = PARKED; // car speed is 0.0, so it is parked or vehicle has stopped
++    }
++    return transStatus;
++
++    // Need to find other ways to find REVERSE and NEUTRAL to better represent transmissionStatus
++}
++
++
++
++int 
++MSDevice_DSRC::RoadSideUnitDetect(double x_coordinate, double y_coordinate){
++
++    int rsu_detected = 0; // signal if the vehicle is near a RSU vicinity
++    
++    // if the vehicles current coordinates are within the range of RSU 1
++    if (((x_coordinate >= RSU1_X_COR_MIN_RANGE) && (x_coordinate <= RSU1_X_COR_MAX_RANGE)) &&
++        ((y_coordinate >= RSU1_Y_COR_MIN_RANGE) && (y_coordinate <= RSU1_Y_COR_MAX_RANGE))) {
++        
++        rsu_detected = RSU_1_DOMAIN; // vehicle IS in the vicinity of RSU1
++
++    }
++    // if the vehicles current coordinates are within the range of RSU 2
++    else if (((x_coordinate >= RSU2_X_COR_MIN_RANGE) && (x_coordinate <= RSU2_X_COR_MAX_RANGE)) &&
++        ((y_coordinate >= RSU2_Y_COR_MIN_RANGE) && (y_coordinate <= RSU2_Y_COR_MAX_RANGE))) {
++        
++        rsu_detected = RSU_2_DOMAIN; // vehicle IS in the vicinity of RSU2
++
++    }
++    // if the vehicles current coordinates are within the range of RSU 3
++    else if (((x_coordinate >= RSU3_X_COR_MIN_RANGE) && (x_coordinate <= RSU3_X_COR_MAX_RANGE)) &&
++        ((y_coordinate >= RSU3_Y_COR_MIN_RANGE) && (y_coordinate <= RSU3_Y_COR_MAX_RANGE))) {
++        
++        rsu_detected = RSU_3_DOMAIN; // vehicle IS in the vicinity of RSU3
++
++    }
++    else{ // the vehicle is currently not in the range of any RSU mentioned within light_run sim
++        rsu_detected = NONE; 
++    }
++    return rsu_detected;
++}
++
++int 
++MSDevice_DSRC::RSUSignalStrength(double x_coordinate, double y_coordinate, double x_rsu_coordinate, double y_rsu_coordinate){
++
++    double signal_strength = 0; // by default strength is 0
++
++	double x_distance = x_coordinate - x_rsu_coordinate; // x-distance from vehicle to nearest road side unit
++	double y_distance = y_coordinate - y_rsu_coordinate; // y-distance from vehicle to nearest road side unit
++	
++	double abs_distance = sqrt((x_distance*x_distance) + (y_distance*y_distance));
++    signal_strength = 100.0 - (abs_distance * 2); // calculate distance 
++    
++    return abs(signal_strength); // return absolute distance 
++}
++// ---------------------------------------------------------------------------
++// static initialisation methods, used to generate actual device and output
++// ---------------------------------------------------------------------------
++void
++MSDevice_DSRC::insertOptions(OptionsCont& oc) {
++    oc.addOptionSubTopic("DSRC Device");
++    insertDefaultAssignmentOptions("dsrc", "DSRC Device", oc);
++
++    oc.doRegister("device.dsrc.parameter", new Option_Float(0.0));
++    oc.addDescription("device.dsrc.parameter", "DSRC Device", "An exemplary parameter which can be used by all instances of the dsrc device");
++}
++
++
++void
++MSDevice_DSRC::buildVehicleDevices(SUMOVehicle& v, std::vector<MSDevice*>& into) {
++    OptionsCont& oc = OptionsCont::getOptions();
++    if (equippedByDefaultAssignmentOptions(oc, "dsrc", v)) {
++        // build the device
++        // get custom vehicle parameter
++        double customParameter2 = -1;
++        if (v.getParameter().knowsParameter("dsrc")) {
++            try {
++                customParameter2 = TplConvert::_2double(v.getParameter().getParameter("dsrc", "-1").c_str());
++            } catch (...) {
++                WRITE_WARNING("Invalid value '" + v.getParameter().getParameter("dsrc", "-1") + "'for vehicle parameter 'dsrc'");
++            }
++
++        } else {
++            //std::cout << "VehicleID: '" << v.getID() << "' does not supply vehicle parameter 'dsrc'. Using default of " << customParameter2 << "\n";
++        }
++        // get custom vType parameter
++        double customParameter3 = -1;
++        if (v.getVehicleType().getParameter().knowsParameter("dsrc")) {
++            try {
++                customParameter3 = TplConvert::_2double(v.getVehicleType().getParameter().getParameter("dsrc", "-1").c_str());
++            } catch (...) {
++                WRITE_WARNING("Invalid value '" + v.getVehicleType().getParameter().getParameter("dsrc", "-1") + "'for vType parameter 'dsrc'");
++            }
++
++        } else {
++            //std::cout << "VehicleID '" << v.getID() << "' does not supply vType parameter 'dsrc'. Using default of " << customParameter3 << "\n";
++        }
++
++        MSDevice_DSRC* device = new MSDevice_DSRC(v, "dsrc_" + v.getID(),
++                oc.getFloat("device.dsrc.parameter"),
++                customParameter2,
++                customParameter3);
++        into.push_back(device);
++    }
++}
++
++
++// ---------------------------------------------------------------------------
++// MSDevice_DSRC-methods
++// ---------------------------------------------------------------------------
++MSDevice_DSRC::MSDevice_DSRC(SUMOVehicle& holder, const std::string& id,
++                                   double customValue1, double customValue2, double customValue3) :
++    MSDevice(holder, id),
++    myCustomValue1(customValue1),
++    myCustomValue2(customValue2),
++    myCustomValue3(customValue3) {
++    
++    int i = 0; // counter for number of RSU files to generate
++
++    std::string file_name;
++    for (i = 1; i <= NUM_RSU_ACTIVE; i++) // for every RSU active on simulation, create own RSU file (refer to header)
++    {
++        std::stringstream file_name; // holder for each rsu string ID
++        file_name << "RSU_" << std::to_string(i) << "_dsrc_pkt_received" << ".csv";
++        //std::string query(file_name.str());
++        std::ofstream file(file_name.str()); // make string into file name
++
++        // data is formatted as a csv file for processing, data collecting purposes
++        file << "MsgCount,TemporaryID,VehicleID,Vehicle Type,Vehicle Length,Vehicle Width," << 
++        "Vehicle Height,Vehicle Wheel Angle,Longitude,Latitude,Vehicle Speed,Vehicle Acceleration," << 
++        "Vehicle Slope Angle,BrakeSystemStatus,TransmissionState,Dsecond,RSU_ID,RSU_SIG_STRENGTH" << "\n"; 
++
++    } // file(s) are only created once before car movement
++}
++
++
++MSDevice_DSRC::~MSDevice_DSRC() {
++}
++
++
++bool
++MSDevice_DSRC::notifyMove(SUMOVehicle& veh, double /* oldPos */,
++                             double /* newPos */, double newSpeed) {
++    
++    std::string rsu_file;                       
++    rsu_domain = RoadSideUnitDetect(veh.getPosition().x(), veh.getPosition().y()); // detect if vehicle is in the vicinity of a road side unit
++    switch(rsu_domain){ // check which road side unit is the vehicle located at
++        case RSU_1_DOMAIN: // vicinity of road side unit 1
++            rsu_file = "RSU_1_dsrc_pkt_received.csv";
++            rsu_x_coordinate = RSU1_X_COORDINATE;
++            rsu_y_coordinate = RSU1_Y_COORDINATE;
++            break;
++        case RSU_2_DOMAIN: // vicinity of road side unit 2
++            rsu_file = "RSU_2_dsrc_pkt_received.csv";
++            rsu_x_coordinate = RSU2_X_COORDINATE;
++            rsu_y_coordinate = RSU2_Y_COORDINATE;
++            break;
++        case RSU_3_DOMAIN: // vicinity of road side unit 3
++            rsu_file = "RSU_3_dsrc_pkt_received.csv";
++            rsu_x_coordinate = RSU3_X_COORDINATE;
++            rsu_y_coordinate = RSU3_Y_COORDINATE;
++            break;
++    }
++    rsu_detected = NONE;
++    if(rsu_domain != NONE){ // if we are in the vicinity of an RSU, return the domain of rhe RSU we are in
++        rsu_detected = rsu_domain;
++    }
++    msg_num++; //increment the message id for message processing purposes
++                  
++    std::ofstream dsrcfile (rsu_file, std::ios_base::app);
++    
++    // check whether another device is present on the vehicle:
++    MSDevice_Tripinfo* otherDevice = static_cast<MSDevice_Tripinfo*>(veh.getDevice(typeid(MSDevice_Tripinfo)));
++    
++    MSVehicle& sus = dynamic_cast<MSVehicle&>(veh); // casting to retrieve other vehicle information
++    int veh_curr_speed = sus.getSpeed(); // retrueve current speed
++    int veh_prev_speed = sus.getPreviousSpeed(); // retrive last time step speed
++
++    if(rsu_detected != NONE){ // if we are in a road side unit domain, output BSM to that RSU file
++
++        dsrcfile << msg_num << ","; //MsgCount
++        dsrcfile << veh.getID() << "_" << msg_num << ","; //TemporaryID
++        dsrcfile << veh.getID() << ","; // VehicleID
++        dsrcfile << veh.getVehicleType().getID() << ","; // Vehicle Type
++        dsrcfile << veh.getVehicleType().getLength() << ","; // Vehicle Length
++        dsrcfile << veh.getVehicleType().getWidth() << ","; // Vehicle Width
++        dsrcfile << veh.getVehicleType().getHeight() << ","; // Vehicle Height
++        dsrcfile << veh.getAngle() << ","; // Vehicle Wheel Angle
++        dsrcfile << veh.getPosition().x() << ","; // Vehicle Longitude
++        dsrcfile << veh.getPosition().y() << ","; // Vehicle Latitude
++        dsrcfile << veh_curr_speed << ","; // Vehicle Speed
++        dsrcfile << veh.getAcceleration() << ","; //vehicle acceleration
++        dsrcfile << veh.getSlope() << ","; // Vehicle Slope
++
++        brakeStatus = getBrakeSystemStatus(veh_prev_speed, veh_curr_speed); // calculate BSS
++
++        if(brakeStatus == BRAKES_ON){
++            dsrcfile << "BRAKES_ON" << ",";
++        }
++        else{
++            dsrcfile << "BRAKES_OFF" << ",";
++        }
++        
++        transStatus = getTransmissionStatus(veh_curr_speed); //calculate TransmissionStatus
++        if(transStatus == PARKED){
++            dsrcfile << "PARK" << ",";
++        }
++        else{
++            dsrcfile << "DRIVE" << ",";
++        }
++
++        time_t t = time(NULL);
++	    tm* timePtr = localtime(&t);
++        
++        // this block is used to calculate Dsecond timestamp
++        typedef std::chrono::system_clock Clock;
++        auto sent = std::chrono::system_clock::now(); // generate date and time with millisecond precision
++        auto now = Clock::now();
++        auto seconds = std::chrono::time_point_cast<std::chrono::seconds>(now);
++        auto fraction = now - seconds;
++        
++        auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(fraction);
++        dsrcfile << timePtr->tm_mon+1 << "-";
++        dsrcfile << timePtr->tm_mday << "-";
++        dsrcfile << timePtr->tm_year+1900 << " ";
++        
++        dsrcfile << timePtr->tm_hour << ":";
++        dsrcfile << timePtr->tm_min << ":";
++        dsrcfile << timePtr->tm_sec << ":";
++        dsrcfile << milliseconds.count() << std::endl;
++        
++        // end of Dsecond timestamp
++
++        // Roadside Unit iD based on location
++        dsrcfile << "rsu_" << rsu_domain << ",";
++        
++        // calculate signal strength from RSU to vehicle based on current position
++        rsu_sig_strength = RSUSignalStrength(veh.getPosition().x(), veh.getPosition().y(), rsu_x_coordinate, rsu_y_coordinate);
++        dsrcfile << rsu_sig_strength;
++        
++        dsrcfile << std::endl; // end appending to file
++    }
++    
++    return true; // keep the device
++}
++
++
++void
++MSDevice_DSRC::generateOutput() const {
++    if (OptionsCont::getOptions().isSet("tripinfo-output")) {
++        OutputDevice& os = OutputDevice::getDeviceByOption("tripinfo-output");
++        os.openTag("dsrc_device");
++        os.writeAttr("customValue1", toString(myCustomValue1));
++        os.writeAttr("customValue2", toString(myCustomValue2));
++        os.closeTag();
++    }
++}
++
++std::string
++MSDevice_DSRC::getParameter(const std::string& key) const {
++    if (key == "customValue1") {
++        return toString(myCustomValue1);
++    } else if (key == "customValue2") {
++        return toString(myCustomValue2);
++    } else if (key == "meaningOfLife") {
++        return "42";
++    }
++    throw InvalidArgument("Parameter '" + key + "' is not supported for device of type '" + deviceName() + "'");
++}
++
++
++void
++MSDevice_DSRC::setParameter(const std::string& key, const std::string& value) {
++    double doubleValue;
++    try {
++        doubleValue = TplConvert::_2double(value.c_str());
++    } catch (NumberFormatException) {
++        throw InvalidArgument("Setting parameter '" + key + "' requires a number for device of type '" + deviceName() + "'");
++    }
++    if (key == "customValue1") {
++        myCustomValue1 = doubleValue;
++    } else {
++        throw InvalidArgument("Setting parameter '" + key + "' is not supported for device of type '" + deviceName() + "'");
++    }
++}
++
++
++/****************************************************************************/
+\ No newline at end of file
+diff -urBNs sumo-OLD-0.32.0/src/microsim/devices/MSDevice_DSRC.h sumo-0.32.0/src/microsim/devices/MSDevice_DSRC.h
+--- sumo-OLD-0.32.0/src/microsim/devices/MSDevice_DSRC.h	1970-01-01 00:00:00.000000000 +0000
++++ sumo-0.32.0/src/microsim/devices/MSDevice_DSRC.h	2019-05-28 18:23:43.876989000 +0000
+@@ -0,0 +1,279 @@
++/****************************************************************************/
++// Eclipse SUMO, Simulation of Urban MObility; see https://eclipse.org/sumo
++// Copyright (C) 2013-2017 German Aerospace Center (DLR) and others.
++/****************************************************************************/
++//
++//   This program and the accompanying materials
++//   are made available under the terms of the Eclipse Public License v2.0
++//   which accompanies this distribution, and is available at
++//   http://www.eclipse.org/legal/epl-v20.html
++//
++/****************************************************************************/
++/// @file    MSDevice_DSRC.h
++/// @author  Alexis Flores
++
++/// based on the work from the example device provided by:
++/// @author  Daniel Krajzewicz
++/// @author  Jakob Erdmann
++///
++///
++/// @date    05.27.2019
++/// @version $Id$
++///
++// A device which generates Basic Safety Messages of a vehicle and outputs them 
++// to console or Road Side Unit files specified by the User
++/****************************************************************************/
++#ifndef MSDevice_DSRC_h
++#define MSDevice_DSRC_h
++
++
++// ===========================================================================
++// included modules
++// ===========================================================================
++#ifdef _MSC_VER
++#include <windows_config.h>
++#else
++#include <config.h>
++#endif
++
++#include "MSDevice.h"
++#include <utils/common/SUMOTime.h>
++
++// 3 currently implemented states for TransmissionStateStatus based on vehicle speed
++#define PARKED 0
++#define DRIVE 1
++#define REVERSE 2
++
++// 2 currently implemented states of BrakeSystemStatus parameter based on vehicle speed
++#define BRAKES_OFF 0 // brakes are on
++#define BRAKES_ON 1 // brakes are off
++
++// hardcoded range coordinates for each of the RSU polygons found inside the additional xml
++// file found inside the light_run simulation folder. MIN and MAX coordinates are used to calculate
++// the signal strength of the Road Side Units. The farther the vehicle is from the MIN/MAX coordinate
++// of the RSU device the weaker the signal will be. The closer it is the stronger the signal will be.
++// These coordinates can be modified depending on where (long x, lat y) the RSU polygons are located.
++// 
++// In this example, the additional file in light_run folder has three RSU polygons located at:
++//
++// RSU 1: (356.57, 594.94)
++// RSU 2: (495.03, 291.76)
++// RSU 3: (254.99, 306.39)
++
++#define NUM_RSU_ACTIVE 3 // number of RSU devices inside light_run simulation, will create X number of RSU message files
++
++#define RSU1_X_COORDINATE 356.57 // absolute x coordinate of the RSU 1 polygon in the simulation
++#define RSU1_Y_COORDINATE 594.94 // absolute y coordinate of the RSU 1 polygon in the simulation
++#define RSU1_X_COR_MIN_RANGE 300 // these values are the ranges that determine RSU signal strength 
++#define RSU1_Y_COR_MIN_RANGE 550
++#define RSU1_X_COR_MAX_RANGE 400
++#define RSU1_Y_COR_MAX_RANGE 650
++
++#define RSU2_X_COORDINATE 495.03 // absolute x coordinate of the RSU 2 polygon in the simulation
++#define RSU2_Y_COORDINATE 291.76 // absolute y coordinate of the RSU 2 polygon in the simulation
++#define RSU2_X_COR_MIN_RANGE 450 // these values are the ranges that determine RSU signal strength 
++#define RSU2_Y_COR_MIN_RANGE 250
++#define RSU2_X_COR_MAX_RANGE 550
++#define RSU2_Y_COR_MAX_RANGE 350
++
++#define RSU3_X_COORDINATE 254.99 // absolute x coordinate of the RSU 3 polygon in the simulation
++#define RSU3_Y_COORDINATE 306.39 // absolute y coordinate of the RSU 3 polygon in the simulation
++#define RSU3_X_COR_MIN_RANGE 200 // these values are the ranges that determine RSU signal strength 
++#define RSU3_Y_COR_MIN_RANGE 250
++#define RSU3_X_COR_MAX_RANGE 300
++#define RSU3_Y_COR_MAX_RANGE 350
++
++// vehicles will pass through 3 different RSU ranges and will output to the corresponding file based on the location domain
++#define NONE 0
++#define RSU_1_DOMAIN 1
++#define RSU_2_DOMAIN 2
++#define RSU_3_DOMAIN 3
++
++//These defines are used for the signal strength of the vehicle with the DSRC device
++// installed to the Road Side Unit within the light_run simulation file
++
++#define SIGNAL_WEAK 50 // vehicle is at a far distance from the Road Side Unit, messages might be lost
++#define SIGNAL_MEDIUM 75 // vehicle is within acceptable range for receiving messages without issues
++#define SIGNAL_STRONG 90 // vehicle is close to RSU and signal strength is best
++
++// ===========================================================================
++// class declarations
++// ===========================================================================
++class SUMOVehicle;
++class MSVehicle; // need for breake lights
++
++// ===========================================================================
++// class definitions
++// ===========================================================================
++/**
++ * @class MSDevice_DSRC
++ * @brief A device which collects info on Basic Safety Messages for DSRC applications
++ *
++ * Each device collects safety information from vehicle attached 
++ *
++ * @see MSDevice
++ */
++class MSDevice_DSRC : public MSDevice {
++public:
++    /** @brief Inserts MSDevice_DSRC-options
++     * @param[filled] oc The options container to add the options to
++     */
++    static void insertOptions(OptionsCont& oc);
++
++
++    /** @brief Build devices for the given vehicle, if needed
++     *
++     * The options are read and evaluated whether a DSRC-device shall be built
++     *  for the given vehicle.
++     *
++     * The built device is stored in the given vector.
++     *
++     * @param[in] v The vehicle for which a device may be built
++     * @param[filled] into The vector to store the built device in
++     */
++    static void buildVehicleDevices(SUMOVehicle& v, std::vector<MSDevice*>& into);
++    // may be able to appy N DSRC devices using the device vector?
++
++
++public:
++    /// @brief Destructor.
++    ~MSDevice_DSRC();
++
++    
++    /** @brief
++     * A basic getHelper function that calculates the current brakesystem status status
++     * of the vehicle based on the speed of the vehicle at time t and t-1. If the
++     * current vehicle speed is less than the previous speed at time t-1, we can
++     * assume that the car is slowing down 
++     * 
++     * NOTE: brake system is not currently supported in SUMO so braking status returned
++     *       is completely based on the changing speed of the vehicle
++     * 
++     * @param[in] prevSpeed is the speed of the vehicle at the previous timestep t-1
++     * @param[in] currSpeed is the speed of the vehicle at the current timestep t
++     *
++     * @return the BrakeSystem status of the vehicle based on previous and current speed
++     */
++    int getBrakeSystemStatus(double prevSpeed, double currSpeed);
++
++    /** @brief
++     * A basic getHelper function that calculates the current TransmissionStateSystem status
++     * of the vehicle based on the speed of the vehicle at time t. If the
++     * current vehicle speed is 0, then the car is PARKED. Less than 0 we assume the vehicle is
++     * in REVERSE, or if speed is positive, then the vehicle is in the DRIVE state.
++     *
++     * NOTE: transmission status is not currently supported in SUMO so the transmission status
++     *       returned is completely based on the changing speed of the vehicle
++     * 
++     * @param[in] currSpeed is the speed of the vehicle at the current timestep t
++     *
++     * @return the transmission status of the vehicle based current speed
++     */
++    int getTransmissionStatus(double currSpeed);
++    
++
++    /** @brief Checks if vehicle is within the range of an Road Side Unit
++     * currently there is no interobject communication between a vehicle and Road Side Unit,
++     * so as a temporary "hacky" solution is to hardcode the location of a RSU 
++     * (found inside the additional files) in the simulatio and output data to a file 
++     * when it comes across the vicinity of the RSU
++     * 
++     * NOTE: x_coordinate and y_coordinate are the x and y coordinates of the vehicle.
++     *       this will check the hardcoded #define'd values on lines 65-90 and return
++     *       whether the vehicle is inside the range of hardcoded values
++     * 
++     * @param[in] x_coordinate is the current longitudal coordiate of the vehicle
++     * @param[in] y_coordinate is the current latitudal coordiate of the vehicle
++     *
++     * @return if the vehicle is within the vicinity of an RSU or near none
++     */
++    int RoadSideUnitDetect(double X_coordinate, double y_coordinate);
++
++    /** @brief 
++     * Calculates the signal stregth of the Vehicle to the RSU using the
++     *  distance formula. Signam strength is determined by how far a vehicle
++     * is from the x, y coordinates of the RSU
++     * 
++     * @param[in] x_coordinate is the current longitudal coordiate of the vehicle
++     * @param[in] y_coordinate is the current latitudal coordiate of the vehicle
++     * @param[in] x_rsu_coordinate is the current longitudal coordiate of the RSU
++     * @param[in] y_rsu_coordinate is the current latitudal coordiate of the RSU
++     * @return signal stregth of the connection between the vehicle and RSU
++     */
++    int RSUSignalStrength(double x_coordinate, double y_coordinate, double x_rsu_coordinate, double y_rsu_coordinate);
++    /// @name Methods called on vehicle movement / state change, overwriting MSDevice
++    /// @{
++
++    /** @brief Checks for waiting steps when the vehicle moves
++     *
++     * @param[in] veh Vehicle that asks this reminder.
++     * @param[in] oldPos Position before move.
++     * @param[in] newPos Position after move with newSpeed.
++     * @param[in] newSpeed Moving speed.
++     *
++     * @return True (always).
++     */
++    bool notifyMove(SUMOVehicle& veh, double oldPos,
++                    double newPos, double newSpeed);
++
++
++    /// @brief return the name for this type of device
++    const std::string deviceName() const {
++        return "dsrc";
++    }
++
++    /// @brief try to retrieve the given parameter from this device. Throw exception for unsupported key
++    std::string getParameter(const std::string& key) const;
++
++    /// @brief try to set the given parameter for this device. Throw exception for unsupported key
++    void setParameter(const std::string& key, const std::string& value);
++
++    /** @brief Called on writing tripinfo output
++     *
++     * @param[in] os The stream to write the information into
++     * @exception IOError not yet implemented
++     * @see MSDevice::generateOutput
++     */
++    void generateOutput() const;
++
++    
++
++private:
++    /** @brief Constructor
++     *
++     * @param[in] holder The vehicle that holds this device
++     * @param[in] id The ID of the device
++     */
++    MSDevice_DSRC(SUMOVehicle& holder, const std::string& id, double customValue1,
++                     double customValue2, double customValue3);
++
++
++
++private:
++    // private state members of the DSRC device, not really used for anything. Based on example device.
++
++    /// @brief a value which is initialised based on a commandline/configuration option
++    double myCustomValue1;
++
++    /// @brief a value which is initialised based on a vehicle parameter
++    double myCustomValue2;
++
++    /// @brief a value which is initialised based on a vType parameter
++    double myCustomValue3;
++
++
++
++private:
++    /// @brief Invalidated copy constructor.
++    MSDevice_DSRC(const MSDevice_DSRC&);
++
++    /// @brief Invalidated assignment operator.
++    MSDevice_DSRC& operator=(const MSDevice_DSRC&);
++
++
++};
++
++
++#endif
++
++/****************************************************************************/
+diff -urBNs sumo-OLD-0.32.0/src/microsim/MSVehicle.cpp sumo-0.32.0/src/microsim/MSVehicle.cpp
+--- sumo-OLD-0.32.0/src/microsim/MSVehicle.cpp	2017-12-19 07:43:20.000000000 +0000
++++ sumo-0.32.0/src/microsim/MSVehicle.cpp	2019-06-03 07:58:47.171186000 +0000
+@@ -4851,6 +4850,10 @@
+ }
+ 
+ #endif
++bool
++MSVehicle::isRogue() const {
++    return getVehicleType().getID() == "rogue";
++}
+ 
+ bool
+ MSVehicle::isRemoteControlled() const {
+@@ -4878,9 +4881,17 @@
+ 
+ bool
+ MSVehicle::ignoreRed(const MSLink* link, bool canBrake) const {
++    if (isRogue() && myInfluencer != 0 && myInfluencer->getEmergencyBrakeRedLight()) { //if rogue with TraCI speedMode() called
++        return false; //don't run red lights
++    } else if (isRogue() && myInfluencer != 0 && !myInfluencer->getEmergencyBrakeRedLight()) { //if rogue with TraCI speedMode() reset
++        return true; //run red lights again
++    } else if (isRogue() && myInfluencer == 0) { //if rogue without TraCI speedMode() called
++        return true; //run red lights by default
++    }
+     if ((myInfluencer != 0 && !myInfluencer->getEmergencyBrakeRedLight())) {
+         return true;
+     }
++    
+     const double ignoreRedTime = getVehicleType().getParameter().getJMParam(SUMO_ATTR_JM_DRIVE_AFTER_RED_TIME, -1);
+ #ifdef DEBUG_IGNORE_RED
+     if (DEBUG_COND) {
+diff -urBNs sumo-OLD-0.32.0/src/microsim/MSVehicle.h sumo-0.32.0/src/microsim/MSVehicle.h
+--- sumo-OLD-0.32.0/src/microsim/MSVehicle.h	2017-12-19 07:43:20.000000000 +0000
++++ sumo-0.32.0/src/microsim/MSVehicle.h	2019-05-28 01:01:18.317584000 +0000
+@@ -995,6 +995,11 @@
+      */
+     bool isParking() const;
+ 
++    /** @brief Returns whether the vehicle is rogue class
++     * @return Whether the vehicle is rogue class
++     */
++    bool isRogue() const;
++    
+     /** @brief Returns the information whether the vehicle is fully controlled via TraCI
+      * @return Whether the vehicle is remote-controlled
+      */
+@@ -1393,6 +1398,14 @@
+          */
+         double changeRequestRemainingSeconds(const SUMOTime currentTime) const;
+ 
++        /** @brief Returns whether safe velocity rules shall be respected
++         * @return Whether safe velocity rules shall be respected
++         */
++        inline bool getConsiderSafeVelocity() const {
++            return myConsiderSafeVelocity;
++        }
++        
++        
+         /** @brief Returns whether junction priority rules shall be respected
+          * @return Whether junction priority rules be respected
+          */
+@@ -1443,7 +1456,7 @@
+ 
+         /// @brief return the change in longitudinal position that is implicit in the new remote position
+         double implicitDeltaPosRemote(const MSVehicle* veh);
+-
++        
+         bool isRemoteControlled() const;
+ 
+         bool isRemoteAffected(SUMOTime t) const;
+diff -urBNs sumo-OLD-0.32.0/src/utils/common/SUMOVehicleClass.cpp sumo-0.32.0/src/utils/common/SUMOVehicleClass.cpp
+--- sumo-OLD-0.32.0/src/utils/common/SUMOVehicleClass.cpp	2017-12-08 18:34:59.000000000 +0000
++++ sumo-0.32.0/src/utils/common/SUMOVehicleClass.cpp	2019-03-10 01:00:34.945001000 +0000
+@@ -78,6 +78,7 @@
+     {"pedestrian",        SVC_PEDESTRIAN},
+     {"evehicle",          SVC_E_VEHICLE},
+     {"ship",              SVC_SHIP},
++	{"rogue",             SVC_ROGUE},
+     {"custom1",           SVC_CUSTOM1},
+     {"custom2",           SVC_CUSTOM2}
+ };
+diff -urBNs sumo-OLD-0.32.0/src/utils/common/SUMOVehicleClass.h sumo-0.32.0/src/utils/common/SUMOVehicleClass.h
+--- sumo-OLD-0.32.0/src/utils/common/SUMOVehicleClass.h	2017-12-08 18:34:59.000000000 +0000
++++ sumo-0.32.0/src/utils/common/SUMOVehicleClass.h	2019-03-10 01:00:34.945001000 +0000
+@@ -108,7 +108,9 @@
+     /// @brief render as a fire brigade
+     SVS_FIREBRIGADE,
+     /// @brief render as a police car
+-    SVS_POLICE
++    SVS_POLICE,
++	/// @brief render as a rogue car
++	//SVS_ROGUE
+ };
+ 
+ 
+@@ -193,10 +195,12 @@
+     SVC_E_VEHICLE = 1 << 21,
+     /// @brief is an arbitrary ship
+     SVC_SHIP = 1 << 22,
++    /// @brief is a rogue type
++    SVC_ROGUE = 1 << 23,
+     /// @brief is a user-defined type
+-    SVC_CUSTOM1 = 1 << 23,
+-    /// @brief is a user-defined type
+-    SVC_CUSTOM2 = 1 << 24,
++    SVC_CUSTOM1 = 1 << 24,
++	/// @brief is a user-defined type
++    SVC_CUSTOM2 = 1 << 25,
+     //@}
+ 
+     /// @brief classes which (normally) do not drive on normal roads
+diff -urBNs sumo-OLD-0.32.0/src/utils/vehicle/SUMOVTypeParameter.cpp sumo-0.32.0/src/utils/vehicle/SUMOVTypeParameter.cpp
+--- sumo-OLD-0.32.0/src/utils/vehicle/SUMOVTypeParameter.cpp	2017-12-08 18:34:59.000000000 +0000
++++ sumo-0.32.0/src/utils/vehicle/SUMOVTypeParameter.cpp	2019-05-20 22:00:17.729163000 +0000
+@@ -31,6 +31,7 @@
+ 
+ #include <algorithm>
+ #include <utils/vehicle/SUMOVTypeParameter.h>
++#include <utils/vehicle/CHRouter.h>
+ #include <utils/common/ToString.h>
+ #include <utils/common/TplConvert.h>
+ #include <utils/common/MsgHandler.h>
+@@ -39,6 +40,8 @@
+ #include <utils/xml/SUMOXMLDefinitions.h>
+ #include <utils/emissions/PollutantsInterface.h>
+ 
++#include <microsim/MSVehicle.h>
++
+ #define EMPREFIX std::string("HBEFA3/")
+ 
+ 
+@@ -50,11 +53,11 @@
+       actionStepLength(0), defaultProbability(DEFAULT_VEH_PROB),
+       speedFactor("normc", 1.0, 0.0, 0.2, 2.0),
+       emissionClass(PollutantsInterface::getClassByName(EMPREFIX + "PC_G_EU4", vclass)), color(RGBColor::DEFAULT_COLOR),
+-      vehicleClass(vclass), impatience(0.0), personCapacity(4), containerCapacity(0), boardingDuration(500),
++      vehicleClass(vclass), impatience(0.0), personCapacity(4), containerCapacity(0), boardingDuration(500), 
+       loadingDuration(90000), width(1.8), height(1.5), shape(SVS_UNKNOWN), osgFile("car-normal-citrus.obj"),
+       cfModel(SUMO_TAG_CF_KRAUSS), lcModel(LCM_DEFAULT),
+       maxSpeedLat(1.0), latAlignment(LATALIGN_CENTER), minGapLat(0.6),
+-      parametersSet(0), saved(false), onlyReferenced(false) {
++      parametersSet(0), saved(false), onlyReferenced(false) { // SUMOVheicle& v,
+     switch (vclass) {
+         case SVC_PEDESTRIAN:
+             length = 0.215;
+@@ -190,6 +193,13 @@
+         case SVC_PASSENGER:
+             shape = SVS_PASSENGER;
+             break;
++        case SVC_ROGUE:
++            speedFactor.parse("2.0"); //double the speed limit
++            impatience = 1.0; //behavior merges to avoid deceleration
++            minGap = 0.5; //tailgating
++            shape = SVS_PASSENGER; //appear as default car
++            emissionClass = PollutantsInterface::getClassByName(EMPREFIX + "PC_G_EU4", vclass);
++            break;
+         case SVC_E_VEHICLE:
+             shape = SVS_E_VEHICLE;
+             emissionClass = PollutantsInterface::getClassByName(EMPREFIX + "zero", vclass);
+diff -urBNs sumo-OLD-0.32.0/tools/traci/_vehicle.py sumo-0.32.0/tools/traci/_vehicle.py
+--- sumo-OLD-0.32.0/tools/traci/_vehicle.py	2017-12-19 08:01:01.000000000 +0000
++++ sumo-0.32.0/tools/traci/_vehicle.py	2019-06-07 21:11:11.629245000 +0000
+@@ -1181,7 +1181,214 @@
+         """
+         self._connection._sendIntCmd(
+             tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_SPEEDSETMODE, vehID, sm)
++        
++    def rogueToggleFollowDistance(self, vehID):
++        """rogueToggleFollowDistance(string) -> None
+ 
++        Toggles follow distance between default and rogue.
++        """
++        if self._getUniversal(tc.VAR_MINGAP, vehID) == 0.5:
++            self._connection._sendDoubleCmd(
++            tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_MINGAP, vehID, 2.5)
++        else:
++            self._connection._sendDoubleCmd(
++            tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_MINGAP, vehID, 0.5)
++        
++    def rogueDisableLightRun(self, vehID):
++        """rogueToggleLightRun(string) -> None
++
++        Sets the vehicle's light respecting status with a bitset.
++        """
++        self._connection._sendIntCmd(
++        tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_SPEEDSETMODE, vehID, 31)
++        
++    def rogueEnableLightRun(self, vehID):
++        """rogueToggleLightRun(string) -> None
++
++        Sets the vehicle's light respecting status with a bitset.
++        """
++        self._connection._sendIntCmd(
++        tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_SPEEDSETMODE, vehID, 0)
++        
++    def rogueToggleSpeeding(self, vehID):
++        """rogueToggleFollowSpeed(string) -> None
++
++        Makes rogue vehicle follow the speed limit/disobey speed limit.
++        """
++        if self._getUniversal(tc.VAR_SPEED_FACTOR, vehID) == 2.0:
++            self._connection._sendDoubleCmd(
++            tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_SPEED_FACTOR, vehID, 1.0)
++        else:
++            self._connection._sendDoubleCmd(
++            tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_SPEED_FACTOR, vehID, 2.0) 
++        
++    def rogueNodeException(self, vehID, x, y):
++        """rogueNodeException(string, double, double) -> None
++
++        Sets the vehicle's rogue exception with node coordinates.
++        """
++        xs, ys = self._getUniversal(tc.VAR_POSITION, vehID)
++        
++        if xs > (x - 65) and xs < (x + 65) and ys > (y - 65) and ys < (y + 65):
++            self._connection._sendIntCmd(
++                tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_SPEEDSETMODE, vehID, 31)
++        else:
++            self._connection._sendIntCmd(
++                tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_SPEEDSETMODE, vehID, 0)
++        
++    def spoof(self, vehID, routeID, typeID="DEFAULT_VEHTYPE", depart=None,
++                departLane="first", departPos="base", departSpeed="0",
++                arrivalLane="current", arrivalPos="max", arrivalSpeed="current",
++                fromTaz="", toTaz="", line="", personCapacity=0, personNumber=0):
++        """spoof(string, string, string) -> None
++        Add 4 spoofed vehicles on top of designated vehicle
++        """
++        messageString = struct.pack("!Bi", tc.TYPE_COMPOUND, 14)
++        if depart is None:
++            depart = str(self._connection.simulation.getCurrentTime() / 1000.)
++        for val in (routeID, typeID, depart, departLane, departPos, departSpeed,
++                    arrivalLane, arrivalPos, arrivalSpeed, fromTaz, toTaz, line):
++            messageString += struct.pack("!Bi",
++                                         tc.TYPE_STRING, len(val)) + str(val).encode("latin1")
++        messageString += struct.pack("!Bi", tc.TYPE_INTEGER, personCapacity)
++        messageString += struct.pack("!Bi", tc.TYPE_INTEGER, personNumber)
++
++        #spawn a vehicle
++        self._connection._beginMessage(
++            tc.CMD_SET_VEHICLE_VARIABLE, tc.ADD_FULL, vehID + 'a', len(messageString))
++        self._connection._string += messageString
++        self._connection._sendExact()
++        #and make them invisible to the simulation
++        self._connection._beginMessage(
++            tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_COLOR, vehID + 'a', 1 + 1 + 1 + 1 + 1)
++        self._connection._string += struct.pack("!BBBBB", tc.TYPE_COLOR, 
++            255, 0, 0, 0)
++        self._connection._sendExact()
++        
++        self._connection._beginMessage(
++            tc.CMD_SET_VEHICLE_VARIABLE, tc.ADD_FULL, vehID + 'b', len(messageString))
++        self._connection._string += messageString
++        self._connection._sendExact()
++        
++        self._connection._beginMessage(
++            tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_COLOR, vehID + 'b', 1 + 1 + 1 + 1 + 1)
++        self._connection._string += struct.pack("!BBBBB", tc.TYPE_COLOR,
++            255, 0, 0, 0)
++        self._connection._sendExact()
++        
++        self._connection._beginMessage(
++            tc.CMD_SET_VEHICLE_VARIABLE, tc.ADD_FULL, vehID + 'c', len(messageString))
++        self._connection._string += messageString
++        self._connection._sendExact()
++        
++        self._connection._beginMessage(
++            tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_COLOR, vehID + 'c', 1 + 1 + 1 + 1 + 1)
++        self._connection._string += struct.pack("!BBBBB", tc.TYPE_COLOR, 
++            255, 0, 0, 0)
++        self._connection._sendExact()
++        
++        self._connection._beginMessage(
++            tc.CMD_SET_VEHICLE_VARIABLE, tc.ADD_FULL, vehID + 'd', len(messageString))
++        self._connection._string += messageString
++        self._connection._sendExact()
++        
++        self._connection._beginMessage(
++            tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_COLOR, vehID  + 'd', 1 + 1 + 1 + 1 + 1)
++        self._connection._string += struct.pack("!BBBBB", tc.TYPE_COLOR, 
++            255, 0, 0, 0)
++        self._connection._sendExact()
++        
++        #retrieve lane and index values of rogue car being classed
++        lane = self._getUniversal(tc.VAR_LANE_ID, vehID)
++
++        index = self._getUniversal(tc.VAR_LANE_INDEX, vehID)
++        
++        #move all spawned vehicles
++        self._connection._beginMessage(tc.CMD_SET_VEHICLE_VARIABLE,
++                                       tc.VAR_MOVE_TO, vehID + 'a', 1 + 4 + 1 + 4 + len(lane) + 1 + 8)
++        self._connection._string += struct.pack("!Bi", tc.TYPE_COMPOUND, 2)
++        self._connection._packString(lane)
++        self._connection._string += struct.pack("!Bd", tc.TYPE_DOUBLE, index - 10)
++        self._connection._sendExact()
++        
++        self._connection._beginMessage(tc.CMD_SET_VEHICLE_VARIABLE,
++                                       tc.VAR_MOVE_TO, vehID + 'b', 1 + 4 + 1 + 4 + len(lane) + 1 + 8)
++        self._connection._string += struct.pack("!Bi", tc.TYPE_COMPOUND, 2)
++        self._connection._packString(lane)
++        self._connection._string += struct.pack("!Bd", tc.TYPE_DOUBLE, index - 20)
++        self._connection._sendExact()
++        
++        self._connection._beginMessage(tc.CMD_SET_VEHICLE_VARIABLE,
++                                       tc.VAR_MOVE_TO, vehID + 'c', 1 + 4 + 1 + 4 + len(lane) + 1 + 8)
++        self._connection._string += struct.pack("!Bi", tc.TYPE_COMPOUND, 2)
++        self._connection._packString(lane)
++        self._connection._string += struct.pack("!Bd", tc.TYPE_DOUBLE, index - 30)
++        self._connection._sendExact()
++        
++        self._connection._beginMessage(tc.CMD_SET_VEHICLE_VARIABLE,
++                                       tc.VAR_MOVE_TO, vehID + 'd', 1 + 4 + 1 + 4 + len(lane) + 1 + 8)
++        self._connection._string += struct.pack("!Bi", tc.TYPE_COMPOUND, 2)
++        self._connection._packString(lane)
++        self._connection._string += struct.pack("!Bd", tc.TYPE_DOUBLE, index - 40)
++        self._connection._sendExact()
++        
++    def pothole(self, edgeID, potholeID):
++        """pothole(string, string) -> None
++        Spawn a pothole along the given edge with the given ID. Cannot repeat ID's
++        """
++        #spawn placeholder
++        vehID = 'veh' + potholeID
++        #typeID="DEFAULT_VEHTYPE"
++        #self._connection._beginMessage(tc.CMD_SET_VEHICLE_VARIABLE, tc.ADD, vehID,
++        #                               1 + 4 + 1 + 4 + len(typeID) + 1 + 4 + 6 + 1 + 4 + 1 + 8 + 1 + 8 + 1 + 1)
++
++        #self._connection._string += struct.pack("!Bi", tc.TYPE_COMPOUND, 6)
++        #self._connection._packString(typeID)
++        #self._connection._packString('route1')
++        #self._connection._string += struct.pack("!Bi", tc.TYPE_INTEGER, tc.DEPARTFLAG_NOW)
++        #self._connection._string += struct.pack("!BdBd",
++        #                                        tc.TYPE_DOUBLE, 0, tc.TYPE_DOUBLE, 0)
++        #self._connection._string += struct.pack("!Bb", tc.TYPE_BYTE, tc.DEPARTFLAG_LANE_FIRST_ALLOWED)
++        #self._connection._sendExact()
++        
++        #self._connection._sendDoubleCmd(
++        #    tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_LENGTH, vehID, 2)
++        #movetoXY position
++        self._connection._beginMessage(tc.CMD_SET_VEHICLE_VARIABLE, tc.MOVE_TO_XY,
++                                       vehID, 1 + 4 + 1 + 4 + len(edgeID) + 1 + 4 + 1 + 8 + 1 + 8 + 1 + 8 + 1 + 1)
++        self._connection._string += struct.pack("!Bi", tc.TYPE_COMPOUND, 6)
++        self._connection._packString(edgeID)
++        self._connection._string += struct.pack("!Bi", tc.TYPE_INTEGER, 0)
++        self._connection._string += struct.pack("!Bd", tc.TYPE_DOUBLE, 254.85)
++        self._connection._string += struct.pack("!Bd", tc.TYPE_DOUBLE, 453)
++        self._connection._string += struct.pack("!Bd", tc.TYPE_DOUBLE, tc.INVALID_DOUBLE_VALUE)
++        self._connection._string += struct.pack("!BB", tc.TYPE_BYTE, 1)
++        self._connection._sendExact()
++        
++        #set speed to zero
++        self._connection._sendDoubleCmd(
++            tc.CMD_SET_VEHICLE_VARIABLE, tc.VAR_SPEED, vehID, 0)
++        
++        #spawn polygon over it
++        shape = ([256.3,450],[253.7,450],[253.7,453],[256.3,453])
++        color = [205,133,63,255]
++        polygonType='building'
++        
++        self._connection._beginMessage(tc.CMD_SET_POLYGON_VARIABLE, tc.ADD, 'pothole_1', 1 + 4 + 1 + 4 +
++                                       len(polygonType) + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 4 + 1 + 1 + len(shape) * (8 + 8))
++        self._connection._string += struct.pack("!Bi", tc.TYPE_COMPOUND, 5)
++        self._connection._packString(polygonType)
++        self._connection._string += struct.pack("!BBBBB", tc.TYPE_COLOR, int(
++            color[0]), int(color[1]), int(color[2]), int(color[3]))
++        self._connection._string += struct.pack("!BB",
++                                                tc.TYPE_UBYTE, int(True))
++        self._connection._string += struct.pack("!Bi", tc.TYPE_INTEGER, 2)
++        self._connection._string += struct.pack("!BB",
++                                                tc.TYPE_POLYGON, len(shape))
++        for p in shape:
++            self._connection._string += struct.pack("!dd", *p)
++        self._connection._sendExact()
++        
+     def add(self, vehID, routeID, depart=tc.DEPARTFLAG_NOW, pos=0, speed=0,
+             lane=tc.DEPARTFLAG_LANE_FIRST_ALLOWED, typeID="DEFAULT_VEHTYPE"):
+         """
